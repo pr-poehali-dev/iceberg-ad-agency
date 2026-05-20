@@ -189,14 +189,7 @@ export default function Index() {
 
       {/* HERO */}
       <section ref={heroRef.ref} className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-16">
-        <div className="absolute inset-0">
-          <img
-            src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/files/15de0f2c-1146-4c02-9ff0-42fc8f5e7e2b.jpg"
-            alt=""
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #0D1117 0%, rgba(13,17,23,0.55) 50%, #0D1117 100%)" }} />
-        </div>
+
         <div className="absolute left-0 top-1/4 w-px h-1/2 opacity-25" style={{ background: `linear-gradient(to bottom, transparent, ${gold}, transparent)` }} />
 
         <div className="relative max-w-7xl mx-auto px-5 md:px-10 py-24 w-full">
