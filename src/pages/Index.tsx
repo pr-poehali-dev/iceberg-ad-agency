@@ -304,7 +304,7 @@ export default function Index() {
                 {/* Center logo */}
                 <div className="relative z-10 rounded-2xl overflow-hidden flex-shrink-0" style={{ width: 140, height: 140, border: "1px solid rgba(232,185,79,0.2)", background: "rgba(13,17,23,0.9)", boxShadow: "0 0 40px rgba(232,185,79,0.08)" }}>
                   <img
-                    src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/c04fa803-5382-4615-ac37-2138b2ed92cf.png"
+                    src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/2a2932c9-8035-4639-9180-051eb7b89939.png"
                     alt="KeyCard"
                     className="w-full h-full object-contain p-3"
                   />
