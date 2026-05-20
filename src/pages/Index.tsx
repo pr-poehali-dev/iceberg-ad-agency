@@ -1,262 +1,253 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const NAV_ITEMS = [
+const NAV = [
   { label: "О нас", href: "#about" },
+  { label: "Подход", href: "#approach" },
   { label: "Услуги", href: "#services" },
-  { label: "Кейсы", href: "#cases" },
   { label: "Тарифы", href: "#pricing" },
   { label: "Контакты", href: "#contact" },
 ];
 
-const SERVICES = [
-  {
-    number: "01",
-    title: "Стратегия и брендинг",
-    desc: "Разрабатываем позиционирование, фирменный стиль и коммуникационную стратегию для устойчивого роста бизнеса.",
-  },
-  {
-    number: "02",
-    title: "Digital-маркетинг",
-    desc: "SEO, контекстная реклама, таргет и аналитика — выстраиваем системный поток клиентов из интернета.",
-  },
-  {
-    number: "03",
-    title: "Веб-разработка",
-    desc: "Создаём сайты и лендинги с фокусом на конверсию, скорость и безупречный пользовательский опыт.",
-  },
-  {
-    number: "04",
-    title: "Контент и SMM",
-    desc: "Производим контент, который работает: тексты, визуал, видео и ведение социальных сетей.",
-  },
+const STATS = [
+  { value: "5+", label: "лет на рынке" },
+  { value: "300+", label: "партнёров" },
+  { value: "ТОП-3", label: "результат в Яндексе" },
+  { value: "98%", label: "продлевают договор" },
 ];
 
-const CASES = [
+const SERVICES = [
   {
-    category: "Ритейл",
-    title: "Рост конверсии на 340%",
-    desc: "Редизайн интернет-магазина и SEO-оптимизация для федеральной сети.",
-    metric: "+340%",
+    icon: "MapPin",
+    title: "Яндекс.Бизнес",
+    desc: "Полное продвижение и оптимизация карточек компании. Заполнение, оформление, рост в поиске и на картах.",
   },
   {
-    category: "B2B",
-    title: "Лидогенерация с нуля",
-    desc: "Комплексный запуск digital-канала для промышленного предприятия.",
-    metric: "×12",
+    icon: "Star",
+    title: "Репутация и отзывы",
+    desc: "Работа с отзывами, улучшение рейтинга, мониторинг упоминаний. Ваша репутация под контролем.",
   },
   {
-    category: "Недвижимость",
-    title: "Снижение стоимости лида",
-    desc: "Оптимизация рекламных кампаний и посадочных страниц застройщика.",
-    metric: "−62%",
+    icon: "Megaphone",
+    title: "Рекламные кампании",
+    desc: "Настройка и ведение рекламы в Яндекс.Директ и РСЯ. Отчёты, аналитика и постоянная оптимизация.",
+  },
+  {
+    icon: "Stethoscope",
+    title: "Яндекс.Медицина",
+    desc: "Продвижение профилей врачей, оптимизация под голосовой поиск Алисы AI и медицинские агрегаторы.",
+  },
+  {
+    icon: "TrendingUp",
+    title: "SEO-оптимизация",
+    desc: "Техническая и контентная оптимизация. Отслеживание позиций, семантика, рост органического трафика.",
+  },
+  {
+    icon: "BarChart2",
+    title: "Поддержка и отчёты",
+    desc: "Регулярные отчёты, персональный менеджер и постоянный контроль результатов продвижения.",
   },
 ];
 
 const PLANS = [
   {
-    name: "Старт",
-    price: "45 000 ₽",
-    period: "/ месяц",
-    desc: "Для малого бизнеса и стартапов",
+    name: "Тестовый",
+    period: "3 месяца",
+    prices: ["120 000 ₽", "150 000 ₽"],
+    desc: "Идеально для старта и проверки стратегии",
     features: [
-      "Аудит и стратегия",
-      "Ведение 2 каналов",
+      "Настройка профиля",
+      "Базовое SEO",
+      "Дизайн карточки",
+      "Работа с отзывами",
       "Ежемесячный отчёт",
-      "Поддержка по email",
     ],
     highlight: false,
   },
   {
-    name: "Рост",
-    price: "95 000 ₽",
-    period: "/ месяц",
-    desc: "Для компаний в активной фазе роста",
+    name: "Стандартный",
+    period: "6 месяцев",
+    prices: ["200 000 ₽", "250 000 ₽"],
+    desc: "Для активного роста и захвата аудитории",
     features: [
-      "Всё из тарифа Старт",
-      "Полный digital-маркетинг",
-      "Контент-план + производство",
+      "Всё из Тестового",
+      "Продвижение Яндекс.Медицина",
+      "Оптимизация под Алису AI",
+      "Рекламные кампании",
+      "Еженедельный отчёт",
       "Персональный менеджер",
-      "Еженедельные встречи",
     ],
     highlight: true,
   },
   {
-    name: "Партнёрство",
-    price: "от 180 000 ₽",
-    period: "/ месяц",
-    desc: "Для крупного бизнеса и холдингов",
+    name: "Логичный",
+    period: "12 месяцев",
+    prices: ["350 000 ₽", "400 000 ₽"],
+    desc: "Полное долгосрочное партнёрство",
     features: [
-      "Всё из тарифа Рост",
-      "Выделенная команда",
-      "Индивидуальная стратегия",
+      "Всё из Стандартного",
+      "Объединение всех стратегий",
       "Приоритетная поддержка 24/7",
-      "Ежеквартальная стратсессия",
+      "Квартальная стратсессия",
+      "Выделенная команда",
+      "Гарантия результата",
     ],
     highlight: false,
   },
 ];
 
-function useInView(threshold = 0.15) {
+const gold = "#E8B94F";
+const goldDim = "rgba(232,185,79,0.12)";
+
+function useInView(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          obs.disconnect();
-        }
-      },
+      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
       { threshold }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [threshold]);
-
   return { ref, inView };
 }
 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "", company: "" });
   const [submitted, setSubmitted] = useState(false);
 
-  const heroSection = useInView(0.1);
-  const aboutSection = useInView(0.1);
-  const servicesSection = useInView(0.1);
-  const casesSection = useInView(0.1);
-  const pricingSection = useInView(0.1);
-  const contactSection = useInView(0.1);
+  const heroRef = useInView(0.05);
+  const aboutRef = useInView(0.1);
+  const approachRef = useInView(0.1);
+  const servicesRef = useInView(0.1);
+  const pricingRef = useInView(0.05);
+  const contactRef = useInView(0.1);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    window.open("https://t.me/yandex_promotion", "_blank");
     setSubmitted(true);
   };
 
   return (
-    <div className="bg-[#F8F7F5] min-h-screen font-body text-[#141414]">
+    <div className="min-h-screen bg-[#0D1117] text-[#E8EDF3]" style={{ fontFamily: "'Golos Text', sans-serif" }}>
 
       {/* NAV */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-[#F8F7F5]/95 backdrop-blur-sm border-b border-[#E0DDD9]" : ""
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
-          <a href="#" className="font-display text-xl tracking-widest uppercase text-[#141414]">
-            Агентство
+      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#0D1117]/90 backdrop-blur-md border-b border-white/5" : ""}`}>
+        <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-[72px]">
+          <a href="#" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded border border-yellow-400/60 flex items-center justify-center glow-gold">
+              <span style={{ fontFamily: "'Cormorant', serif", color: gold, fontSize: 14, fontWeight: 700, letterSpacing: 1 }}>K</span>
+            </div>
+            <span style={{ fontFamily: "'Cormorant', serif", fontSize: 20, fontWeight: 600, letterSpacing: 3, color: "#E8EDF3", textTransform: "uppercase" }}>
+              KeyCard
+            </span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-10">
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-xs tracking-[0.15em] uppercase text-[#666] hover:text-[#141414] transition-colors duration-300 link-line"
-              >
-                {item.label}
+          <nav className="hidden md:flex items-center gap-8">
+            {NAV.map((n) => (
+              <a key={n.href} href={n.href} className="text-xs tracking-widest uppercase text-[#8A95A3] hover:text-[#E8EDF3] transition-colors duration-300">
+                {n.label}
               </a>
             ))}
           </nav>
 
           <a
             href="#contact"
-            className="hidden md:block text-xs tracking-[0.15em] uppercase border border-[#141414] px-5 py-2.5 hover:bg-[#141414] hover:text-[#F8F7F5] transition-all duration-300"
+            className="hidden md:flex items-center gap-2 text-xs tracking-widest uppercase px-5 py-2.5 rounded border transition-all duration-300 hover:opacity-90"
+            style={{ borderColor: gold, color: gold }}
           >
-            Оставить заявку
+            Получить разбор
           </a>
 
-          <button
-            className="md:hidden p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Меню"
-          >
-            <Icon name={menuOpen ? "X" : "Menu"} size={20} />
+          <button className="md:hidden p-2 text-[#8A95A3]" onClick={() => setMenuOpen(!menuOpen)}>
+            <Icon name={menuOpen ? "X" : "Menu"} size={22} />
           </button>
         </div>
 
         {menuOpen && (
-          <div className="md:hidden bg-[#F8F7F5] border-t border-[#E0DDD9] px-6 py-8 flex flex-col gap-6">
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-sm tracking-[0.12em] uppercase text-[#141414]"
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
+          <div className="md:hidden bg-[#111827] border-t border-white/5 px-5 py-6 flex flex-col gap-5">
+            {NAV.map((n) => (
+              <a key={n.href} href={n.href} className="text-sm tracking-widest uppercase text-[#E8EDF3]" onClick={() => setMenuOpen(false)}>
+                {n.label}
               </a>
             ))}
-            <a
-              href="#contact"
-              className="text-sm tracking-[0.12em] uppercase border border-[#141414] px-5 py-3 text-center"
-              onClick={() => setMenuOpen(false)}
-            >
-              Оставить заявку
-            </a>
           </div>
         )}
       </header>
 
       {/* HERO */}
-      <section ref={heroSection.ref} className="min-h-screen flex flex-col justify-end pt-20">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full pb-16 md:pb-24 grid md:grid-cols-2 gap-12 items-end">
-          <div>
-            <p
-              className={`text-xs tracking-[0.25em] uppercase text-[#999] mb-8 transition-all duration-700 ${
-                heroSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-            >
-              Маркетинговое агентство — Москва
-            </p>
-            <h1
-              className={`font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] font-light text-[#141414] transition-all duration-700 delay-100 ${
-                heroSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-            >
-              Мы строим
-              <br />
-              <em className="not-italic text-[#888]">бизнес</em>
-              <br />
-              через digital
+      <section ref={heroRef.ref} className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-16">
+        <div className="absolute inset-0">
+          <img
+            src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/files/15de0f2c-1146-4c02-9ff0-42fc8f5e7e2b.jpg"
+            alt=""
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #0D1117 0%, rgba(13,17,23,0.55) 50%, #0D1117 100%)" }} />
+        </div>
+        <div className="absolute left-0 top-1/4 w-px h-1/2 opacity-25" style={{ background: `linear-gradient(to bottom, transparent, ${gold}, transparent)` }} />
+
+        <div className="relative max-w-7xl mx-auto px-5 md:px-10 py-24 w-full">
+          <div className={`max-w-3xl transition-all duration-1000 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="h-px w-10 opacity-70" style={{ background: gold }} />
+              <span className="text-xs tracking-[0.25em] uppercase" style={{ color: gold }}>SEO-агентство для локального бизнеса</span>
+            </div>
+            <h1 style={{ fontFamily: "'Cormorant', serif", fontSize: "clamp(3rem,7vw,5.5rem)", lineHeight: 1, fontWeight: 600, color: "#E8EDF3" }}>
+              Занимайте{" "}
+              <span style={{ color: gold, fontStyle: "italic" }}>первые места</span>
+              <br />в Яндексе и на Картах
             </h1>
+            <p className="mt-6 text-base md:text-lg text-[#8A95A3] leading-relaxed max-w-xl font-light">
+              Помогаем салонам красоты, стоматологиям и медицинским центрам стабильно привлекать новых клиентов через локальный поиск.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a
+                href="https://t.me/yandex_promotion"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 px-7 py-4 text-sm font-medium tracking-wide rounded transition-all duration-300 hover:opacity-90"
+                style={{ background: gold, color: "#0D1117" }}
+              >
+                Разбор вашей организации
+                <Icon name="ArrowRight" size={16} />
+              </a>
+              <a
+                href="#services"
+                className="flex items-center gap-2.5 px-7 py-4 text-sm font-medium tracking-wide rounded border border-white/15 text-[#E8EDF3] hover:border-white/30 transition-all duration-300"
+              >
+                Наши услуги
+              </a>
+            </div>
           </div>
 
-          <div
-            className={`flex flex-col gap-8 transition-all duration-700 delay-200 ${
-              heroSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
-            <img
-              src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/files/6a6b463a-739b-4917-a3a7-c195b6d50454.jpg"
-              alt="Рабочее пространство агентства"
-              className="w-full aspect-[4/3] object-cover"
-            />
-            <p className="text-sm text-[#666] leading-relaxed max-w-xs font-light">
-              Системный подход к росту: от стратегии до результата. Работаем с бизнесом любого масштаба.
-            </p>
+          <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-5 transition-all duration-1000 delay-300 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            {STATS.map((s) => (
+              <div key={s.value} className="rounded-lg p-5 border border-white/8" style={{ background: "rgba(255,255,255,0.03)" }}>
+                <div style={{ fontFamily: "'Cormorant', serif", fontSize: 38, fontWeight: 700, color: gold, lineHeight: 1 }}>{s.value}</div>
+                <div className="mt-1 text-xs text-[#8A95A3] tracking-wide">{s.label}</div>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="border-t border-[#E0DDD9] py-4 overflow-hidden">
-          <div
-            className="flex gap-16 whitespace-nowrap"
-            style={{ animation: "ticker 20s linear infinite" }}
-          >
-            {Array(4).fill(["Стратегия", "Брендинг", "SEO", "Реклама", "Контент", "Аналитика"]).flat().map((t, i) => (
-              <span key={i} className="text-xs tracking-[0.2em] uppercase text-[#AAA]">
-                {t} &nbsp;·
+        <div className="relative border-t border-white/5 py-3 overflow-hidden">
+          <div className="ticker-wrap flex gap-14 whitespace-nowrap">
+            {Array(6).fill(["Яндекс.Бизнес", "Яндекс.Карты", "SEO", "Репутация", "Алиса AI", "Яндекс.Медицина"]).flat().map((t, i) => (
+              <span key={i} className="text-[11px] tracking-[0.2em] uppercase" style={{ color: "rgba(232,185,79,0.4)" }}>
+                {t}&nbsp;·
               </span>
             ))}
           </div>
@@ -264,110 +255,140 @@ export default function Index() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" ref={aboutSection.ref} className="py-28 md:py-40">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-12 gap-12">
-            <div className="md:col-span-3">
-              <p className="text-xs tracking-[0.2em] uppercase text-[#999]">О нас</p>
-            </div>
-            <div className="md:col-span-9">
-              <h2
-                className={`font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] font-light mb-12 transition-all duration-700 ${
-                  aboutSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-              >
-                Десять лет мы помогаем компаниям расти через осмысленный маркетинг
+      <section id="about" ref={aboutRef.ref} className="py-28 md:py-36">
+        <div className="max-w-7xl mx-auto px-5 md:px-10">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className={`transition-all duration-700 ${aboutRef.inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="h-px w-8" style={{ background: gold }} />
+                <span className="text-xs tracking-[0.2em] uppercase" style={{ color: gold }}>О компании</span>
+              </div>
+              <h2 style={{ fontFamily: "'Cormorant', serif", fontSize: "clamp(2.2rem,4vw,3.5rem)", lineHeight: 1.1, fontWeight: 600, color: "#E8EDF3" }}>
+                5 лет выводим бизнес в топ Яндекса
               </h2>
-              <div
-                className={`grid md:grid-cols-3 gap-10 transition-all duration-700 delay-150 ${
-                  aboutSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-              >
+              <p className="mt-5 text-[#8A95A3] leading-relaxed text-sm">
+                Компания KeyCard специализируется на продвижении локального бизнеса в поисковых системах Яндекс, Яндекс.Карты и смежных платформах.
+              </p>
+              <p className="mt-3 text-[#8A95A3] leading-relaxed text-sm">
+                Работаем с салонами красоты, косметологическими сетями, стоматологиями и медицинскими центрами — нишами с высокой конкуренцией в локальном поиске.
+              </p>
+              <div className="mt-8 flex flex-col gap-3">
                 {[
-                  { n: "200+", label: "Реализованных проектов" },
-                  { n: "40+", label: "Специалистов в команде" },
-                  { n: "94%", label: "Клиентов возвращаются" },
-                ].map((s) => (
-                  <div key={s.n} className="border-t border-[#E0DDD9] pt-6">
-                    <div className="font-display text-5xl font-light text-[#141414] mb-2">{s.n}</div>
-                    <div className="text-xs tracking-[0.1em] uppercase text-[#888]">{s.label}</div>
+                  "Более 300 доверенных партнёров по всей России",
+                  "Команда дизайнеров, маркетологов, SEO- и IT-специалистов",
+                  "Постоянно отслеживаем тренды и алгоритмы Яндекса",
+                ].map((t) => (
+                  <div key={t} className="flex items-start gap-3">
+                    <div className="mt-1 w-4 h-4 rounded-sm flex-shrink-0 flex items-center justify-center" style={{ background: goldDim, border: `1px solid rgba(232,185,79,0.25)` }}>
+                      <Icon name="Check" size={10} style={{ color: gold }} />
+                    </div>
+                    <span className="text-sm text-[#B0BAC5]">{t}</span>
                   </div>
                 ))}
               </div>
             </div>
+
+            <div className={`transition-all duration-700 delay-200 ${aboutRef.inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+              <div className="relative rounded-xl overflow-hidden">
+                <img
+                  src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/files/2c388f1d-099e-4786-8225-775e4167b12e.jpg"
+                  alt="Наши клиенты"
+                  className="w-full aspect-[4/3] object-cover"
+                />
+                <div className="absolute inset-0 rounded-xl" style={{ background: "linear-gradient(to top, #0D1117 0%, transparent 55%)" }} />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="text-[10px] tracking-wider uppercase mb-2" style={{ color: gold }}>Работаем с нишами</p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Салоны красоты", "Стоматологии", "Косметология", "Медцентры"].map((tag) => (
+                      <span key={tag} className="text-xs px-3 py-1 rounded-full text-[#E8EDF3]" style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* APPROACH */}
+      <section id="approach" ref={approachRef.ref} className="py-28 md:py-36" style={{ background: "linear-gradient(180deg, #0D1117 0%, #0f1623 50%, #0D1117 100%)" }}>
+        <div className="max-w-7xl mx-auto px-5 md:px-10">
+          <div className={`text-center mb-14 transition-all duration-700 ${approachRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-8" style={{ background: gold }} />
+              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: gold }}>Наш подход</span>
+              <div className="h-px w-8" style={{ background: gold }} />
+            </div>
+            <h2 style={{ fontFamily: "'Cormorant', serif", fontSize: "clamp(2.2rem,4vw,3.5rem)", fontWeight: 600, color: "#E8EDF3", lineHeight: 1.1 }}>
+              Индивидуальная стратегия — проверенный результат
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { num: "01", icon: "Target", title: "Индивидуальный подход", desc: "Анализируем ваш бизнес, конкурентов и нишу. Разрабатываем стратегию под конкретные цели — без шаблонов." },
+              { num: "02", icon: "Zap", title: "Готовые решения", desc: "Используем методики, отработанные на 300+ клиентах. Знаем, что работает в вашей нише и даёт результат быстро." },
+              { num: "03", icon: "Users", title: "Новые клиенты", desc: "Цель — не просто позиции, а реальный поток клиентов. Оцениваем эффективность по бизнес-метрикам." },
+            ].map((c, i) => (
+              <div
+                key={c.num}
+                className={`card-hover rounded-xl p-8 border border-white/8 transition-all duration-700 ${approachRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                style={{ background: "rgba(255,255,255,0.03)", transitionDelay: `${i * 120}ms` }}
+              >
+                <div className="flex items-start justify-between mb-6">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ background: goldDim }}>
+                    <Icon name={c.icon} size={22} style={{ color: gold }} />
+                  </div>
+                  <span style={{ fontFamily: "'Cormorant', serif", fontSize: 44, fontWeight: 700, color: "rgba(232,185,79,0.1)", lineHeight: 1 }}>{c.num}</span>
+                </div>
+                <h3 style={{ fontFamily: "'Cormorant', serif", fontSize: 22, fontWeight: 600, color: "#E8EDF3", marginBottom: 10 }}>{c.title}</h3>
+                <p className="text-sm text-[#8A95A3] leading-relaxed">{c.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className={`mt-12 text-center transition-all duration-700 delay-400 ${approachRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+            <a
+              href="https://t.me/yandex_promotion"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-8 py-4 text-sm font-medium rounded transition-all duration-300 hover:opacity-90"
+              style={{ background: gold, color: "#0D1117" }}
+            >
+              Разбор вашей организации
+              <Icon name="ArrowUpRight" size={16} />
+            </a>
           </div>
         </div>
       </section>
 
       {/* SERVICES */}
-      <section id="services" ref={servicesSection.ref} className="py-28 md:py-40 bg-[#141414] text-[#F8F7F5]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-12 gap-12 mb-16">
-            <div className="md:col-span-3">
-              <p className="text-xs tracking-[0.2em] uppercase text-[#666]">Что предлагаем</p>
+      <section id="services" ref={servicesRef.ref} className="py-28 md:py-36">
+        <div className="max-w-7xl mx-auto px-5 md:px-10">
+          <div className={`mb-14 transition-all duration-700 ${servicesRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-px w-8" style={{ background: gold }} />
+              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: gold }}>Что мы предлагаем</span>
             </div>
-            <div className="md:col-span-9">
-              <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] font-light text-[#F8F7F5]">
-                Полный спектр digital-услуг
-              </h2>
-            </div>
+            <h2 style={{ fontFamily: "'Cormorant', serif", fontSize: "clamp(2.2rem,4vw,3.5rem)", fontWeight: 600, color: "#E8EDF3", lineHeight: 1.1 }}>
+              Полный арсенал инструментов<br className="hidden md:block" /> для роста в Яндексе
+            </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-0">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {SERVICES.map((s, i) => (
               <div
-                key={s.number}
-                className={`border-t border-[#333] p-8 md:p-10 group hover:bg-[#1E1E1E] transition-all duration-300 ${
-                  i % 2 === 1 ? "md:border-l md:border-l-[#333]" : ""
-                } ${
-                  servicesSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${i * 100}ms` }}
+                key={s.title}
+                className={`card-hover rounded-xl p-7 border border-white/8 transition-all duration-700 ${servicesRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                style={{ background: "rgba(255,255,255,0.03)", transitionDelay: `${i * 80}ms` }}
               >
-                <div className="text-xs tracking-[0.2em] text-[#555] mb-6">{s.number}</div>
-                <h3 className="font-display text-2xl md:text-3xl font-light text-[#F8F7F5] mb-4">
-                  {s.title}
-                </h3>
-                <p className="text-sm text-[#888] leading-relaxed font-light">{s.desc}</p>
-                <div className="mt-8 flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-[#555] group-hover:text-[#F8F7F5] transition-colors duration-300">
-                  <span>Подробнее</span>
-                  <Icon name="ArrowRight" size={12} />
+                <div className="w-11 h-11 rounded-lg flex items-center justify-center mb-5" style={{ background: goldDim }}>
+                  <Icon name={s.icon} size={20} style={{ color: gold }} />
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CASES */}
-      <section id="cases" ref={casesSection.ref} className="py-28 md:py-40">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-12 gap-12 mb-16">
-            <div className="md:col-span-3">
-              <p className="text-xs tracking-[0.2em] uppercase text-[#999]">Кейсы</p>
-            </div>
-            <div className="md:col-span-9">
-              <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] font-light">
-                Результаты, которые говорят сами за себя
-              </h2>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-0 border-t border-[#E0DDD9]">
-            {CASES.map((c, i) => (
-              <div
-                key={c.title}
-                className={`p-8 md:p-10 border-b border-[#E0DDD9] md:border-b-0 ${
-                  i !== 0 ? "md:border-l md:border-[#E0DDD9]" : ""
-                } hover:bg-[#F0EDE8] transition-all duration-300 ${
-                  casesSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${i * 120}ms` }}
-              >
-                <p className="text-xs tracking-[0.15em] uppercase text-[#999] mb-6">{c.category}</p>
-                <div className="font-display text-6xl font-light text-[#141414] mb-6">{c.metric}</div>
-                <h3 className="font-display text-xl font-light text-[#141414] mb-3">{c.title}</h3>
-                <p className="text-sm text-[#777] leading-relaxed font-light">{c.desc}</p>
+                <h3 style={{ fontFamily: "'Cormorant', serif", fontSize: 20, fontWeight: 600, color: "#E8EDF3", marginBottom: 10 }}>{s.title}</h3>
+                <p className="text-sm text-[#8A95A3] leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -375,213 +396,192 @@ export default function Index() {
       </section>
 
       {/* PRICING */}
-      <section id="pricing" ref={pricingSection.ref} className="py-28 md:py-40 bg-[#F0EDE8]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-12 gap-12 mb-16">
-            <div className="md:col-span-3">
-              <p className="text-xs tracking-[0.2em] uppercase text-[#999]">Тарифы</p>
+      <section id="pricing" ref={pricingRef.ref} className="py-28 md:py-36" style={{ background: "linear-gradient(180deg, #0D1117 0%, #0A0F1A 100%)" }}>
+        <div className="max-w-7xl mx-auto px-5 md:px-10">
+          <div className={`text-center mb-14 transition-all duration-700 ${pricingRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-8" style={{ background: gold }} />
+              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: gold }}>Тарифы</span>
+              <div className="h-px w-8" style={{ background: gold }} />
             </div>
-            <div className="md:col-span-9">
-              <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] font-light">
-                Прозрачное ценообразование
-              </h2>
-            </div>
+            <h2 style={{ fontFamily: "'Cormorant', serif", fontSize: "clamp(2.2rem,4vw,3.5rem)", fontWeight: 600, color: "#E8EDF3", lineHeight: 1.1 }}>
+              Прозрачные условия сотрудничества
+            </h2>
+            <p className="mt-3 text-[#8A95A3] text-sm">Цена зависит от количества продвигаемых точек и объёма работ</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {PLANS.map((p, i) => (
               <div
                 key={p.name}
-                className={`p-8 md:p-10 transition-all duration-700 ${
-                  p.highlight
-                    ? "bg-[#141414] text-[#F8F7F5]"
-                    : "bg-[#F8F7F5] text-[#141414]"
-                } ${
-                  pricingSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${i * 120}ms` }}
+                className={`relative rounded-xl p-8 transition-all duration-700 ${pricingRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                style={{
+                  transitionDelay: `${i * 120}ms`,
+                  background: p.highlight ? "linear-gradient(145deg, #1A1F2E, #141926)" : "rgba(255,255,255,0.025)",
+                  border: p.highlight ? `1px solid rgba(232,185,79,0.4)` : "1px solid rgba(255,255,255,0.07)",
+                  boxShadow: p.highlight ? "0 0 60px rgba(232,185,79,0.07)" : undefined,
+                }}
               >
                 {p.highlight && (
-                  <span className="text-[10px] tracking-[0.2em] uppercase bg-[#F8F7F5] text-[#141414] px-3 py-1 mb-6 inline-block">
-                    Популярный
-                  </span>
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                    <span className="text-[10px] tracking-widest uppercase px-4 py-1.5 rounded-full font-medium" style={{ background: gold, color: "#0D1117" }}>
+                      Популярный
+                    </span>
+                  </div>
                 )}
-                <p className="text-xs tracking-[0.15em] uppercase opacity-50 mb-4">{p.name}</p>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="font-display text-4xl font-light">{p.price}</span>
-                  <span className="text-xs opacity-50">{p.period}</span>
+                <div className="mb-5">
+                  <p className="text-xs tracking-[0.2em] uppercase text-[#8A95A3] mb-1">{p.name}</p>
+                  <p className="text-sm" style={{ color: gold }}>{p.period}</p>
                 </div>
-                <p className={`text-xs mb-8 ${p.highlight ? "text-[#AAA]" : "text-[#888]"}`}>{p.desc}</p>
-                <ul className="space-y-3 mb-10">
+                <div style={{ fontFamily: "'Cormorant', serif", fontSize: 30, fontWeight: 700, color: "#E8EDF3", marginBottom: 4 }}>{p.prices[0]}</div>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="h-px flex-1 border-t border-dashed border-white/10" />
+                  <span className="text-xs text-[#8A95A3]">или</span>
+                  <div className="h-px flex-1 border-t border-dashed border-white/10" />
+                </div>
+                <div style={{ fontFamily: "'Cormorant', serif", fontSize: 30, fontWeight: 700, color: "#E8EDF3", marginBottom: 12 }}>{p.prices[1]}</div>
+                <p className="text-xs text-[#8A95A3] mb-7">{p.desc}</p>
+                <ul className="space-y-3 mb-8">
                   {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm font-light">
-                      <Icon
-                        name="Check"
-                        size={14}
-                        className={`mt-0.5 flex-shrink-0 ${p.highlight ? "text-[#F8F7F5]" : "text-[#141414]"}`}
-                      />
-                      <span className={p.highlight ? "text-[#CCC]" : "text-[#555]"}>{f}</span>
+                    <li key={f} className="flex items-start gap-2.5">
+                      <div className="mt-0.5 w-4 h-4 rounded-sm flex-shrink-0 flex items-center justify-center" style={{ background: goldDim }}>
+                        <Icon name="Check" size={9} style={{ color: gold }} />
+                      </div>
+                      <span className="text-sm text-[#B0BAC5]">{f}</span>
                     </li>
                   ))}
                 </ul>
                 <a
                   href="#contact"
-                  className={`block text-center text-xs tracking-[0.15em] uppercase py-3.5 border transition-all duration-300 ${
-                    p.highlight
-                      ? "border-[#F8F7F5] text-[#F8F7F5] hover:bg-[#F8F7F5] hover:text-[#141414]"
-                      : "border-[#141414] text-[#141414] hover:bg-[#141414] hover:text-[#F8F7F5]"
-                  }`}
+                  className="block text-center text-sm font-medium py-3.5 rounded border transition-all duration-300 hover:opacity-90"
+                  style={p.highlight
+                    ? { background: gold, color: "#0D1117", borderColor: gold }
+                    : { background: "transparent", color: "#E8EDF3", borderColor: "rgba(255,255,255,0.15)" }
+                  }
                 >
                   Выбрать тариф
                 </a>
               </div>
             ))}
           </div>
+
+          <p className="mt-8 text-center text-xs text-[#555E6E]">
+            В каждый тариф включено: настройка профиля · SEO · дизайн · работа с отзывами · Яндекс.Медицина · Алиса AI
+          </p>
         </div>
       </section>
 
       {/* CONTACT */}
-      <section id="contact" ref={contactSection.ref} className="py-28 md:py-40">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-12 gap-12">
-            <div className="md:col-span-4">
-              <p className="text-xs tracking-[0.2em] uppercase text-[#999] mb-6">Контакты</p>
-              <h2
-                className={`font-display text-[clamp(2.5rem,4vw,3.5rem)] leading-[1.1] font-light mb-10 transition-all duration-700 ${
-                  contactSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-              >
-                Давайте обсудим ваш проект
-              </h2>
-              <div className="space-y-6 text-sm text-[#666] font-light">
-                <div>
-                  <p className="text-xs tracking-[0.1em] uppercase text-[#AAA] mb-1">Email</p>
-                  <a href="mailto:hello@agency.ru" className="hover:text-[#141414] transition-colors link-line">
-                    hello@agency.ru
-                  </a>
-                </div>
-                <div>
-                  <p className="text-xs tracking-[0.1em] uppercase text-[#AAA] mb-1">Телефон</p>
-                  <a href="tel:+74951234567" className="hover:text-[#141414] transition-colors link-line">
-                    +7 (495) 123-45-67
-                  </a>
-                </div>
-                <div>
-                  <p className="text-xs tracking-[0.1em] uppercase text-[#AAA] mb-1">Адрес</p>
-                  <p>Москва, ул. Пречистенка, 27</p>
-                </div>
-              </div>
+      <section id="contact" ref={contactRef.ref} className="py-28 md:py-36">
+        <div className="max-w-4xl mx-auto px-5 md:px-10">
+          <div className={`text-center mb-12 transition-all duration-700 ${contactRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-8" style={{ background: gold }} />
+              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: gold }}>Контакты</span>
+              <div className="h-px w-8" style={{ background: gold }} />
             </div>
+            <h2 style={{ fontFamily: "'Cormorant', serif", fontSize: "clamp(2.2rem,4vw,3.5rem)", fontWeight: 600, color: "#E8EDF3", lineHeight: 1.1 }}>
+              Готовы обсудить ваш проект?
+            </h2>
+            <p className="mt-3 text-[#8A95A3] text-sm">Оставьте заявку — свяжемся в течение 30 минут в рабочее время</p>
+          </div>
 
-            <div
-              className={`md:col-span-8 transition-all duration-700 delay-150 ${
-                contactSection.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
-              {submitted ? (
-                <div className="h-full flex flex-col items-start justify-center py-20">
-                  <div className="w-12 h-12 border border-[#141414] flex items-center justify-center mb-6">
-                    <Icon name="Check" size={20} />
-                  </div>
-                  <h3 className="font-display text-3xl font-light mb-3">Заявка принята</h3>
-                  <p className="text-sm text-[#888] font-light">
-                    Мы свяжемся с вами в течение одного рабочего дня.
-                  </p>
+          <div
+            className={`rounded-2xl p-8 md:p-12 border border-white/8 transition-all duration-700 delay-150 ${contactRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            style={{ background: "rgba(255,255,255,0.025)" }}
+          >
+            {submitted ? (
+              <div className="text-center py-10">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: goldDim, border: `1px solid rgba(232,185,79,0.3)` }}>
+                  <Icon name="Check" size={28} style={{ color: gold }} />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="text-[10px] tracking-[0.2em] uppercase text-[#999] block mb-2">
-                        Имя
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="w-full border-b border-[#D0CCC7] bg-transparent py-3 text-sm font-light text-[#141414] placeholder-[#CCC] focus:outline-none focus:border-[#141414] transition-colors"
-                        placeholder="Ваше имя"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[10px] tracking-[0.2em] uppercase text-[#999] block mb-2">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full border-b border-[#D0CCC7] bg-transparent py-3 text-sm font-light text-[#141414] placeholder-[#CCC] focus:outline-none focus:border-[#141414] transition-colors"
-                        placeholder="email@company.ru"
-                      />
-                    </div>
+                <h3 style={{ fontFamily: "'Cormorant', serif", fontSize: 28, fontWeight: 600, color: "#E8EDF3" }}>Заявка отправлена!</h3>
+                <p className="mt-3 text-[#8A95A3] text-sm">Мы открыли Telegram — напишите нам там для быстрой связи.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div>
+                    <label className="text-[11px] tracking-[0.15em] uppercase text-[#8A95A3] block mb-2">Имя *</label>
+                    <input
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={e => setForm({ ...form, name: e.target.value })}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-[#E8EDF3] placeholder-[#555E6E] focus:outline-none focus:border-yellow-400/40 transition-colors"
+                      placeholder="Ваше имя"
+                    />
                   </div>
                   <div>
-                    <label className="text-[10px] tracking-[0.2em] uppercase text-[#999] block mb-2">
-                      Телефон
-                    </label>
+                    <label className="text-[11px] tracking-[0.15em] uppercase text-[#8A95A3] block mb-2">Телефон *</label>
                     <input
                       type="tel"
+                      required
                       value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      className="w-full border-b border-[#D0CCC7] bg-transparent py-3 text-sm font-light text-[#141414] placeholder-[#CCC] focus:outline-none focus:border-[#141414] transition-colors"
+                      onChange={e => setForm({ ...form, phone: e.target.value })}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-[#E8EDF3] placeholder-[#555E6E] focus:outline-none focus:border-yellow-400/40 transition-colors"
                       placeholder="+7 (___) ___-__-__"
                     />
                   </div>
-                  <div>
-                    <label className="text-[10px] tracking-[0.2em] uppercase text-[#999] block mb-2">
-                      Расскажите о задаче
-                    </label>
-                    <textarea
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      rows={4}
-                      className="w-full border-b border-[#D0CCC7] bg-transparent py-3 text-sm font-light text-[#141414] placeholder-[#CCC] focus:outline-none focus:border-[#141414] transition-colors resize-none"
-                      placeholder="Опишите ваш проект или вопрос..."
-                    />
-                  </div>
-                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pt-2">
-                    <p className="text-xs text-[#AAA] font-light max-w-xs">
-                      Нажимая «Отправить», вы соглашаетесь с политикой конфиденциальности
-                    </p>
-                    <button
-                      type="submit"
-                      className="text-xs tracking-[0.15em] uppercase border border-[#141414] text-[#141414] px-8 py-4 hover:bg-[#141414] hover:text-[#F8F7F5] transition-all duration-300 flex items-center gap-3 whitespace-nowrap"
-                    >
-                      Отправить
-                      <Icon name="ArrowRight" size={12} />
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
+                </div>
+                <div>
+                  <label className="text-[11px] tracking-[0.15em] uppercase text-[#8A95A3] block mb-2">Название организации</label>
+                  <input
+                    type="text"
+                    value={form.company}
+                    onChange={e => setForm({ ...form, company: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-[#E8EDF3] placeholder-[#555E6E] focus:outline-none focus:border-yellow-400/40 transition-colors"
+                    placeholder="Салон красоты «Название»"
+                  />
+                </div>
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <p className="text-xs text-[#555E6E] text-center sm:text-left">
+                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                  </p>
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 hover:opacity-90"
+                    style={{ background: gold, color: "#0D1117" }}
+                  >
+                    Узнать подробнее
+                    <Icon name="Send" size={15} />
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-[#8A95A3]">Или напишите нам напрямую в Telegram</p>
+            <a
+              href="https://t.me/yandex_promotion"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-2 text-sm font-medium transition-colors hover:opacity-80"
+              style={{ color: gold }}
+            >
+              <Icon name="Send" size={15} />
+              @yandex_promotion
+            </a>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-[#E0DDD9] py-10">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-display text-sm tracking-widest uppercase text-[#888]">Агентство</span>
-          <p className="text-xs text-[#BBB] font-light">© 2024 Все права защищены</p>
-          <div className="flex items-center gap-6">
-            {["Telegram", "VK", "Behance"].map((s) => (
-              <a key={s} href="#" className="text-xs tracking-[0.1em] uppercase text-[#BBB] hover:text-[#141414] transition-colors">
-                {s}
-              </a>
-            ))}
+      <footer className="border-t py-10" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <div className="max-w-7xl mx-auto px-5 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded border flex items-center justify-center" style={{ borderColor: "rgba(232,185,79,0.4)" }}>
+              <span style={{ fontFamily: "'Cormorant', serif", color: gold, fontSize: 11, fontWeight: 700 }}>K</span>
+            </div>
+            <span style={{ fontFamily: "'Cormorant', serif", fontSize: 15, fontWeight: 600, letterSpacing: 3, color: "#8A95A3", textTransform: "uppercase" }}>KeyCard</span>
           </div>
+          <p className="text-xs text-[#555E6E]">© 2025 KeyCard. Все права защищены.</p>
+          <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="text-xs tracking-widest uppercase hover:opacity-80 transition-opacity" style={{ color: gold }}>
+            Telegram
+          </a>
         </div>
       </footer>
-
-      <style>{`
-        @keyframes ticker {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-      `}</style>
     </div>
   );
 }
