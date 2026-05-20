@@ -577,7 +577,10 @@ export default function Index() {
             className="h-8 w-auto object-contain"
             style={{ mixBlendMode: "lighten", filter: "saturate(1.2) brightness(1)" }}
           />
-          <p className="text-xs text-[#555E6E]">© 2025 KeyCard. Все права защищены.</p>
+          <div className="flex flex-col items-center md:items-start gap-0.5">
+            <p className="text-xs text-[#555E6E]">© 2025 KeyCard. Все права защищены.</p>
+            <p className="text-xs text-[#555E6E]">ИНН 772145676128</p>
+          </div>
           <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="text-xs tracking-widest uppercase hover:opacity-80 transition-opacity" style={{ color: gold }}>
             Telegram
           </a>
