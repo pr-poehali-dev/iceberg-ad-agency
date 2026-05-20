@@ -283,23 +283,66 @@ export default function Index() {
             </div>
 
             <div className={`transition-all duration-700 delay-200 ${aboutRef.inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
-              <div className="relative rounded-xl overflow-hidden">
-                <img
-                  src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/40d1d0f4-8bd9-47f7-bcef-68fbb86a51c7.png"
-                  alt="Наши клиенты"
-                  className="w-full aspect-[4/3] object-cover"
-                />
-                <div className="absolute inset-0 rounded-xl" style={{ background: "linear-gradient(to top, #0D1117 0%, transparent 55%)" }} />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <p className="text-[10px] tracking-wider uppercase mb-2" style={{ color: gold }}>Работаем с нишами</p>
-                  <div className="flex flex-wrap gap-2">
-                    {["Салоны красоты", "Стоматологии", "Косметология", "Медцентры"].map((tag) => (
-                      <span key={tag} className="text-xs px-3 py-1 rounded-full text-[#E8EDF3]" style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+              <div className="relative flex items-center justify-center" style={{ minHeight: 420 }}>
+                {/* SVG lines */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {[
+                    { x: 210, y: 60 },
+                    { x: 360, y: 120 },
+                    { x: 390, y: 270 },
+                    { x: 310, y: 380 },
+                    { x: 110, y: 380 },
+                    { x: 30, y: 270 },
+                    { x: 60, y: 120 },
+                  ].map((pt, i) => (
+                    <line key={i} x1="210" y1="210" x2={pt.x} y2={pt.y} stroke="rgba(232,185,79,0.2)" strokeWidth="1" strokeDasharray="4 4" />
+                  ))}
+                  <circle cx="210" cy="210" r="80" stroke="rgba(232,185,79,0.08)" strokeWidth="1" />
+                  <circle cx="210" cy="210" r="160" stroke="rgba(232,185,79,0.05)" strokeWidth="1" />
+                </svg>
+
+                {/* Center logo */}
+                <div className="relative z-10 rounded-2xl overflow-hidden flex-shrink-0" style={{ width: 140, height: 140, border: "1px solid rgba(232,185,79,0.2)", background: "rgba(13,17,23,0.9)", boxShadow: "0 0 40px rgba(232,185,79,0.08)" }}>
+                  <img
+                    src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/c04fa803-5382-4615-ac37-2138b2ed92cf.png"
+                    alt="KeyCard"
+                    className="w-full h-full object-contain p-3"
+                  />
                 </div>
+
+                {/* Orbit tags */}
+                {[
+                  { label: "Стоматологии", angle: -90, icon: "🦷" },
+                  { label: "Косметология", angle: -38, icon: "✨" },
+                  { label: "Салоны красоты", angle: 14, icon: "💇" },
+                  { label: "Медцентры", angle: 66, icon: "🏥" },
+                  { label: "Автосервисы", angle: 118, icon: "🔧" },
+                  { label: "Фитнес-клубы", angle: 170, icon: "💪" },
+                  { label: "Рестораны", angle: 222, icon: "🍽️" },
+                ].map(({ label, angle, icon }) => {
+                  const r = 160;
+                  const rad = (angle * Math.PI) / 180;
+                  const x = 50 + ((Math.cos(rad) * r) / 420) * 100;
+                  const y = 50 + ((Math.sin(rad) * r) / 420) * 100;
+                  return (
+                    <div
+                      key={label}
+                      className="absolute flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-[#E8EDF3] whitespace-nowrap"
+                      style={{
+                        left: `${x}%`,
+                        top: `${y}%`,
+                        transform: "translate(-50%, -50%)",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(232,185,79,0.18)",
+                        backdropFilter: "blur(8px)",
+                        boxShadow: "0 2px 12px rgba(0,0,0,0.3)",
+                      }}
+                    >
+                      <span>{icon}</span>
+                      <span>{label}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
