@@ -148,7 +148,7 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-[72px]">
           <a href="#">
             <img
-              src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/fb926d4f-6758-46fd-89a5-3e58bf61db4e.png"
+              src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/b0881780-e896-45e3-81e9-485d118b2819.png"
               alt="KeyCard"
               className="h-10 w-auto object-contain"
               style={{ mixBlendMode: "lighten", filter: "brightness(1.1)" }}
@@ -608,7 +608,7 @@ export default function Index() {
       <footer className="border-t py-10" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
           <img
-            src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/fb926d4f-6758-46fd-89a5-3e58bf61db4e.png"
+            src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/b0881780-e896-45e3-81e9-485d118b2819.png"
             alt="KeyCard"
             className="h-8 w-auto object-contain"
             style={{ mixBlendMode: "lighten", filter: "brightness(1.1)" }}
