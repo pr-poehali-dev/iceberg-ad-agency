@@ -203,7 +203,7 @@ export default function Index() {
           <div className={`max-w-3xl transition-all duration-1000 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <div className="flex items-center gap-3 mb-8">
               <div className="h-px w-10 opacity-70" style={{ background: gold }} />
-              <span className="text-xs tracking-[0.25em] uppercase" style={{ color: gold }}>SEO-агентство для локального бизнеса</span>
+              <span className="text-xs tracking-[0.25em] uppercase" style={{ color: gold }}>Рекламное SEO-агентство для локального бизнеса</span>
             </div>
             <h1 style={{ fontFamily: "'Cormorant', serif", fontSize: "clamp(3rem,7vw,5.5rem)", lineHeight: 1, fontWeight: 600, color: "#E8EDF3" }}>
               Занимайте{" "}
