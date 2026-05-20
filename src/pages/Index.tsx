@@ -151,7 +151,7 @@ export default function Index() {
               src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/605f1524-c40f-4d6f-b9f6-9df7b8998f55.png"
               alt="KeyCard"
               className="h-10 w-auto object-contain"
-              style={{ filter: "drop-shadow(0 0 8px rgba(232,185,79,0.25))" }}
+              style={{ mixBlendMode: "lighten", filter: "saturate(1.3) brightness(1.1)" }}
             />
           </a>
 
@@ -573,7 +573,8 @@ export default function Index() {
           <img
             src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/605f1524-c40f-4d6f-b9f6-9df7b8998f55.png"
             alt="KeyCard"
-            className="h-8 w-auto object-contain opacity-70"
+            className="h-8 w-auto object-contain"
+            style={{ mixBlendMode: "lighten", filter: "saturate(1.2) brightness(1)" }}
           />
           <p className="text-xs text-[#555E6E]">© 2025 KeyCard. Все права защищены.</p>
           <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="text-xs tracking-widest uppercase hover:opacity-80 transition-opacity" style={{ color: gold }}>
