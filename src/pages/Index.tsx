@@ -306,7 +306,7 @@ export default function Index() {
                   <img
                     src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/2a2932c9-8035-4639-9180-051eb7b89939.png"
                     alt="KeyCard"
-                    className="w-full h-full object-contain p-3"
+                    className="w-full h-full object-cover"
                   />
                 </div>
 
