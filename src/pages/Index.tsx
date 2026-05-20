@@ -148,10 +148,10 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-[72px]">
           <a href="#">
             <img
-              src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/605f1524-c40f-4d6f-b9f6-9df7b8998f55.png"
+              src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/fb926d4f-6758-46fd-89a5-3e58bf61db4e.png"
               alt="KeyCard"
               className="h-10 w-auto object-contain"
-              style={{ mixBlendMode: "lighten", filter: "saturate(1.3) brightness(1.1)" }}
+              style={{ mixBlendMode: "lighten", filter: "brightness(1.1)" }}
             />
           </a>
 
@@ -572,10 +572,10 @@ export default function Index() {
       <footer className="border-t py-10" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
           <img
-            src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/605f1524-c40f-4d6f-b9f6-9df7b8998f55.png"
+            src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/fb926d4f-6758-46fd-89a5-3e58bf61db4e.png"
             alt="KeyCard"
             className="h-8 w-auto object-contain"
-            style={{ mixBlendMode: "lighten", filter: "saturate(1.2) brightness(1)" }}
+            style={{ mixBlendMode: "lighten", filter: "brightness(1.1)" }}
           />
           <div className="flex flex-col items-center md:items-start gap-0.5">
             <p className="text-xs text-[#555E6E]">© 2025 KeyCard. Все права защищены.</p>
