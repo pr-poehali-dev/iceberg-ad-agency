@@ -206,9 +206,10 @@ export default function Index() {
               <span className="text-xs tracking-[0.25em] uppercase" style={{ color: gold }}>Рекламное SEO-агентство для локального бизнеса</span>
             </div>
             <h1 style={{ fontFamily: "'Cormorant', serif", fontSize: "clamp(3rem,7vw,5.5rem)", lineHeight: 1, fontWeight: 600, color: "#E8EDF3" }}>
-              Занимайте{" "}
-              <span style={{ color: gold, fontStyle: "italic" }}>первые места</span>
-              <br />в Яндексе и на Картах
+              Будь первым
+              <br />на картах с{" "}
+              <span style={{ color: gold, fontStyle: "italic" }}>первыми</span>
+              <br />в Яндекс Рекламе
             </h1>
             <p className="mt-6 text-base md:text-lg text-[#8A95A3] leading-relaxed max-w-xl font-light">
               Помогаем салонам красоты, стоматологиям и медицинским центрам стабильно привлекать новых клиентов через локальный поиск.
