@@ -13,7 +13,7 @@ const STATS = [
   { value: "5+", label: "лет на рынке" },
   { value: "300+", label: "партнёров" },
   { value: "ТОП-3", label: "результат в Яндексе" },
-  { value: "98%", label: "продлевают договор" },
+  { value: "100%", label: "продление партнёров" },
 ];
 
 const SERVICES = [
