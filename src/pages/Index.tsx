@@ -574,9 +574,19 @@ export default function Index() {
             <p className="text-xs text-[#555E6E]">© 2025 KeyCard. Все права защищены.</p>
             <p className="text-xs text-[#555E6E]">ИНН 772145676128</p>
           </div>
-          <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="text-xs tracking-widest uppercase hover:opacity-80 transition-opacity" style={{ color: gold }}>
-            Telegram
-          </a>
+          <div className="flex flex-col items-end gap-2">
+            <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="text-xs tracking-widest uppercase hover:opacity-80 transition-opacity" style={{ color: gold }}>
+              Telegram
+            </a>
+            <a
+              href="https://drive.google.com/file/d/1HLi4Iq_alrceyaNOXONKQddflYvHbtM1/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[#555E6E] hover:opacity-80 transition-opacity underline underline-offset-2"
+            >
+              Договор об оказании услуг
+            </a>
+          </div>
         </div>
       </footer>
     </div>
