@@ -146,13 +146,13 @@ export default function Index() {
       {/* NAV */}
       <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#0D1117]/90 backdrop-blur-md border-b border-white/5" : ""}`}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-[72px]">
-          <a href="#" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded border border-yellow-400/60 flex items-center justify-center glow-gold">
-              <span style={{ fontFamily: "'Cormorant', serif", color: gold, fontSize: 14, fontWeight: 700, letterSpacing: 1 }}>K</span>
-            </div>
-            <span style={{ fontFamily: "'Cormorant', serif", fontSize: 20, fontWeight: 600, letterSpacing: 3, color: "#E8EDF3", textTransform: "uppercase" }}>
-              KeyCard
-            </span>
+          <a href="#">
+            <img
+              src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/605f1524-c40f-4d6f-b9f6-9df7b8998f55.png"
+              alt="KeyCard"
+              className="h-10 w-auto object-contain"
+              style={{ filter: "drop-shadow(0 0 8px rgba(232,185,79,0.25))" }}
+            />
           </a>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -570,12 +570,11 @@ export default function Index() {
       {/* FOOTER */}
       <footer className="border-t py-10" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded border flex items-center justify-center" style={{ borderColor: "rgba(232,185,79,0.4)" }}>
-              <span style={{ fontFamily: "'Cormorant', serif", color: gold, fontSize: 11, fontWeight: 700 }}>K</span>
-            </div>
-            <span style={{ fontFamily: "'Cormorant', serif", fontSize: 15, fontWeight: 600, letterSpacing: 3, color: "#8A95A3", textTransform: "uppercase" }}>KeyCard</span>
-          </div>
+          <img
+            src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/605f1524-c40f-4d6f-b9f6-9df7b8998f55.png"
+            alt="KeyCard"
+            className="h-8 w-auto object-contain opacity-70"
+          />
           <p className="text-xs text-[#555E6E]">© 2025 KeyCard. Все права защищены.</p>
           <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="text-xs tracking-widest uppercase hover:opacity-80 transition-opacity" style={{ color: gold }}>
             Telegram
