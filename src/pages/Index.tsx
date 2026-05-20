@@ -285,7 +285,7 @@ export default function Index() {
             <div className={`transition-all duration-700 delay-200 ${aboutRef.inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
               <div className="relative rounded-xl overflow-hidden">
                 <img
-                  src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/files/2c388f1d-099e-4786-8225-775e4167b12e.jpg"
+                  src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/40d1d0f4-8bd9-47f7-bcef-68fbb86a51c7.png"
                   alt="Наши клиенты"
                   className="w-full aspect-[4/3] object-cover"
                 />
