@@ -115,6 +115,154 @@ function useInView(threshold = 0.12) {
   return { ref, inView };
 }
 
+const QUERY = "имплантация зубов москва";
+
+const RESULTS = [
+  {
+    ad: true,
+    title: "Имплантация зубов — Клиника «ДентаПро»",
+    url: "dentapro.ru",
+    desc: "Имплантация от 22 990 ₽. Гарантия 15 лет. Запись онлайн — без очереди!",
+  },
+  {
+    ad: true,
+    title: "Зубные импланты — Рассрочка 0%",
+    url: "implant-msk.ru",
+    desc: "Бесплатная консультация. Установка за 1 день. Более 10 000 пациентов.",
+  },
+  {
+    ad: false,
+    title: "Имплантация зубов в Москве — цены 2024",
+    url: "yandex.ru/health",
+    desc: "Сравните клиники, цены и отзывы пациентов на Яндекс.Здоровье.",
+  },
+];
+
+function YandexSearchAnimation() {
+  const [typed, setTyped] = useState("");
+  const [showResults, setShowResults] = useState(false);
+  const [visibleResults, setVisibleResults] = useState(0);
+
+  useEffect(() => {
+    let i = 0;
+    setTyped("");
+    setShowResults(false);
+    setVisibleResults(0);
+
+    const typeInterval = setInterval(() => {
+      i++;
+      setTyped(QUERY.slice(0, i));
+      if (i >= QUERY.length) {
+        clearInterval(typeInterval);
+        setTimeout(() => {
+          setShowResults(true);
+          let r = 0;
+          const showInterval = setInterval(() => {
+            r++;
+            setVisibleResults(r);
+            if (r >= RESULTS.length) clearInterval(showInterval);
+          }, 300);
+        }, 400);
+      }
+    }, 80);
+
+    const restart = setInterval(() => {
+      i = 0;
+      setTyped("");
+      setShowResults(false);
+      setVisibleResults(0);
+      const ti = setInterval(() => {
+        i++;
+        setTyped(QUERY.slice(0, i));
+        if (i >= QUERY.length) {
+          clearInterval(ti);
+          setTimeout(() => {
+            setShowResults(true);
+            let r = 0;
+            const si = setInterval(() => {
+              r++;
+              setVisibleResults(r);
+              if (r >= RESULTS.length) clearInterval(si);
+            }, 300);
+          }, 400);
+        }
+      }, 80);
+    }, 7000);
+
+    return () => { clearInterval(typeInterval); clearInterval(restart); };
+  }, []);
+
+  return (
+    <div className="w-full max-w-md mx-auto select-none">
+      {/* Browser chrome */}
+      <div className="rounded-2xl overflow-hidden" style={{ background: "#1a1f2e", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 24px 60px rgba(0,0,0,0.5)" }}>
+        {/* Top bar */}
+        <div className="flex items-center gap-2 px-4 py-3" style={{ background: "#141926", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="flex gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ff5f57" }} />
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#febc2e" }} />
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#28c840" }} />
+          </div>
+          <div className="flex-1 mx-3 px-3 py-1 rounded text-[11px] text-[#555E6E] truncate" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+            yandex.ru
+          </div>
+        </div>
+
+        {/* Search area */}
+        <div className="p-4">
+          {/* Yandex logo */}
+          <div className="flex items-center justify-center mb-4">
+            <span style={{ fontFamily: "serif", fontSize: 28, fontWeight: 700, color: "#FC3F1D" }}>Я</span>
+            <span style={{ fontFamily: "serif", fontSize: 20, fontWeight: 400, color: "#E8EDF3", marginLeft: 1 }}>ндекс</span>
+          </div>
+
+          {/* Search bar */}
+          <div className="flex items-center rounded-lg px-3 py-2.5 mb-4" style={{ background: "#fff", gap: 8 }}>
+            <span className="text-sm text-[#1a1a1a] flex-1 min-h-[20px]">
+              {typed}
+              <span className="inline-block w-0.5 h-4 ml-0.5 align-middle animate-pulse" style={{ background: "#FC3F1D", opacity: typed.length < QUERY.length ? 1 : 0 }} />
+            </span>
+            <div className="w-7 h-7 rounded flex items-center justify-center flex-shrink-0" style={{ background: "#FC3F1D" }}>
+              <Icon name="Search" size={13} style={{ color: "#fff" }} />
+            </div>
+          </div>
+
+          {/* Results */}
+          <div className="space-y-3">
+            {showResults && RESULTS.slice(0, visibleResults).map((r, idx) => (
+              <div
+                key={idx}
+                className="rounded-lg p-3 transition-all duration-300"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", animation: "fadeSlideUp 0.3s ease" }}
+              >
+                {r.ad && (
+                  <span className="text-[9px] px-1.5 py-0.5 rounded mr-2" style={{ background: "rgba(252,63,29,0.15)", color: "#FC3F1D", fontWeight: 600 }}>
+                    РЕКЛАМА
+                  </span>
+                )}
+                <p className="text-xs font-medium mt-1" style={{ color: "#7db3f5" }}>{r.title}</p>
+                <p className="text-[10px] mt-0.5" style={{ color: "#4caf7d" }}>{r.url}</p>
+                <p className="text-[10px] mt-1 text-[#8A95A3] leading-relaxed">{r.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p className="text-center text-[11px] mt-3 tracking-wide" style={{ color: "rgba(232,185,79,0.5)" }}>
+        Так выглядит ваша реклама в Яндексе
+      </p>
+
+      <style>{`
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -194,7 +342,8 @@ export default function Index() {
         <div className="absolute left-0 top-1/4 w-px h-1/2 opacity-25" style={{ background: `linear-gradient(to bottom, transparent, ${gold}, transparent)` }} />
 
         <div className="relative max-w-7xl mx-auto px-5 md:px-10 py-24 w-full">
-          <div className={`max-w-3xl transition-all duration-1000 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          <div className={`flex-1 transition-all duration-1000 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <div className="flex items-center gap-3 mb-8">
               <div className="h-px w-10 opacity-70" style={{ background: gold }} />
               <span className="text-xs tracking-[0.25em] uppercase" style={{ color: gold }}>Рекламное SEO-агентство для локального бизнеса</span>
@@ -227,6 +376,13 @@ export default function Index() {
               </a>
             </div>
           </div>
+
+          {/* Yandex Search Animation */}
+          <div className={`flex-1 hidden lg:flex flex-col gap-3 transition-all duration-1000 delay-300 ${heroRef.inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
+            <YandexSearchAnimation />
+          </div>
+
+          </div>{/* end flex row */}
 
           <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-5 transition-all duration-1000 delay-300 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             {STATS.map((s) => (
