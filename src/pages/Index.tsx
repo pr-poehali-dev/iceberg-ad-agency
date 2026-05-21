@@ -342,7 +342,7 @@ export default function Index() {
         <div className="absolute left-0 top-1/4 w-px h-1/2 opacity-25" style={{ background: `linear-gradient(to bottom, transparent, ${gold}, transparent)` }} />
 
         <div className="relative max-w-7xl mx-auto px-5 md:px-10 py-24 w-full">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
           <div className={`flex-1 transition-all duration-1000 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <div className="flex items-center gap-3 mb-8">
               <div className="h-px w-10 opacity-70" style={{ background: gold }} />
@@ -378,7 +378,7 @@ export default function Index() {
           </div>
 
           {/* Yandex Search Animation */}
-          <div className={`flex-1 hidden lg:flex flex-col gap-3 transition-all duration-1000 delay-300 ${heroRef.inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
+          <div className={`flex-1 hidden lg:flex flex-col gap-3 transition-all duration-1000 delay-300 pt-16 ${heroRef.inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
             <YandexSearchAnimation />
           </div>
 
