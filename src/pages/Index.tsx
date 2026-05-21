@@ -471,7 +471,8 @@ export default function Index() {
                   <p className="text-xs tracking-[0.2em] uppercase text-[#8A95A3] mb-1">{p.name}</p>
                   <p className="text-sm" style={{ color: gold }}>{p.period}</p>
                 </div>
-                <div style={{ fontFamily: "'Cormorant', serif", fontSize: 30, fontWeight: 700, color: "#E8EDF3", marginBottom: 4 }}>{p.prices[0]}</div>
+                <div style={{ fontFamily: "'Cormorant', serif", fontSize: 30, fontWeight: 700, color: "#E8EDF3", marginBottom: 2 }}>{p.prices[0]}</div>
+                <p className="text-xs text-[#8A95A3] mb-3">Без репутации</p>
                 <div className="flex items-center gap-2 mb-3">
                   <div className="h-px flex-1 border-t border-dashed border-white/10" />
                   <span className="text-xs text-[#8A95A3]">или</span>
