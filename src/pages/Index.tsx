@@ -120,6 +120,7 @@ export default function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", company: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   const heroRef = useInView(0.05);
   const aboutRef = useInView(0.1);
@@ -573,7 +574,14 @@ export default function Index() {
                 </div>
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <p className="text-xs text-[#555E6E] text-center sm:text-left">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                    Нажимая кнопку, вы соглашаетесь с{" "}
+                    <button
+                      type="button"
+                      onClick={() => setPrivacyOpen(true)}
+                      className="underline underline-offset-2 hover:text-yellow-400 transition-colors cursor-pointer"
+                    >
+                      политикой конфиденциальности
+                    </button>
                   </p>
                   <button
                     type="submit"
@@ -632,6 +640,86 @@ export default function Index() {
           </div>
         </div>
       </footer>
+
+      {/* Privacy Policy Modal */}
+      {privacyOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "rgba(0,0,0,0.75)" }}
+          onClick={() => setPrivacyOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl p-8"
+            style={{ background: "#0D1117", border: "1px solid rgba(232,185,79,0.15)" }}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setPrivacyOpen(false)}
+              className="absolute top-4 right-4 text-[#555E6E] hover:text-white transition-colors"
+            >
+              <Icon name="X" size={20} />
+            </button>
+            <h2 className="text-xl font-bold text-[#E8EDF3] mb-6">Политика конфиденциальности</h2>
+            <div className="text-sm text-[#8A95A3] space-y-4 leading-relaxed">
+              <p>Настоящая Политика конфиденциальности (далее — «Политика») регулирует порядок обработки и защиты персональных данных пользователей сайта, принадлежащего ИП Плотицин Егор Михайлович (далее — «Компания»).</p>
+              <div>
+                <p className="text-[#E8EDF3] font-semibold mb-2">1. Общие положения</p>
+                <p>1.1. Компания заботится о конфиденциальности и безопасности персональных данных своих пользователей. В этой Политике изложены основные принципы обработки персональных данных.</p>
+                <p className="mt-2">1.2. Используя наш сайт, вы соглашаетесь с условиями этой Политики и даете согласие на обработку ваших персональных данных в соответствии с настоящей Политикой.</p>
+              </div>
+              <div>
+                <p className="text-[#E8EDF3] font-semibold mb-2">2. Какие персональные данные мы можем собирать</p>
+                <p>2.1. При использовании сайта мы можем собирать следующую информацию:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                  <li>Имя, фамилия, контактные данные (например, телефон, электронная почта);</li>
+                  <li>Иные данные, предоставленные вами при обращении или регистрации.</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-[#E8EDF3] font-semibold mb-2">3. Цели обработки персональных данных</p>
+                <p>3.1. Обработка персональных данных осуществляется для следующих целей:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                  <li>Предоставление услуг и выполнения обязательств перед пользователями;</li>
+                  <li>Обработка запросов и обращений;</li>
+                  <li>Улучшение качества сервиса и работы сайта;</li>
+                  <li>Информирование о новых услугах и акциях (при согласии пользователя).</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-[#E8EDF3] font-semibold mb-2">4. Передача персональных данных третьим лицам</p>
+                <p>4.1. Персональные данные не передаются третьим лицам без вашего согласия, за исключением случаев, предусмотренных законодательством Российской Федерации.</p>
+              </div>
+              <div>
+                <p className="text-[#E8EDF3] font-semibold mb-2">5. Меры по обеспечению безопасности</p>
+                <p>5.1. Компания принимает все необходимые технические и организационные меры для защиты персональных данных от несанкционированного доступа, изменения, раскрытия или уничтожения.</p>
+              </div>
+              <div>
+                <p className="text-[#E8EDF3] font-semibold mb-2">6. Права пользователей</p>
+                <p>6.1. Пользователи имеют право:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                  <li>Получать информацию о своих персональных данных;</li>
+                  <li>Требовать уточнения, обновления или удаления своих персональных данных;</li>
+                  <li>Отказаться от получения информационных сообщений.</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-[#E8EDF3] font-semibold mb-2">7. Контактные данные</p>
+                <p>7.1. Для вопросов, связанных с обработкой персональных данных, вы можете связаться с нами по следующим реквизитам:</p>
+                <div className="mt-2 space-y-1">
+                  <p>Наименование: ИП Плотицин Егор Михайлович</p>
+                  <p>Юридический адрес: Москва, 111674, 1-я Вольская улица, 13 к2, кв.71</p>
+                  <p>Расчетный счет: 40802810300009669624</p>
+                  <p>Банк: АО «Тинькофф Банк»</p>
+                  <p>Корр. счет: 30101810145250000974</p>
+                  <p>ИНН: 7710140679</p>
+                  <p>БИК: 044525974</p>
+                  <p>Юридический адрес банка: Москва, 127287, ул. Хуторская 2-я, д. 38А, стр. 26</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
