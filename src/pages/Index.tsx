@@ -884,7 +884,7 @@ export default function Index() {
             </a>
             <a href="https://drive.google.com/file/d/1HLi4Iq_alrceyaNOXONKQddflYvHbtM1/view?usp=sharing" target="_blank" rel="noopener noreferrer"
               className="text-xs hover:opacity-80 transition-opacity underline underline-offset-2" style={{ color: "rgba(180,200,230,0.35)" }}>
-              Политика конфиденциальности
+              Договор на оказание услуг
             </a>
           </div>
         </div>
