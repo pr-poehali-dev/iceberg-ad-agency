@@ -127,13 +127,12 @@ const ORG_RESULTS = [
   { name: "Дентика", rating: "4,9", reviews: "189", type: "Стоматологическая кли...", address: "Комендантский просп., 27, корп. 1, Санкт-Пе...", hours: "Открыто до 21:00", goodPlace: true, promo: null, icon: null, iconBg: "#1A3FA0", iconTextColor: "#fff", iconText: "Д)", price: "81000 ₽", priceLabel: "Имплантация системы Neobiotec..." },
 ];
 
-const MAP_QUERY = "стоматологии Санкт-Петербург";
+const MAP_QUERY = "стоматологии в спб";
 
 const MAP_ORGS = [
-  { name: "Меди", rating: "4.9", reviews: "3 120", dist: "0.3 км", open: true },
-  { name: "Дентал Фэмили", rating: "4.8", reviews: "1 890", dist: "0.6 км", open: true },
-  { name: "Пирогов Клиник", rating: "4.7", reviews: "2 560", dist: "1.1 км", open: false },
-  { name: "Nordent", rating: "4.8", reviews: "987", dist: "1.4 км", open: true },
+  { name: "Time to Smile", rating: "4,9", reviews: "99", type: "Стоматологическая клиника", hours: "Открыто до 21:00", metro: "Фрунзенская (закрыта)", dist: "750 м", address: "Заозёрная ул., 3, корп. 2, Санкт-Петер...", promo: "Скидка до 20% - Проф. гигиена в День рождения!", hasBook: true, phone: "+7 (911) 926-XX-XX", imgColor: "#E8F0E8" },
+  { name: "Стоматология Credus", rating: "5,0", reviews: "710", type: "Стоматологическая клиника", hours: "Открыто до 21:00", metro: "Лесная", dist: "1,66 км", address: "Кушелевская дорога, 3, корп. 2, Санкт-Петербург (м...", promo: "Акция Всё за 1 день в стоматологии Credus в Санкт-Петербурге!", hasTelegram: true, phone: "+7 (812) 720-XX-XX", imgColor: "#2D2D2D" },
+  { name: "АРС Дентал Клиник", rating: "5,0", reviews: "148", type: "Стоматологическая клиника", hours: "Открыто до 21:00", metro: "Лесная", dist: "990 м", address: "ул. Грибалёвой, 7, корп. 4, Санкт-Петербург", promo: "Скидка 1000 ₽ на первый приём в клинике!", phone: "+7 (812) 319-XX-XX", imgColor: "#D0D8C8" },
 ];
 
 function YandexSearchAnimation() {
@@ -295,36 +294,43 @@ function YandexSearchAnimation() {
 function YandexMapsAnimation() {
   const [typed, setTyped] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   const [visibleResults, setVisibleResults] = useState(0);
-  const [activePin, setActivePin] = useState(0);
 
   useEffect(() => {
     function run() {
       let i = 0;
-      setTyped(""); setShowResults(false); setVisibleResults(0); setActivePin(0);
+      setTyped(""); setShowResults(false); setShowMap(false); setVisibleResults(0);
       const ti = setInterval(() => {
         i++;
         setTyped(MAP_QUERY.slice(0, i));
         if (i >= MAP_QUERY.length) {
           clearInterval(ti);
           setTimeout(() => {
-            setShowResults(true);
-            let r = 0;
-            const si = setInterval(() => { r++; setVisibleResults(r); setActivePin(r - 1); if (r >= MAP_ORGS.length) clearInterval(si); }, 450);
-          }, 500);
+            setShowMap(true);
+            setTimeout(() => {
+              setShowResults(true);
+              let r = 0;
+              const si = setInterval(() => { r++; setVisibleResults(r); if (r >= MAP_ORGS.length) clearInterval(si); }, 450);
+            }, 400);
+          }, 400);
         }
-      }, 75);
+      }, 70);
     }
     run();
-    const cycle = setInterval(run, 10000);
+    const cycle = setInterval(run, 12000);
     return () => clearInterval(cycle);
   }, []);
 
-  const pins = [{ x: "30%", y: "42%" }, { x: "55%", y: "28%" }, { x: "68%", y: "58%" }, { x: "42%", y: "65%" }];
+  const mapPins = [
+    { x: "38%", y: "38%", label: "Доктор Дент", rating: "5", price: "1000 ₽ Консультация детс..." },
+    { x: "52%", y: "48%", label: "Time to Smile", rating: "4.9", price: "4100 ₽ Сканирование з..." },
+    { x: "44%", y: "44%", label: null, rating: null, price: null },
+  ];
 
   return (
-    <div className="w-full max-w-md mx-auto select-none">
-      <div className="rounded-xl overflow-hidden" style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.5)", border: "1px solid rgba(59,130,246,0.2)" }}>
+    <div className="w-full max-w-sm mx-auto select-none" style={{ fontFamily: "-apple-system, 'Helvetica Neue', Arial, sans-serif" }}>
+      <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.45)", border: "1px solid rgba(59,130,246,0.2)" }}>
         <div className="flex items-center gap-2 px-3 py-2" style={{ background: "#DEE1E6" }}>
           <div className="flex gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ff5f57" }} />
@@ -333,77 +339,143 @@ function YandexMapsAnimation() {
           </div>
           <div className="flex-1 mx-2 flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] truncate" style={{ background: "#fff", color: "#4a4a4a", border: "1px solid #C8CBD0" }}>
             <Icon name="Lock" size={9} style={{ color: "#888", flexShrink: 0 }} />
-            <span className="truncate">yandex.ru/maps — Яндекс Карты</span>
+            <span className="truncate">yandex.ru — Яндекс: нашлось...</span>
           </div>
         </div>
-        <div className="flex" style={{ height: 310 }}>
-          <div className="flex flex-col shrink-0 overflow-hidden" style={{ width: 168, background: "#fff", borderRight: "1px solid #E8E8E8" }}>
-            <div className="p-2" style={{ borderBottom: "1px solid #EFEFEF" }}>
-              <div className="flex items-center rounded-xl px-2 py-1.5" style={{ background: "#F5F5F5", border: "1px solid #E0E0E0", gap: 5 }}>
-                <Icon name="Search" size={10} style={{ color: "#999", flexShrink: 0 }} />
-                <span className="text-[11px] flex-1 min-h-[14px] leading-snug" style={{ color: "#1a1a1a" }}>
-                  {typed}
-                  <span className="inline-block w-px h-3 ml-0.5 align-middle" style={{ background: "#FC3F1D", opacity: typed.length < MAP_QUERY.length ? 1 : 0, animation: "blink 1s step-end infinite" }} />
-                </span>
+
+        <div style={{ background: "#fff" }}>
+          <div className="flex items-center gap-2 px-3 py-2.5" style={{ borderBottom: "1px solid #E5E5E5" }}>
+            <div className="flex items-center gap-0.5 shrink-0">
+              <span style={{ fontFamily: "Arial, sans-serif", fontSize: 20, fontWeight: 900, color: "#FC3F1D", letterSpacing: -1 }}>Я</span>
+              <span style={{ fontFamily: "Arial, sans-serif", fontSize: 13, fontWeight: 400, color: "#000" }}>ндекс</span>
+            </div>
+            <div className="flex-1 flex items-center rounded-2xl px-3 py-1.5" style={{ background: "#F5F5F5", border: "1px solid #E0E0E0", gap: 6 }}>
+              <span className="text-[12px] flex-1 min-h-[16px]" style={{ color: "#1a1a1a" }}>
+                {typed}
+                <span className="inline-block w-px h-3.5 ml-0.5 align-middle" style={{ background: "#000", opacity: typed.length < MAP_QUERY.length ? 1 : 0, animation: "blink 1s step-end infinite" }} />
+              </span>
+              {typed.length >= MAP_QUERY.length && <Icon name="X" size={12} style={{ color: "#888", flexShrink: 0 }} />}
+              <div className="w-6 h-6 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#FC3F1D" }}>
+                <Icon name="Search" size={11} style={{ color: "#fff" }} />
               </div>
             </div>
-            <div className="flex-1 overflow-hidden">
-              {showResults && MAP_ORGS.slice(0, visibleResults).map((org, idx) => (
-                <div key={idx} style={{ borderBottom: "1px solid #F5F5F5", background: activePin === idx ? "#FFF8F7" : "#fff", animation: "fadeSlideUp 0.3s ease", borderLeft: activePin === idx ? "3px solid #FC3F1D" : "3px solid transparent", transition: "background 0.2s" }} className="px-2 py-2 cursor-pointer">
-                  <p className="text-[11px] font-semibold leading-tight" style={{ color: "#1a1a1a" }}>{org.name}</p>
-                  <div className="flex items-center gap-1 mt-0.5">
-                    <span style={{ fontSize: 9, color: "#F5A623" }}>★</span>
-                    <span className="text-[10px] font-semibold" style={{ color: "#1a1a1a" }}>{org.rating}</span>
-                    <span className="text-[9px]" style={{ color: "#70757a" }}>{org.reviews} отз.</span>
-                  </div>
-                  <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[9px]" style={{ color: "#70757a" }}>{org.dist}</span>
-                    <span className="text-[9px] font-medium" style={{ color: org.open ? "#0D8043" : "#D93025" }}>{org.open ? "Открыто" : "Закрыто"}</span>
+          </div>
+
+          {showMap && (
+            <div style={{ animation: "fadeSlideUp 0.3s ease" }}>
+              <div className="flex gap-0 px-3 pt-1 pb-0 overflow-x-hidden" style={{ borderBottom: "1px solid #EFEFEF" }}>
+                {["Поиск","Алиса AI","Медицина","Картинки","Карты"].map((tab, i) => (
+                  <span key={tab} className="text-[10px] pb-1.5 pr-3 whitespace-nowrap shrink-0" style={{ color: i === 0 ? "#FC3F1D" : "#555", borderBottom: i === 0 ? "2px solid #FC3F1D" : "2px solid transparent", fontWeight: i === 0 ? 500 : 400 }}>{tab}</span>
+                ))}
+              </div>
+
+              <div className="px-3 pt-2 pb-1">
+                <p className="text-[13px] font-bold mb-2" style={{ color: "#1a1a1a" }}>Стоматологии в Санкт-Петербурге</p>
+                <div className="rounded-xl overflow-hidden relative" style={{ height: 130, border: "1px solid #DDD" }}>
+                  <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 130">
+                    <rect width="340" height="130" fill="#C8D8C0" />
+                    <rect x="0" y="55" width="340" height="18" fill="#D4CCA8" opacity="0.6" />
+                    <rect x="80" y="0" width="12" height="130" fill="#D4CCA8" opacity="0.5" />
+                    <rect x="170" y="0" width="10" height="130" fill="#D4CCA8" opacity="0.4" />
+                    <rect x="240" y="0" width="8" height="130" fill="#D4CCA8" opacity="0.4" />
+                    <ellipse cx="60" cy="75" rx="35" ry="20" fill="#A8C4E0" opacity="0.7" />
+                    <rect x="100" y="20" width="45" height="30" rx="3" fill="#E8E0D0" opacity="0.8" />
+                    <rect x="155" y="10" width="55" height="35" rx="3" fill="#E8E0D0" opacity="0.8" />
+                    <rect x="220" y="25" width="40" height="28" rx="3" fill="#E8E0D0" opacity="0.8" />
+                    <rect x="105" y="75" width="35" height="25" rx="2" fill="#E8E0D0" opacity="0.8" />
+                    <rect x="150" y="80" width="50" height="22" rx="2" fill="#E8E0D0" opacity="0.8" />
+                    <rect x="210" y="70" width="40" height="30" rx="2" fill="#E8E0D0" opacity="0.8" />
+                    <text x="25" y="50" fontSize="8" fill="#666" fontFamily="Arial">губа</text>
+                    <text x="115" y="48" fontSize="9" fill="#444" fontFamily="Arial" fontWeight="500">Санкт-П...</text>
+                    <rect x="270" y="95" width="25" height="25" rx="4" fill="#fff" opacity="0.85" />
+                    <text x="279" y="112" fontSize="14" fill="#555">➤</text>
+                  </svg>
+                  {mapPins.map((pin, idx) => (
+                    <div key={idx} className="absolute" style={{ left: pin.x, top: pin.y, transform: "translate(-50%, -50%)", zIndex: pin.label ? 5 : 3, animation: "fadeSlideUp 0.3s ease" }}>
+                      <div style={{ width: 22, height: 22, borderRadius: "50%", background: "#1A73E8", border: "2px solid #fff", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>
+                        <span style={{ fontSize: 11 }}>🦷</span>
+                      </div>
+                      {pin.label && (
+                        <div className="absolute left-6 top-0 rounded-lg px-1.5 py-1 whitespace-nowrap" style={{ background: "rgba(0,0,0,0.82)", minWidth: 100, zIndex: 10 }}>
+                          <p style={{ fontSize: 9, fontWeight: 600, color: "#fff" }}>{pin.label}</p>
+                          <p style={{ fontSize: 8, color: "#ccc" }}>★ {pin.rating} {pin.price}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 rounded-lg" style={{ background: "rgba(0,0,0,0.78)" }}>
+                    <Icon name="Maximize2" size={9} style={{ color: "#fff" }} />
+                    <span style={{ fontSize: 9, color: "#fff", fontWeight: 500 }}>Смотреть на карте</span>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex-1 relative overflow-hidden">
-            <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 310">
-              <rect width="200" height="310" fill="#EEF0E8" />
-              <rect x="10" y="20" width="40" height="30" rx="2" fill="#E2E4DA" />
-              <rect x="60" y="10" width="50" height="25" rx="2" fill="#E2E4DA" />
-              <rect x="120" y="25" width="35" height="40" rx="2" fill="#E2E4DA" />
-              <rect x="15" y="80" width="30" height="45" rx="2" fill="#E2E4DA" />
-              <rect x="60" y="70" width="45" height="35" rx="2" fill="#DFE1D8" />
-              <rect x="120" y="85" width="55" height="28" rx="2" fill="#E2E4DA" />
-              <rect x="20" y="160" width="50" height="35" rx="2" fill="#E2E4DA" />
-              <rect x="85" y="150" width="40" height="50" rx="2" fill="#DFE1D8" />
-              <rect x="140" y="160" width="45" height="30" rx="2" fill="#E2E4DA" />
-              <rect x="15" y="230" width="60" height="40" rx="2" fill="#E2E4DA" />
-              <rect x="100" y="225" width="50" height="45" rx="2" fill="#E2E4DA" />
-              <rect x="0" y="58" width="200" height="10" fill="#D4D6CF" />
-              <rect x="0" y="135" width="200" height="10" fill="#D4D6CF" />
-              <rect x="0" y="210" width="200" height="8" fill="#D4D6CF" />
-              <rect x="50" y="0" width="8" height="310" fill="#D4D6CF" />
-              <rect x="112" y="0" width="8" height="310" fill="#D4D6CF" />
-              <rect x="0" y="60" width="200" height="6" fill="#C8CAC3" />
-              <rect x="52" y="0" width="4" height="310" fill="#C8CAC3" />
-              <rect x="155" y="15" width="40" height="35" rx="3" fill="#C9D9A8" />
-              <rect x="0" y="275" width="45" height="35" rx="2" fill="#C9D9A8" />
-            </svg>
-            {showResults && pins.slice(0, visibleResults).map((pin, idx) => (
-              <div key={idx} className="absolute flex flex-col items-center" style={{ left: pin.x, top: pin.y, transform: "translate(-50%,-100%)", animation: "fadeSlideUp 0.25s ease", zIndex: activePin === idx ? 10 : idx + 1 }}>
-                <div style={{ width: activePin === idx ? 30 : 22, height: activePin === idx ? 30 : 22, borderRadius: "50% 50% 50% 0", transform: "rotate(-45deg)", background: activePin === idx ? "#FC3F1D" : "#fff", border: `2px solid ${activePin === idx ? "#D63515" : "#FC3F1D"}`, boxShadow: activePin === idx ? "0 3px 10px rgba(252,63,29,0.5)" : "0 2px 6px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.25s" }}>
-                  <span style={{ transform: "rotate(45deg)", fontSize: activePin === idx ? 11 : 9, fontWeight: 700, color: activePin === idx ? "#fff" : "#FC3F1D" }}>{idx + 1}</span>
+
+                <div className="flex gap-1.5 mt-2 overflow-x-hidden pb-1">
+                  {["Рядом со мной","Высокий рейтинг","Хорошее место","Открыто"].map((tag, i) => (
+                    <span key={tag} className="text-[9px] whitespace-nowrap px-2 py-1 rounded-full shrink-0" style={{ background: "#F0F0F0", color: "#333", border: "1px solid #E0E0E0" }}>{tag}</span>
+                  ))}
                 </div>
               </div>
-            ))}
-            <div className="absolute bottom-2 right-2 flex items-center gap-0.5 opacity-50">
-              <span style={{ fontFamily: "Arial,sans-serif", fontSize: 9, fontWeight: 900, color: "#FC3F1D" }}>Я</span>
-              <span style={{ fontSize: 8, color: "#555" }}>Карты</span>
+
+              {showResults && (
+                <div>
+                  {MAP_ORGS.slice(0, visibleResults).map((org, idx) => (
+                    <div key={idx} style={{ borderTop: "1px solid #F0F0F0", background: "#fff", animation: "fadeSlideUp 0.3s ease", padding: "10px 12px" }}>
+                      <div className="flex items-start gap-2.5">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1 mb-1">
+                            <span className="text-[13px] font-bold" style={{ color: "#1a1a1a" }}>{org.name}</span>
+                            <span style={{ color: "#1A73E8", fontSize: 12 }}>✓</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                            <span className="text-[11px] font-bold px-1.5 py-0.5 rounded" style={{ background: "#4CAF50", color: "#fff" }}>{org.rating}</span>
+                            <span className="text-[10px]" style={{ color: "#70757a" }}>{org.reviews} отзывов</span>
+                            <span className="text-[10px]" style={{ color: "#70757a" }}>{org.type}</span>
+                            <span className="text-[10px]" style={{ color: "#0D8043" }}>{org.hours}</span>
+                          </div>
+                          <div className="flex items-center gap-1 mb-0.5">
+                            <span style={{ fontSize: 8, color: "#FC3F1D" }}>●</span>
+                            <span className="text-[10px]" style={{ color: "#70757a" }}>{org.metro}, {org.dist} · {org.address}</span>
+                          </div>
+                          {org.promo && (
+                            <p className="text-[10px] mb-1.5" style={{ color: "#70757a" }}>
+                              {org.promo} <span style={{ color: "#888" }}>Промо</span>
+                            </p>
+                          )}
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            {org.hasBook && (
+                              <span className="text-[10px] px-2 py-1 rounded-full" style={{ background: "#fff", border: "1px solid #DDD", color: "#333" }}>Записаться онлайн</span>
+                            )}
+                            {org.hasTelegram && (
+                              <span className="text-[10px] px-2 py-1 rounded-full" style={{ background: "#fff", border: "1px solid #DDD", color: "#333" }}>Написать в Telegram</span>
+                            )}
+                            <span className="text-[10px] px-2 py-1 rounded-full flex items-center gap-1" style={{ background: "#fff", border: "1px solid #DDD", color: "#333" }}>
+                              <Icon name="Phone" size={9} />
+                              {org.phone}
+                            </span>
+                            <span className="px-1.5 py-1 rounded-full" style={{ background: "#fff", border: "1px solid #DDD" }}>
+                              <Icon name="Globe" size={10} style={{ color: "#555" }} />
+                            </span>
+                            <span className="px-1.5 py-1 rounded-full" style={{ background: "#fff", border: "1px solid #DDD" }}>
+                              <Icon name="Share2" size={10} style={{ color: "#555" }} />
+                            </span>
+                          </div>
+                        </div>
+                        <div className="w-14 h-14 rounded-xl shrink-0 overflow-hidden" style={{ background: org.imgColor, border: "1px solid #E8E8E8" }}>
+                          <div className="w-full h-full flex items-center justify-center">
+                            <span style={{ fontSize: 22 }}>🏥</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
+          )}
         </div>
       </div>
       <p className="text-center text-[11px] mt-3 tracking-wide" style={{ color: "rgba(59,130,246,0.6)" }}>
-        Так выглядит ваша организация на Яндекс Картах
+        Так выглядит ваша клиника в поиске Яндекса
       </p>
     </div>
   );
