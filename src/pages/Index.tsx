@@ -310,9 +310,16 @@ function YandexMapsAnimation() {
           )}
         </div>
       </div>
-      <p className="text-center text-[11px] mt-3 tracking-wide" style={{ color: "rgba(59,130,246,0.6)" }}>
-        Так выглядит ваша клиника в поиске Яндекса
-      </p>
+      <a
+        href="https://t.me/yandex_promotion"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block text-center mt-3 tracking-wide transition-opacity duration-200 hover:opacity-80"
+        style={{ color: "rgba(59,130,246,0.9)", textDecoration: "none" }}
+      >
+        <span className="text-[12px] font-medium">Вы ещё не лидеры рынка?</span>
+        <span className="text-[11px] ml-1" style={{ color: "rgba(59,130,246,0.65)" }}>Ждём вас на разбор →</span>
+      </a>
     </div>
   );
 }
