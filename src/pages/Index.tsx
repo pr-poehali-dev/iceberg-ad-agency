@@ -5,7 +5,6 @@ const NAV = [
   { label: "О нас", href: "#about" },
   { label: "Подход", href: "#approach" },
   { label: "Услуги", href: "#services" },
-  { label: "Отзывы", href: "#reviews" },
   { label: "Тарифы", href: "#pricing" },
   { label: "Контакты", href: "#contact" },
 ];
@@ -733,12 +732,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* REVIEWS */}
-      <section id="reviews" ref={reviewsRef.ref} className="py-28 md:py-36 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute" style={{ width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)", top: "0%", left: "-10%" }} />
-          <div className="absolute" style={{ width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)", bottom: "0%", right: "-5%" }} />
-        </div>
+      {/* REVIEWS_START */}
+      <section id="reviews" style={{display:"none"}}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
 
           <div className={`text-center mb-14 transition-all duration-700 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
