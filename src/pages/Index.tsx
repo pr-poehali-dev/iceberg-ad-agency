@@ -991,66 +991,70 @@ export default function Index() {
 
           <div className={`rounded-2xl p-8 md:p-12 border transition-all duration-700 delay-150 tech-border ${contactRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
             style={{ background: "rgba(59,130,246,0.04)", borderColor: "rgba(59,130,246,0.15)" }}>
-            {submitted ? (
-              <div className="text-center py-10">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: blueDim, border: `1px solid rgba(59,130,246,0.3)` }}>
-                  <Icon name="Check" size={28} style={{ color: blue }} />
-                </div>
-                <h3 style={{ fontSize: 28, fontWeight: 700, color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif" }}>Заявка отправлена!</h3>
-                <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Мы открыли Telegram — напишите нам там для быстрой связи.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-[11px] tracking-[0.15em] uppercase block mb-2" style={{ color: "rgba(180,200,230,0.55)" }}>Имя *</label>
-                    <input type="text" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-                      className="w-full rounded-lg px-4 py-3 text-sm text-[#E8EDF3] placeholder-[#3a4a6a] focus:outline-none transition-colors"
-                      style={{ background: "rgba(59,130,246,0.07)", border: "1px solid rgba(59,130,246,0.15)" }}
-                      placeholder="Ваше имя" />
-                  </div>
-                  <div>
-                    <label className="text-[11px] tracking-[0.15em] uppercase block mb-2" style={{ color: "rgba(180,200,230,0.55)" }}>Телефон *</label>
-                    <input type="tel" required value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
-                      className="w-full rounded-lg px-4 py-3 text-sm text-[#E8EDF3] placeholder-[#3a4a6a] focus:outline-none transition-colors"
-                      style={{ background: "rgba(59,130,246,0.07)", border: "1px solid rgba(59,130,246,0.15)" }}
-                      placeholder="+7 (___) ___-__-__" />
-                  </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Phone + email */}
+              <div className="flex flex-col gap-5">
+                <div>
+                  <p className="text-[11px] tracking-[0.15em] uppercase mb-2" style={{ color: "rgba(180,200,230,0.45)" }}>Телефон</p>
+                  <a href="tel:+79935904964" className="flex items-center gap-3 text-lg font-semibold hover:opacity-80 transition-opacity" style={{ color: "#E8EDF3" }}>
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: blueDim, border: "1px solid rgba(59,130,246,0.2)" }}>
+                      <Icon name="Phone" size={16} style={{ color: blue }} />
+                    </div>
+                    +7 993-590-49-64
+                  </a>
                 </div>
                 <div>
-                  <label className="text-[11px] tracking-[0.15em] uppercase block mb-2" style={{ color: "rgba(180,200,230,0.55)" }}>Название организации</label>
-                  <input type="text" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })}
-                    className="w-full rounded-lg px-4 py-3 text-sm text-[#E8EDF3] placeholder-[#3a4a6a] focus:outline-none transition-colors"
-                    style={{ background: "rgba(59,130,246,0.07)", border: "1px solid rgba(59,130,246,0.15)" }}
-                    placeholder="Салон красоты «Название»" />
+                  <p className="text-[11px] tracking-[0.15em] uppercase mb-2" style={{ color: "rgba(180,200,230,0.45)" }}>Почта</p>
+                  <a href="mailto:yandex_promotion@mail.ru" className="flex items-center gap-3 text-sm hover:opacity-80 transition-opacity" style={{ color: "#E8EDF3" }}>
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: blueDim, border: "1px solid rgba(59,130,246,0.2)" }}>
+                      <Icon name="Mail" size={16} style={{ color: blue }} />
+                    </div>
+                    yandex_promotion@mail.ru
+                  </a>
                 </div>
-                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <p className="text-xs text-center sm:text-left" style={{ color: "rgba(180,200,230,0.4)" }}>
-                    Нажимая кнопку, вы соглашаетесь с{" "}
-                    <button type="button" onClick={() => setPrivacyOpen(true)}
-                      className="underline underline-offset-2 hover:text-blue-400 transition-colors cursor-pointer">
-                      политикой конфиденциальности
-                    </button>
-                  </p>
-                  <button type="submit"
-                    className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 hover:opacity-90"
-                    style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}>
-                    Узнать подробнее
-                    <Icon name="Send" size={15} />
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
+              </div>
 
-          <div className="mt-8 text-center">
-            <p className="text-sm" style={{ color: "rgba(180,200,230,0.5)" }}>Или напишите нам напрямую в Telegram</p>
-            <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-2 text-sm font-medium transition-colors hover:opacity-80"
-              style={{ color: blue }}>
-              <Icon name="Send" size={15} />
-              @yandex_promotion
-            </a>
+              {/* Messengers */}
+              <div>
+                <p className="text-[11px] tracking-[0.15em] uppercase mb-4" style={{ color: "rgba(180,200,230,0.45)" }}>Мессенджеры</p>
+                <div className="flex flex-col gap-3">
+                  <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:opacity-80"
+                    style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#229ED9" }}>
+                      <Icon name="Send" size={15} style={{ color: "#fff" }} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>Telegram</p>
+                      <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>@yandex_promotion</p>
+                    </div>
+                  </a>
+                  <a href="https://wa.me/79935904964" target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:opacity-80"
+                    style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#25D366" }}>
+                      <Icon name="MessageCircle" size={15} style={{ color: "#fff" }} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>WhatsApp</p>
+                      <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>+7 993-590-49-64</p>
+                    </div>
+                  </a>
+                  <a href="https://vk.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:opacity-80"
+                    style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#0077FF" }}>
+                      <Icon name="Users" size={15} style={{ color: "#fff" }} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>ВКонтакте</p>
+                      <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>Написать в VK</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1077,6 +1081,10 @@ export default function Index() {
               className="text-xs hover:opacity-80 transition-opacity underline underline-offset-2" style={{ color: "rgba(180,200,230,0.35)" }}>
               Договор на оказание услуг
             </a>
+            <button onClick={() => setPrivacyOpen(true)}
+              className="text-xs hover:opacity-80 transition-opacity underline underline-offset-2 cursor-pointer" style={{ color: "rgba(180,200,230,0.35)", background: "none", border: "none" }}>
+              Политика конфиденциальности
+            </button>
           </div>
         </div>
       </footer>
