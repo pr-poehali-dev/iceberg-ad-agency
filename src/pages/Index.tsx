@@ -1041,15 +1041,15 @@ export default function Index() {
                       <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>+7 993-590-49-64</p>
                     </div>
                   </a>
-                  <a href="https://vk.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
+                  <a href="https://max.ru/yandex_promotion" target="_blank" rel="noopener noreferrer"
                     className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:opacity-80"
                     style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#0077FF" }}>
-                      <Icon name="Users" size={15} style={{ color: "#fff" }} />
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-white font-bold text-sm" style={{ background: "#5B4CDB" }}>
+                      М
                     </div>
                     <div>
-                      <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>ВКонтакте</p>
-                      <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>Написать в VK</p>
+                      <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>Макс</p>
+                      <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>Написать в Макс</p>
                     </div>
                   </a>
                 </div>
