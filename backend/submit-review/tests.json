@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Missing fields",
+      "method": "POST",
+      "path": "/",
+      "body": {"full_name": "Тест"},
+      "expectedStatus": 400,
+      "expectedBody": {"error": "Все поля обязательны"},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Submit review",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "full_name": "Иван Иванов",
+        "email": "test@test.ru",
+        "organization": "Тестовая клиника",
+        "phone": "+7 999 000-00-00",
+        "text": "Отличная работа команды!"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {"success": true},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

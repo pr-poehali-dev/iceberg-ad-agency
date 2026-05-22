@@ -5,6 +5,7 @@ const NAV = [
   { label: "О нас", href: "#about" },
   { label: "Подход", href: "#approach" },
   { label: "Услуги", href: "#services" },
+  { label: "Отзывы", href: "#reviews" },
   { label: "Тарифы", href: "#pricing" },
   { label: "Контакты", href: "#contact" },
 ];
@@ -94,6 +95,47 @@ const PLANS = [
     highlight: false,
   },
 ];
+
+const REVIEWS = [
+  {
+    org: "Клиника «Здоровая улыбка»",
+    text: "Благодарим команду KeyCard за профессиональную помощь в улучшении нашей репутации! Благодаря их поддержке мы смогли обойти конкурентов и привлечь больше новых клиентов. Особенно радует, что наши акции и предложения стали привлекать больше внимания. Также хочется отметить, что все материалы оформлены очень красиво и стильно. Очень ценим работу с вашей командой и надеемся на дальнейшее сотрудничество!",
+    icon: "🦷",
+    rating: 5,
+  },
+  {
+    org: "Клиника «Академия стоматологии»",
+    text: "Выражаем глубокую благодарность за эффективную работу по улучшению нашей онлайн-репутации! Благодаря KeyCard мы заметно повысили узнаваемость и привлекли новых пациентов. Особенно радует, что наши рекламные материалы и оформление стали выглядеть очень профессионально. Всё выполнено красиво и аккуратно, что очень важно для нас. Спасибо за внимательное отношение и качественную работу!",
+    icon: "🏥",
+    rating: 5,
+  },
+  {
+    org: "Клиника «Улыбка Мира»",
+    text: "Спасибо команде KeyCard за отличную работу! Ваша помощь помогла нам обойти конкурентов и привлекла больше клиентов. Все наши акции и предложения теперь выглядят очень привлекательно благодаря красивому оформлению. Работа с вами — настоящее удовольствие, и мы очень ценим ваше профессиональное отношение.",
+    icon: "😊",
+    rating: 5,
+  },
+  {
+    org: "Клиника «Эстетика улыбки»",
+    text: "Большое спасибо за поддержку! Благодаря KeyCard мы смогли улучшить свою репутацию и привлечь больше пациентов. Всё оформление материалов выполнено очень красиво и аккуратно. Очень довольны сотрудничеством и надеемся на дальнейшие успехи!",
+    icon: "✨",
+    rating: 5,
+  },
+  {
+    org: "Косметологический салон «Красота и гармония»",
+    text: "Огромное спасибо команде KeyCard! Ваша помощь позволила нам обойти конкурентов и значительно увеличить поток клиентов. Все рекламные материалы и оформление выполнены очень красиво и элегантно. Очень ценим ваше профессиональное отношение и работу с нашей репутацией.",
+    icon: "💅",
+    rating: 5,
+  },
+  {
+    org: "Косметологический салон «Элеганс-класс»",
+    text: "Спасибо за отличную работу! Благодаря вам мы смогли повысить узнаваемость и привлечь больше клиентов. Всё оформление материалов выполнено очень красиво и стильно. Работа с вами — настоящее удовольствие, и мы рады продолжать сотрудничество!",
+    icon: "💎",
+    rating: 5,
+  },
+];
+
+const SUBMIT_REVIEW_URL = "https://functions.poehali.dev/afbbb854-a4da-457c-8a63-421bef083447";
 
 const blue = "#3B82F6";
 const blueDim = "rgba(59,130,246,0.12)";
@@ -349,8 +391,29 @@ export default function Index() {
   const aboutRef = useInView(0.1);
   const approachRef = useInView(0.1);
   const servicesRef = useInView(0.1);
+  const reviewsRef = useInView(0.05);
   const pricingRef = useInView(0.05);
   const contactRef = useInView(0.1);
+
+  const [reviewForm, setReviewForm] = useState({ full_name: "", email: "", organization: "", phone: "", text: "" });
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [reviewLoading, setReviewLoading] = useState(false);
+  const [activeReview, setActiveReview] = useState(0);
+
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setReviewLoading(true);
+    try {
+      await fetch(SUBMIT_REVIEW_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reviewForm),
+      });
+      setReviewSubmitted(true);
+    } finally {
+      setReviewLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -666,6 +729,165 @@ export default function Index() {
                 <p className="text-sm leading-relaxed" style={{ color: "rgba(180,200,230,0.65)" }}>{s.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section id="reviews" ref={reviewsRef.ref} className="py-28 md:py-36 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute" style={{ width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)", top: "0%", left: "-10%" }} />
+          <div className="absolute" style={{ width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)", bottom: "0%", right: "-5%" }} />
+        </div>
+        <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
+
+          <div className={`text-center mb-14 transition-all duration-700 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, transparent, ${blue})` }} />
+              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Отзывы клиентов</span>
+              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
+            </div>
+            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Rajdhani, sans-serif" }}>
+              Нам доверяют лидеры рынка
+            </h2>
+            <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Реальные результаты наших партнёров</p>
+          </div>
+
+          {/* Reviews carousel */}
+          <div className={`transition-all duration-700 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="relative rounded-2xl p-8 md:p-10 border" style={{ background: "linear-gradient(145deg, rgba(59,130,246,0.08), rgba(139,92,246,0.06))", borderColor: "rgba(59,130,246,0.2)" }}>
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.2)" }}>
+                  {REVIEWS[activeReview].icon}
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg" style={{ color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif" }}>{REVIEWS[activeReview].org}</h3>
+                  <div className="flex gap-0.5 mt-1">
+                    {[1,2,3,4,5].map(s => <span key={s} style={{ color: "#F5A623", fontSize: 14 }}>★</span>)}
+                  </div>
+                </div>
+                <div className="ml-auto text-5xl leading-none opacity-20 font-serif" style={{ color: blue }}>"</div>
+              </div>
+              <p className="text-base leading-relaxed" style={{ color: "rgba(180,200,230,0.85)" }}>
+                {REVIEWS[activeReview].text}
+              </p>
+              <div className="flex items-center justify-between mt-8">
+                <div className="flex gap-2">
+                  {REVIEWS.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveReview(i)}
+                      className="rounded-full transition-all duration-300"
+                      style={{ width: i === activeReview ? 24 : 8, height: 8, background: i === activeReview ? blue : "rgba(59,130,246,0.25)" }}
+                    />
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setActiveReview((activeReview - 1 + REVIEWS.length) % REVIEWS.length)}
+                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:opacity-80"
+                    style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.2)" }}
+                  >
+                    <Icon name="ChevronLeft" size={18} style={{ color: blue }} />
+                  </button>
+                  <button
+                    onClick={() => setActiveReview((activeReview + 1) % REVIEWS.length)}
+                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:opacity-80"
+                    style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.2)" }}
+                  >
+                    <Icon name="ChevronRight" size={18} style={{ color: blue }} />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Mini grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
+              {REVIEWS.map((r, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveReview(i)}
+                  className="text-left rounded-xl p-4 border transition-all duration-200"
+                  style={{
+                    background: i === activeReview ? "rgba(59,130,246,0.12)" : "rgba(59,130,246,0.04)",
+                    borderColor: i === activeReview ? "rgba(59,130,246,0.4)" : "rgba(59,130,246,0.1)",
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <span style={{ fontSize: 16 }}>{r.icon}</span>
+                    <span className="text-[11px] font-semibold truncate" style={{ color: i === activeReview ? blue : "rgba(180,200,230,0.7)" }}>{r.org}</span>
+                  </div>
+                  <div className="flex gap-px">
+                    {[1,2,3,4,5].map(s => <span key={s} style={{ color: "#F5A623", fontSize: 10 }}>★</span>)}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Review form */}
+          <div className={`mt-16 transition-all duration-700 delay-200 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="rounded-2xl p-8 md:p-10 border" style={{ background: "rgba(59,130,246,0.04)", borderColor: "rgba(59,130,246,0.15)" }}>
+              <div className="mb-6">
+                <h3 className="text-xl font-bold mb-1" style={{ color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif" }}>Оставить отзыв</h3>
+                <p className="text-sm" style={{ color: "rgba(180,200,230,0.55)" }}>Мы опубликуем его после проверки</p>
+              </div>
+
+              {reviewSubmitted ? (
+                <div className="flex flex-col items-center justify-center py-10 gap-4">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.3)" }}>
+                    <Icon name="CheckCircle" size={32} style={{ color: blue }} />
+                  </div>
+                  <p className="text-lg font-semibold" style={{ color: "#E8EDF3" }}>Спасибо за отзыв!</p>
+                  <p className="text-sm text-center" style={{ color: "rgba(180,200,230,0.6)" }}>Мы рассмотрим его в течение 1–2 рабочих дней и опубликуем.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleReviewSubmit}>
+                  <div className="grid md:grid-cols-2 gap-4 mb-4">
+                    {[
+                      { key: "full_name", label: "ФИО", placeholder: "Иванова Мария Сергеевна", type: "text" },
+                      { key: "organization", label: "Название организации", placeholder: "Клиника «Здоровая улыбка»", type: "text" },
+                      { key: "phone", label: "Телефон", placeholder: "+7 (999) 000-00-00", type: "tel" },
+                      { key: "email", label: "Почта", placeholder: "mail@clinic.ru", type: "email" },
+                    ].map(({ key, label, placeholder, type }) => (
+                      <div key={key}>
+                        <label className="block text-xs mb-1.5 tracking-wide" style={{ color: "rgba(180,200,230,0.55)" }}>{label}</label>
+                        <input
+                          type={type}
+                          required
+                          placeholder={placeholder}
+                          value={reviewForm[key as keyof typeof reviewForm]}
+                          onChange={e => setReviewForm(f => ({ ...f, [key]: e.target.value }))}
+                          className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-all duration-200"
+                          style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.2)", color: "#E8EDF3" }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mb-5">
+                    <label className="block text-xs mb-1.5 tracking-wide" style={{ color: "rgba(180,200,230,0.55)" }}>Ваш отзыв</label>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="Расскажите о вашем опыте работы с KeyCard..."
+                      value={reviewForm.text}
+                      onChange={e => setReviewForm(f => ({ ...f, text: e.target.value }))}
+                      className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-all duration-200 resize-none"
+                      style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.2)", color: "#E8EDF3" }}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={reviewLoading}
+                    className="flex items-center gap-2.5 px-7 py-3.5 text-sm font-medium rounded-lg transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+                    style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}
+                  >
+                    {reviewLoading ? "Отправляем..." : "Отправить отзыв"}
+                    {!reviewLoading && <Icon name="Send" size={15} />}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>

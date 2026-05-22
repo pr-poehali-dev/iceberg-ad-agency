@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS reviews (
+  id SERIAL PRIMARY KEY,
+  full_name VARCHAR(200) NOT NULL,
+  email VARCHAR(200) NOT NULL,
+  organization VARCHAR(300) NOT NULL,
+  phone VARCHAR(50) NOT NULL,
+  text TEXT NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT NOW()
+);
