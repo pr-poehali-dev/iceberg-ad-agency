@@ -4,44 +4,44 @@
 
 @layer base {
   :root {
-    --background: 220 20% 7%;
-    --foreground: 210 20% 95%;
+    --background: 224 50% 8%;
+    --foreground: 210 40% 96%;
 
-    --card: 220 18% 10%;
-    --card-foreground: 210 20% 95%;
+    --card: 224 45% 11%;
+    --card-foreground: 210 40% 96%;
 
-    --popover: 220 18% 10%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 224 45% 11%;
+    --popover-foreground: 210 40% 96%;
 
-    --primary: 43 90% 58%;
-    --primary-foreground: 220 20% 7%;
+    --primary: 220 90% 60%;
+    --primary-foreground: 224 50% 8%;
 
-    --secondary: 220 15% 15%;
-    --secondary-foreground: 210 20% 85%;
+    --secondary: 224 40% 15%;
+    --secondary-foreground: 210 30% 85%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 210 15% 55%;
+    --muted: 224 40% 15%;
+    --muted-foreground: 215 20% 55%;
 
-    --accent: 43 90% 58%;
-    --accent-foreground: 220 20% 7%;
+    --accent: 260 80% 65%;
+    --accent-foreground: 224 50% 8%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 43 90% 58%;
+    --border: 224 35% 18%;
+    --input: 224 35% 18%;
+    --ring: 220 90% 60%;
 
-    --radius: 4px;
+    --radius: 8px;
 
-    --sidebar-background: 220 20% 7%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 43 90% 58%;
-    --sidebar-primary-foreground: 220 20% 7%;
-    --sidebar-accent: 220 15% 15%;
-    --sidebar-accent-foreground: 210 20% 85%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 43 90% 58%;
+    --sidebar-background: 224 50% 8%;
+    --sidebar-foreground: 210 30% 85%;
+    --sidebar-primary: 220 90% 60%;
+    --sidebar-primary-foreground: 224 50% 8%;
+    --sidebar-accent: 224 40% 15%;
+    --sidebar-accent-foreground: 210 30% 85%;
+    --sidebar-border: 224 35% 18%;
+    --sidebar-ring: 220 90% 60%;
   }
 }
 
@@ -56,12 +56,13 @@
     @apply bg-background text-foreground;
     font-family: "Golos Text", sans-serif;
     font-weight: 400;
+    background: #060d1f;
   }
   h1,
   h2,
   h3,
   h4 {
-    font-family: "Cormorant", serif;
+    font-family: "Rajdhani", "Golos Text", sans-serif;
   }
 }
 
@@ -94,10 +95,60 @@
 @keyframes glow-pulse {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(234, 179, 8, 0.25);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
   50% {
-    box-shadow: 0 0 48px rgba(234, 179, 8, 0.55);
+    box-shadow: 0 0 60px rgba(59, 130, 246, 0.7);
+  }
+}
+@keyframes glow-purple {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(139, 92, 246, 0.7);
+  }
+}
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes hex-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes circuit-dash {
+  from {
+    stroke-dashoffset: 200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes scanline {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100vh);
   }
 }
 
@@ -107,8 +158,14 @@
 .animate-fade-in {
   animation: fadeIn 0.6s ease forwards;
 }
-.glow-gold {
+.glow-blue {
   animation: glow-pulse 3s ease-in-out infinite;
+}
+.glow-purple {
+  animation: glow-purple 3s ease-in-out infinite;
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
 .ticker-wrap {
   animation: ticker 28s linear infinite;
@@ -122,6 +179,32 @@
 }
 .card-hover:hover {
   transform: translateY(-5px);
-  border-color: rgba(234, 179, 8, 0.35);
-  box-shadow: 0 12px 40px rgba(234, 179, 8, 0.08);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.12);
+}
+
+.tech-border {
+  position: relative;
+}
+.tech-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.6),
+    rgba(139, 92, 246, 0.4),
+    transparent
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
