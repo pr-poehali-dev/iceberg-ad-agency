@@ -1044,8 +1044,8 @@ export default function Index() {
                   <a href="https://max.ru/yandex_promotion" target="_blank" rel="noopener noreferrer"
                     className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:opacity-80"
                     style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-white font-bold text-sm" style={{ background: "#5B4CDB" }}>
-                      М
+                    <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0">
+                      <img src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/cece604d-e954-48aa-81df-e9bbf691da88.png" alt="Макс" className="w-full h-full object-cover" />
                     </div>
                     <div>
                       <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>Макс</p>
