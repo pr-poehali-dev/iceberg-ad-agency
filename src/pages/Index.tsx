@@ -117,15 +117,6 @@ function useInView(threshold = 0.12) {
   return { ref, inView };
 }
 
-const QUERY = "имплантация зубов санкт п";
-
-const ORG_RESULTS = [
-  { name: "Зубной центр", rating: "5,0", reviews: "117", type: "Стоматологическая кли...", address: "Подольская ул., 1-3-5, Санкт-Петербург", hours: "Открыто до 21:00", goodPlace: true, promo: "Имплантация зубов от 19 900 р. Бесплатное КТ · Есть рассрочка.", icon: "🦷", iconBg: "#F0F7FF", discount: null },
-  { name: "Zub", rating: "5,0", reviews: "348", type: "Стоматологическая кли...", address: "просп. Энгельса, 150, корп. 1, Санкт-Петерб...", hours: "Открыто до 21:00", goodPlace: true, promo: "Бесплатная консультация с диагностикой - элайнеры FlexiLigner", icon: null, iconText: "züb", iconBg: "#FFF8EE", discount: null },
-  { name: "Триумф Дента", rating: "5,0", reviews: "359", type: "Стоматологическая кли...", address: "просп. Луначарского, 7, корп. 1, Санкт-Пете...", hours: "Открыто до 21:00", goodPlace: true, promo: null, icon: "🦷", iconBg: "#F0FFF8", discount: "-20% на отбеливание зубов", price: "30000 ₽", priceLabel: "Установить зубной имплант" },
-  { name: "Все свои", rating: "5,0", reviews: "1242", type: "Стоматологическая кли...", address: "ул. Марата, 50, Санкт-Петербург", hours: "Открыто до 22:00", goodPlace: true, promo: "Имплантация зубов | 4 500₽ — импланты зубов — Lenmiriot (РФ)!", icon: "🌸", iconBg: "#FFF0F8", discount: null },
-  { name: "Дентика", rating: "4,9", reviews: "189", type: "Стоматологическая кли...", address: "Комендантский просп., 27, корп. 1, Санкт-Пе...", hours: "Открыто до 21:00", goodPlace: true, promo: null, icon: null, iconBg: "#1A3FA0", iconTextColor: "#fff", iconText: "Д)", price: "81000 ₽", priceLabel: "Имплантация системы Neobiotec..." },
-];
 
 const MAP_QUERY = "стоматологии в спб";
 
@@ -135,161 +126,6 @@ const MAP_ORGS = [
   { name: "АРС Дентал Клиник", rating: "5,0", reviews: "148", type: "Стоматологическая клиника", hours: "Открыто до 21:00", metro: "Лесная", dist: "990 м", address: "ул. Грибалёвой, 7, корп. 4, Санкт-Петербург", promo: "Скидка 1000 ₽ на первый приём в клинике!", phone: "+7 (812) 319-XX-XX", imgColor: "#D0D8C8" },
 ];
 
-function YandexSearchAnimation() {
-  const [typed, setTyped] = useState("");
-  const [showResults, setShowResults] = useState(false);
-  const [visibleResults, setVisibleResults] = useState(0);
-  const [activeTab, setActiveTab] = useState<"places" | "selections">("places");
-
-  useEffect(() => {
-    function run() {
-      let i = 0;
-      setTyped(""); setShowResults(false); setVisibleResults(0); setActiveTab("places");
-      const ti = setInterval(() => {
-        i++;
-        setTyped(QUERY.slice(0, i));
-        if (i >= QUERY.length) {
-          clearInterval(ti);
-          setTimeout(() => {
-            setShowResults(true);
-            let r = 0;
-            const si = setInterval(() => { r++; setVisibleResults(r); if (r >= ORG_RESULTS.length) clearInterval(si); }, 350);
-          }, 500);
-        }
-      }, 70);
-    }
-    run();
-    const cycle = setInterval(run, 11000);
-    return () => clearInterval(cycle);
-  }, []);
-
-  return (
-    <div className="w-full max-w-sm mx-auto select-none" style={{ fontFamily: "-apple-system, 'Helvetica Neue', Arial, sans-serif" }}>
-      <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.45)", border: "1px solid rgba(59,130,246,0.2)" }}>
-        <div className="flex items-center gap-2 px-3 py-2" style={{ background: "#DEE1E6" }}>
-          <div className="flex gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ff5f57" }} />
-            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#febc2e" }} />
-            <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#28c840" }} />
-          </div>
-          <div className="flex-1 mx-2 flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] truncate" style={{ background: "#fff", color: "#4a4a4a", border: "1px solid #C8CBD0" }}>
-            <Icon name="Lock" size={9} style={{ color: "#888", flexShrink: 0 }} />
-            <span className="truncate">yandex.ru/maps</span>
-          </div>
-        </div>
-        <div style={{ background: "#F5F5F5" }}>
-          <div className="flex items-center gap-2 px-3 py-2" style={{ background: "#F5F5F5", borderBottom: "1px solid #E0E0E0" }}>
-            <div className="flex items-center gap-1.5 shrink-0 rounded-full px-2 py-1" style={{ background: "#FF4433" }}>
-              <Icon name="MapPin" size={11} style={{ color: "#fff" }} />
-            </div>
-            <div className="flex-1 flex items-center rounded-full px-3 py-1.5" style={{ background: "#fff", border: "1px solid #E0E0E0", gap: 5 }}>
-              <span className="text-[12px] flex-1 min-h-[16px]" style={{ color: "#1a1a1a" }}>
-                {typed}
-                <span className="inline-block w-px h-3.5 ml-0.5 align-middle" style={{ background: "#333", opacity: typed.length < QUERY.length ? 1 : 0, animation: "blink 1s step-end infinite" }} />
-              </span>
-              <Icon name="Search" size={13} style={{ color: "#888", flexShrink: 0 }} />
-              <Icon name="X" size={13} style={{ color: "#888", flexShrink: 0 }} />
-            </div>
-          </div>
-
-          {showResults && (
-            <div style={{ animation: "fadeSlideUp 0.2s ease" }}>
-              <div className="flex gap-0 px-3 py-2">
-                <button
-                  onClick={() => setActiveTab("places")}
-                  className="text-[12px] font-medium pb-1.5 pr-4"
-                  style={{ color: activeTab === "places" ? "#1558D6" : "#555", borderBottom: activeTab === "places" ? "2px solid #1558D6" : "2px solid transparent", background: "none", border: "none", borderBottom: activeTab === "places" ? "2px solid #1558D6" : "2px solid transparent", cursor: "pointer" }}
-                >
-                  Места
-                </button>
-                <button
-                  onClick={() => setActiveTab("selections")}
-                  className="text-[12px] font-medium pb-1.5 px-2"
-                  style={{ color: activeTab === "selections" ? "#1558D6" : "#555", borderBottom: activeTab === "selections" ? "2px solid #1558D6" : "2px solid transparent", background: "none", border: "none", borderBottom: activeTab === "selections" ? "2px solid #1558D6" : "2px solid transparent", cursor: "pointer" }}
-                >
-                  Подборки
-                </button>
-              </div>
-
-              <div style={{ background: "#fff" }}>
-                {ORG_RESULTS.slice(0, visibleResults).map((org, idx) => (
-                  <div key={idx} style={{ borderTop: idx > 0 ? "1px solid #F0F0F0" : "none", background: "#fff", animation: "fadeSlideUp 0.3s ease", padding: "10px 12px" }}>
-                    <div className="flex items-start gap-2.5">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1 mb-0.5">
-                          <span className="text-[13px] font-medium" style={{ color: "#1558D6" }}>{org.name}</span>
-                          <span style={{ color: "#4CAF50", fontSize: 12 }}>✓</span>
-                        </div>
-                        <div className="flex items-center gap-1 mb-0.5">
-                          <span style={{ fontSize: 11, color: "#F5A623" }}>★</span>
-                          <span className="text-[11px] font-semibold" style={{ color: "#1a1a1a" }}>{org.rating}</span>
-                          <span className="text-[10px]" style={{ color: "#70757a" }}>({org.reviews})</span>
-                        </div>
-                        {org.goodPlace && (
-                          <div className="flex items-center gap-1 mb-0.5">
-                            <span style={{ fontSize: 9 }}>🏅</span>
-                            <span style={{ fontSize: 9 }}>📍</span>
-                            <span className="text-[10px] font-medium" style={{ color: "#1a1a1a" }}>Хорошее место 2026</span>
-                          </div>
-                        )}
-                        <p className="text-[10px] leading-snug" style={{ color: "#70757a" }}>
-                          {org.hours} · {org.type}
-                        </p>
-                        <p className="text-[10px]" style={{ color: "#70757a" }}>{org.address}</p>
-                        {org.promo && (
-                          <div className="mt-1.5 rounded px-2 py-1" style={{ background: "#F8F9FA", border: "1px solid #E8E8E8" }}>
-                            <div className="flex items-start gap-1">
-                              <span style={{ fontSize: 10, color: "#888", flexShrink: 0 }}>⊞</span>
-                              <span className="text-[10px]" style={{ color: "#70757a", lineHeight: 1.3 }}>{org.promo}</span>
-                            </div>
-                          </div>
-                        )}
-                        {org.discount && (
-                          <div className="mt-1.5 flex items-center gap-1.5">
-                            {org.price && (
-                              <div className="rounded px-2 py-0.5" style={{ background: "#F5F5F5", border: "1px solid #E0E0E0" }}>
-                                <span className="text-[10px]" style={{ color: "#555" }}>{org.priceLabel}</span>
-                                <span className="text-[11px] font-semibold ml-1" style={{ color: "#1a1a1a" }}>{org.price}</span>
-                              </div>
-                            )}
-                            <div className="rounded px-2 py-0.5 flex items-center gap-0.5" style={{ background: "#E8F5E9" }}>
-                              <span style={{ fontSize: 9, color: "#2E7D32" }}>⊞</span>
-                              <span className="text-[10px] font-medium" style={{ color: "#2E7D32" }}>{org.discount}</span>
-                            </div>
-                          </div>
-                        )}
-                        {org.price && !org.discount && (
-                          <div className="mt-1 flex items-center gap-1">
-                            <span className="text-[10px]" style={{ color: "#555" }}>{org.priceLabel}</span>
-                            <span className="text-[11px] font-semibold" style={{ color: "#1a1a1a" }}>{org.price}</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center overflow-hidden" style={{ background: org.iconBg, border: "1px solid #E8E8E8" }}>
-                        {org.icon ? (
-                          <span style={{ fontSize: 20 }}>{org.icon}</span>
-                        ) : (
-                          <span style={{ fontSize: org.iconText && org.iconText.length > 2 ? 9 : 11, fontWeight: 700, color: org.iconTextColor || "#CC7700", fontFamily: "serif" }}>{org.iconText}</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-      <p className="text-center text-[11px] mt-3 tracking-wide" style={{ color: "rgba(59,130,246,0.6)" }}>
-        Так выглядит ваша организация в Яндекс Картах
-      </p>
-      <style>{`
-        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-      `}</style>
-    </div>
-  );
-}
 
 function YandexMapsAnimation() {
   const [typed, setTyped] = useState("");
@@ -648,7 +484,6 @@ export default function Index() {
             </div>
 
             <div className={`flex-1 hidden lg:flex flex-col gap-8 transition-all duration-1000 delay-300 pt-16 ${heroRef.inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
-              <YandexSearchAnimation />
               <YandexMapsAnimation />
             </div>
           </div>
