@@ -860,7 +860,9 @@ export default function Index() {
                   ))}
                 </ul>
                 <a
-                  href="#contact"
+                  href="https://t.me/yandex_promotion"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block text-center text-sm font-medium py-3.5 rounded border transition-all duration-300 hover:opacity-90"
                   style={p.highlight
                     ? { background: gold, color: "#0D1117", borderColor: gold }
