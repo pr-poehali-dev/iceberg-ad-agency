@@ -1119,10 +1119,11 @@ export default function Index() {
               <p className="text-sm font-bold tracking-[0.15em] uppercase mb-4" style={{ color: "#fff" }}>Что мы предлагаем:</p>
               <ul className="space-y-2.5">
                 {[
-                  "Официальное оформление.",
-                  "Корпоративная система бонусов за счёт компании.",
+                  "Оформление ИП / Самозанятый.",
+                  "Высокий доход с первого месяца работы.",
                   "Дружный коллектив.",
                   "100% удалённая работа.",
+                  "Поддержка на всех этапах.",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span style={{ color: "#60A5FA", marginTop: 2, flexShrink: 0 }}>•</span>
