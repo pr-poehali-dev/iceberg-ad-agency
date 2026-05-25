@@ -1105,7 +1105,7 @@ export default function Index() {
               <div className="flex items-center justify-center gap-4 px-6 py-4 rounded-2xl" style={{ border: "2px solid #3B82F6", background: "rgba(59,130,246,0.08)", boxShadow: "0 0 30px rgba(59,130,246,0.15)" }}>
                 <div style={{ fontSize: 32 }}>📈</div>
                 <div className="text-center">
-                  <p className="text-xs tracking-widest uppercase mb-0.5" style={{ color: "rgba(180,200,230,0.6)" }}>Средняя з/п от</p>
+                  <p className="text-xs tracking-widest uppercase mb-0.5" style={{ color: "rgba(180,200,230,0.6)" }}>Средняя з/п</p>
                   <p className="font-black" style={{ fontSize: "clamp(2rem,6vw,3rem)", color: "#60A5FA", fontFamily: "Rajdhani, sans-serif", lineHeight: 1 }}>250 000 <span style={{ fontSize: "0.6em" }}>РУБ</span></p>
                 </div>
                 <div style={{ fontSize: 32 }}>🪙</div>
