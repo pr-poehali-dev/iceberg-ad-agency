@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
+import html2canvas from "html2canvas";
 
 const NAV = [
   { label: "О нас", href: "#about" },
@@ -393,6 +394,20 @@ export default function Index() {
   const reviewsRef = useInView(0.05);
   const pricingRef = useInView(0.05);
   const contactRef = useInView(0.1);
+
+  const vacancyRef = useRef<HTMLDivElement>(null);
+  const [savingVacancy, setSavingVacancy] = useState(false);
+
+  const saveVacancyAsImage = async () => {
+    if (!vacancyRef.current) return;
+    setSavingVacancy(true);
+    const canvas = await html2canvas(vacancyRef.current, { scale: 2, useCORS: true, backgroundColor: "#0f2147" });
+    const link = document.createElement("a");
+    link.download = "keycard-vacancy.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+    setSavingVacancy(false);
+  };
 
   const [reviewForm, setReviewForm] = useState({ full_name: "", email: "", organization: "", phone: "", text: "" });
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
@@ -1069,7 +1084,7 @@ export default function Index() {
         </div>
 
         <div className="max-w-2xl mx-auto px-5 md:px-10 relative">
-          <div className="rounded-3xl overflow-hidden" style={{ background: "linear-gradient(160deg, #0f2147 0%, #0a1833 100%)", border: "1px solid rgba(59,130,246,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+          <div ref={vacancyRef} className="rounded-3xl overflow-hidden" style={{ background: "linear-gradient(160deg, #0f2147 0%, #0a1833 100%)", border: "1px solid rgba(59,130,246,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
 
             {/* Header */}
             <div className="px-8 pt-10 pb-6 text-center">
@@ -1150,6 +1165,18 @@ export default function Index() {
               </div>
             </div>
 
+          </div>
+
+          <div className="mt-5 flex justify-center">
+            <button
+              onClick={saveVacancyAsImage}
+              disabled={savingVacancy}
+              className="flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+              style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}
+            >
+              <Icon name={savingVacancy ? "Loader" : "Download"} size={16} />
+              {savingVacancy ? "Сохраняем..." : "Сохранить как картинку"}
+            </button>
           </div>
         </div>
       </section>
