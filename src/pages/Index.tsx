@@ -1142,8 +1142,8 @@ export default function Index() {
               </div>
               <div className="text-right">
                 <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: "rgba(180,200,230,0.8)" }}>Готовы стать частью нашей команды?</p>
-                <a href="mailto:hr@keycard-promotion.ru" className="text-xs hover:opacity-80 transition-opacity" style={{ color: "#60A5FA" }}>
-                  Отправляйте резюме на hr@keycard-promotion.ru
+                <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="text-xs hover:opacity-80 transition-opacity" style={{ color: "#60A5FA" }}>
+                  Отправляйте резюме в Telegram: @yandex_promotion
                 </a>
               </div>
             </div>
