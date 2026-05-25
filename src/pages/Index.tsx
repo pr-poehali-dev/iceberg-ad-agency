@@ -1122,6 +1122,7 @@ export default function Index() {
                   "Официальное оформление.",
                   "Корпоративная система бонусов за счёт компании.",
                   "Дружный коллектив.",
+                  "100% удалённая работа.",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span style={{ color: "#60A5FA", marginTop: 2, flexShrink: 0 }}>•</span>
