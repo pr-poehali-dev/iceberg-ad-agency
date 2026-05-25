@@ -1054,6 +1054,104 @@ export default function Index() {
         </div>
       </section>
 
+      {/* VACANCY */}
+      <section id="vacancy" className="py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0a1628 0%, #0d1f3c 50%, #0a1628 100%)" }}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute opacity-10" style={{ top: "5%", right: "3%", animation: "rotate-slow 30s linear infinite" }}>
+            <HexagonDecor size={280} color="#3B82F6" strokeWidth={1} />
+          </div>
+          <div className="absolute opacity-5" style={{ bottom: "5%", left: "2%", animation: "rotate-slow 25s linear infinite reverse" }}>
+            <HexagonDecor size={200} color="#60A5FA" strokeWidth={1} />
+          </div>
+          {[{x:"8%",y:"15%"},{x:"92%",y:"25%"},{x:"5%",y:"70%"},{x:"95%",y:"65%"},{x:"50%",y:"5%"}].map((d,i) => (
+            <div key={i} className="absolute rounded-full" style={{ width: 3, height: 3, left: d.x, top: d.y, background: "#60A5FA", boxShadow: "0 0 8px rgba(96,165,250,0.8)", animation: `float ${3+i}s ease-in-out infinite`, animationDelay: `${i*0.6}s` }} />
+          ))}
+        </div>
+
+        <div className="max-w-2xl mx-auto px-5 md:px-10 relative">
+          <div className="rounded-3xl overflow-hidden" style={{ background: "linear-gradient(160deg, #0f2147 0%, #0a1833 100%)", border: "1px solid rgba(59,130,246,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+
+            {/* Header */}
+            <div className="px-8 pt-10 pb-6 text-center">
+              <h2 className="font-black leading-tight uppercase" style={{ fontSize: "clamp(1.8rem,5vw,2.8rem)", color: "#fff", fontFamily: "Rajdhani, sans-serif", letterSpacing: "0.02em" }}>
+                Ищете работу, где ваш талант<br />оценят по достоинству?
+              </h2>
+            </div>
+
+            {/* Subtitle */}
+            <div className="text-center pb-4">
+              <p className="text-sm font-medium tracking-[0.25em] uppercase" style={{ color: "rgba(180,200,230,0.7)" }}>
+                Мы ищем менеджера по продажам
+              </p>
+            </div>
+
+            {/* Salary block */}
+            <div className="mx-6 my-5">
+              <div className="flex items-center justify-center gap-4 px-6 py-4 rounded-2xl" style={{ border: "2px solid #3B82F6", background: "rgba(59,130,246,0.08)", boxShadow: "0 0 30px rgba(59,130,246,0.15)" }}>
+                <div style={{ fontSize: 32 }}>📈</div>
+                <div className="text-center">
+                  <p className="text-xs tracking-widest uppercase mb-0.5" style={{ color: "rgba(180,200,230,0.6)" }}>Средняя з/п от</p>
+                  <p className="font-black" style={{ fontSize: "clamp(2rem,6vw,3rem)", color: "#60A5FA", fontFamily: "Rajdhani, sans-serif", lineHeight: 1 }}>250 000 <span style={{ fontSize: "0.6em" }}>РУБ</span></p>
+                </div>
+                <div style={{ fontSize: 32 }}>🪙</div>
+              </div>
+            </div>
+
+            {/* Requirements */}
+            <div className="px-8 py-5">
+              <p className="text-sm font-bold tracking-[0.15em] uppercase mb-4" style={{ color: "#fff" }}>Чего мы ждём от вас:</p>
+              <ul className="space-y-2.5">
+                {[
+                  "Опыт в продажах (желательно в сфере IT/Digital).",
+                  "Навыки ведения переговоров и заключения сделок.",
+                  "Желание много зарабатывать и развиваться.",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <span style={{ color: "#60A5FA", marginTop: 2, flexShrink: 0 }}>•</span>
+                    <span className="text-sm" style={{ color: "rgba(180,200,230,0.85)" }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Offer */}
+            <div className="px-8 py-5">
+              <p className="text-sm font-bold tracking-[0.15em] uppercase mb-4" style={{ color: "#fff" }}>Что мы предлагаем:</p>
+              <ul className="space-y-2.5">
+                {[
+                  "Официальное оформление.",
+                  "Корпоративная система бонусов за счёт компании.",
+                  "Дружный коллектив и комфортный офис.",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <span style={{ color: "#60A5FA", marginTop: 2, flexShrink: 0 }}>•</span>
+                    <span className="text-sm" style={{ color: "rgba(180,200,230,0.85)" }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-2 px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderTop: "1px solid rgba(59,130,246,0.2)", background: "rgba(0,0,0,0.2)" }}>
+              <div className="flex items-center gap-3">
+                <img src={LOGO_URL} alt="KeyCard" className="h-10 w-10 object-cover rounded-lg" style={{ border: "1px solid rgba(59,130,246,0.4)" }} />
+                <div>
+                  <p className="text-sm font-bold tracking-widest uppercase" style={{ color: "#fff", fontFamily: "Rajdhani, sans-serif" }}>KeyCard <span style={{ color: "#60A5FA" }}>Promotion</span></p>
+                  <p className="text-[10px]" style={{ color: "rgba(180,200,230,0.45)" }}>keycard-promotion.ru</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: "rgba(180,200,230,0.8)" }}>Готовы стать частью нашей команды?</p>
+                <a href="mailto:hr@keycard-promotion.ru" className="text-xs hover:opacity-80 transition-opacity" style={{ color: "#60A5FA" }}>
+                  Отправляйте резюме на hr@keycard-promotion.ru
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer className="border-t py-10" style={{ borderColor: "rgba(59,130,246,0.1)", background: "#040a18" }}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
