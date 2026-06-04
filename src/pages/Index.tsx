@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
-import html2canvas from "html2canvas";
 
 const NAV = [
   { label: "О нас", href: "#about" },
@@ -395,18 +394,28 @@ export default function Index() {
   const pricingRef = useInView(0.05);
   const contactRef = useInView(0.1);
 
-  const vacancyRef = useRef<HTMLDivElement>(null);
-  const [savingVacancy, setSavingVacancy] = useState(false);
+  const [leadForm, setLeadForm] = useState({ name: "", phone: "", card_url: "" });
+  const [leadLoading, setLeadLoading] = useState(false);
+  const [leadSent, setLeadSent] = useState(false);
+  const [leadError, setLeadError] = useState("");
 
-  const saveVacancyAsImage = async () => {
-    if (!vacancyRef.current) return;
-    setSavingVacancy(true);
-    const canvas = await html2canvas(vacancyRef.current, { scale: 2, useCORS: true, backgroundColor: "#0f2147" });
-    const link = document.createElement("a");
-    link.download = "keycard-vacancy.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-    setSavingVacancy(false);
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLeadError("");
+    setLeadLoading(true);
+    try {
+      const res = await fetch("https://functions.poehali.dev/9161593e-c262-48b1-946d-04c5d9dbb4c5", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(leadForm),
+      });
+      if (!res.ok) throw new Error("Ошибка отправки");
+      setLeadSent(true);
+    } catch {
+      setLeadError("Не удалось отправить заявку. Попробуйте ещё раз.");
+    } finally {
+      setLeadLoading(false);
+    }
   };
 
   const [reviewForm, setReviewForm] = useState({ full_name: "", email: "", organization: "", phone: "", text: "" });
@@ -1069,7 +1078,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* VACANCY */}
+      {/* LEAD FORM */}
       <section id="vacancy" className="py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0a1628 0%, #0d1f3c 50%, #0a1628 100%)" }}>
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute opacity-10" style={{ top: "5%", right: "3%", animation: "rotate-slow 30s linear infinite" }}>
@@ -1084,99 +1093,97 @@ export default function Index() {
         </div>
 
         <div className="max-w-2xl mx-auto px-5 md:px-10 relative">
-          <div ref={vacancyRef} className="rounded-3xl overflow-hidden" style={{ background: "linear-gradient(160deg, #0f2147 0%, #0a1833 100%)", border: "1px solid rgba(59,130,246,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
-
-            {/* Header */}
-            <div className="px-8 pt-10 pb-6 text-center">
-              <h2 className="font-black leading-tight uppercase" style={{ fontSize: "clamp(1.8rem,5vw,2.8rem)", color: "#fff", fontFamily: "Rajdhani, sans-serif", letterSpacing: "0.02em" }}>
-                Ищете работу, где ваш талант<br />оценят по достоинству?
-              </h2>
-            </div>
-
-            {/* Subtitle */}
-            <div className="text-center pb-4">
-              <p className="text-sm font-medium tracking-[0.25em] uppercase" style={{ color: "rgba(180,200,230,0.7)" }}>
-                Мы ищем менеджера по продажам
-              </p>
-            </div>
-
-            {/* Salary block */}
-            <div className="mx-6 my-5">
-              <div className="flex items-center justify-center gap-4 px-6 py-4 rounded-2xl" style={{ border: "2px solid #3B82F6", background: "rgba(59,130,246,0.08)", boxShadow: "0 0 30px rgba(59,130,246,0.15)" }}>
-                <div style={{ fontSize: 32 }}>📈</div>
-                <div className="text-center">
-                  <p className="text-xs tracking-widest uppercase mb-0.5" style={{ color: "rgba(180,200,230,0.6)" }}>Средняя з/п</p>
-                  <p className="font-black" style={{ fontSize: "clamp(2rem,6vw,3rem)", color: "#60A5FA", fontFamily: "Rajdhani, sans-serif", lineHeight: 1 }}>250 000 <span style={{ fontSize: "0.6em" }}>РУБ</span></p>
-                </div>
-                <div style={{ fontSize: 32 }}>🪙</div>
-              </div>
-            </div>
-
-            {/* Requirements */}
-            <div className="px-8 py-5">
-              <p className="text-sm font-bold tracking-[0.15em] uppercase mb-4" style={{ color: "#fff" }}>Чего мы ждём от вас:</p>
-              <ul className="space-y-2.5">
-                {[
-                  "Опыт в продажах (желательно в сфере IT/Digital).",
-                  "Навыки ведения переговоров и заключения сделок.",
-                  "Желание много зарабатывать и развиваться.",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <span style={{ color: "#60A5FA", marginTop: 2, flexShrink: 0 }}>•</span>
-                    <span className="text-sm" style={{ color: "rgba(180,200,230,0.85)" }}>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Offer */}
-            <div className="px-8 py-5">
-              <p className="text-sm font-bold tracking-[0.15em] uppercase mb-4" style={{ color: "#fff" }}>Что мы предлагаем:</p>
-              <ul className="space-y-2.5">
-                {[
-                  "Оформление ИП / Самозанятый.",
-                  "Высокий доход с первого месяца работы.",
-                  "Дружный коллектив.",
-                  "100% удалённая работа.",
-                  "Поддержка на всех этапах.",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <span style={{ color: "#60A5FA", marginTop: 2, flexShrink: 0 }}>•</span>
-                    <span className="text-sm" style={{ color: "rgba(180,200,230,0.85)" }}>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Footer */}
-            <div className="mt-2 px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderTop: "1px solid rgba(59,130,246,0.2)", background: "rgba(0,0,0,0.2)" }}>
-              <div className="flex items-center gap-3">
-                <img src={LOGO_URL} alt="KeyCard" className="h-10 w-10 object-cover rounded-lg" style={{ border: "1px solid rgba(59,130,246,0.4)" }} />
-                <div>
-                  <p className="text-sm font-bold tracking-widest uppercase" style={{ color: "#fff", fontFamily: "Rajdhani, sans-serif" }}>KeyCard <span style={{ color: "#60A5FA" }}>Promotion</span></p>
-                  <p className="text-[10px]" style={{ color: "rgba(180,200,230,0.45)" }}>keycard-promotion.ru</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: "rgba(180,200,230,0.8)" }}>Готовы стать частью нашей команды?</p>
-                <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="text-xs hover:opacity-80 transition-opacity" style={{ color: "#60A5FA" }}>
-                  Отправляйте резюме в Telegram: @yandex_promotion
-                </a>
-              </div>
-            </div>
-
+          {/* Header */}
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold tracking-[0.3em] uppercase mb-3" style={{ color: "#60A5FA" }}>Бесплатно</p>
+            <h2 className="font-black leading-tight uppercase" style={{ fontSize: "clamp(1.8rem,5vw,2.8rem)", color: "#fff", fontFamily: "Rajdhani, sans-serif", letterSpacing: "0.02em" }}>
+              Записаться на разбор
+            </h2>
+            <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Оставьте заявку — свяжемся и проведём разбор вашей карточки</p>
           </div>
 
-          <div className="mt-5 flex justify-center">
-            <button
-              onClick={saveVacancyAsImage}
-              disabled={savingVacancy}
-              className="flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 hover:opacity-90 disabled:opacity-50"
-              style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}
-            >
-              <Icon name={savingVacancy ? "Loader" : "Download"} size={16} />
-              {savingVacancy ? "Сохраняем..." : "Сохранить как картинку"}
-            </button>
+          {/* What's included */}
+          <div className="grid grid-cols-3 gap-3 mb-8">
+            {[
+              { icon: "📊", title: "Анализ текущего положения", desc: "Разберём где вы сейчас и что мешает росту" },
+              { icon: "🔍", title: "Разбор ошибок", desc: "Найдём слабые места в карточке и стратегии" },
+              { icon: "✅", title: "Решение", desc: "Дадим конкретный план действий" },
+            ].map((item, i) => (
+              <div key={i} className="rounded-2xl p-4 text-center flex flex-col items-center gap-2" style={{ background: "rgba(59,130,246,0.07)", border: "1px solid rgba(59,130,246,0.2)" }}>
+                <div style={{ fontSize: 28 }}>{item.icon}</div>
+                <p className="text-xs font-bold leading-snug" style={{ color: "#E8EDF3" }}>{item.title}</p>
+                <p className="text-[11px] leading-snug" style={{ color: "rgba(180,200,230,0.55)" }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Form card */}
+          <div className="rounded-3xl overflow-hidden" style={{ background: "linear-gradient(160deg, #0f2147 0%, #0a1833 100%)", border: "1px solid rgba(59,130,246,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+            {leadSent ? (
+              <div className="px-8 py-16 text-center">
+                <div className="text-5xl mb-4">🎉</div>
+                <h3 className="font-black text-2xl mb-2" style={{ color: "#fff", fontFamily: "Rajdhani, sans-serif" }}>Заявка отправлена!</h3>
+                <p className="text-sm" style={{ color: "rgba(180,200,230,0.65)" }}>Мы свяжемся с вами в ближайшее время для записи на разбор.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleLeadSubmit} className="px-8 py-10 space-y-5">
+                <div>
+                  <label className="block text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "rgba(180,200,230,0.6)" }}>Ваше имя *</label>
+                  <input
+                    type="text"
+                    value={leadForm.name}
+                    onChange={e => setLeadForm(f => ({ ...f, name: e.target.value }))}
+                    placeholder="Иван Иванов"
+                    required
+                    className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.25)", color: "#E8EDF3" }}
+                    onFocus={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.7)"}
+                    onBlur={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)"}
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "rgba(180,200,230,0.6)" }}>Телефон *</label>
+                  <input
+                    type="tel"
+                    value={leadForm.phone}
+                    onChange={e => setLeadForm(f => ({ ...f, phone: e.target.value }))}
+                    placeholder="+7 (999) 000-00-00"
+                    required
+                    className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.25)", color: "#E8EDF3" }}
+                    onFocus={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.7)"}
+                    onBlur={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)"}
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "rgba(180,200,230,0.6)" }}>Ссылка на карточку</label>
+                  <input
+                    type="url"
+                    value={leadForm.card_url}
+                    onChange={e => setLeadForm(f => ({ ...f, card_url: e.target.value }))}
+                    placeholder="https://www.wildberries.ru/catalog/..."
+                    className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.25)", color: "#E8EDF3" }}
+                    onFocus={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.7)"}
+                    onBlur={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)"}
+                  />
+                </div>
+                {leadError && (
+                  <p className="text-xs text-red-400">{leadError}</p>
+                )}
+                <button
+                  type="submit"
+                  disabled={leadLoading}
+                  className="w-full py-4 rounded-xl font-bold text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+                  style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}
+                >
+                  {leadLoading ? "Отправляем..." : "Отправить заявку"}
+                </button>
+                <p className="text-center text-[11px]" style={{ color: "rgba(180,200,230,0.35)" }}>
+                  Нажимая кнопку, вы соглашаетесь с <button type="button" onClick={() => setPrivacyOpen(true)} className="underline hover:opacity-80">политикой конфиденциальности</button>
+                </p>
+              </form>
+            )}
           </div>
         </div>
       </section>
