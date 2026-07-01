@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Icon from "@/components/ui/icon";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const NAV = [
   { label: "О нас", href: "#about" },
@@ -12,185 +16,171 @@ const NAV = [
 const STATS = [
   { value: "5+", label: "лет на рынке" },
   { value: "300+", label: "партнёров" },
-  { value: "ТОП-3", label: "результат в Яндексе" },
-  { value: "100%", label: "продление партнёров" },
+  { value: "ТОП-3", label: "в Яндексе" },
+  { value: "100%", label: "продление" },
 ];
 
 const SERVICES = [
-  {
-    icon: "MapPin",
-    title: "Яндекс.Бизнес",
-    desc: "Полное продвижение и оптимизация карточек компании. Заполнение, оформление, рост в поиске и на картах.",
-  },
-  {
-    icon: "Star",
-    title: "Репутация и отзывы",
-    desc: "Работа с отзывами, улучшение рейтинга, мониторинг упоминаний. Ваша репутация под контролем.",
-  },
-  {
-    icon: "Megaphone",
-    title: "Рекламные кампании",
-    desc: "Настройка и ведение рекламы в Яндекс.Директ и РСЯ. Отчёты, аналитика и постоянная оптимизация.",
-  },
-  {
-    icon: "Stethoscope",
-    title: "Яндекс.Медицина",
-    desc: "Продвижение профилей врачей, оптимизация под голосовой поиск Алисы AI и медицинские агрегаторы.",
-  },
-  {
-    icon: "TrendingUp",
-    title: "SEO-оптимизация",
-    desc: "Техническая и контентная оптимизация. Отслеживание позиций, семантика, рост органического трафика.",
-  },
-  {
-    icon: "BarChart2",
-    title: "Поддержка и отчёты",
-    desc: "Регулярные отчёты, персональный менеджер и постоянный контроль результатов продвижения.",
-  },
+  { icon: "MapPin", title: "Яндекс.Бизнес", desc: "Полное продвижение и оптимизация карточек компании. Заполнение, оформление, рост в поиске и на картах.", num: "01" },
+  { icon: "Star", title: "Репутация и отзывы", desc: "Работа с отзывами, улучшение рейтинга, мониторинг упоминаний. Ваша репутация под контролем.", num: "02" },
+  { icon: "Megaphone", title: "Рекламные кампании", desc: "Настройка и ведение рекламы в Яндекс.Директ и РСЯ. Отчёты, аналитика и постоянная оптимизация.", num: "03" },
+  { icon: "Stethoscope", title: "Яндекс.Медицина", desc: "Продвижение профилей врачей, оптимизация под голосовой поиск Алисы AI и медицинские агрегаторы.", num: "04" },
+  { icon: "TrendingUp", title: "SEO-оптимизация", desc: "Техническая и контентная оптимизация. Отслеживание позиций, семантика, рост органического трафика.", num: "05" },
+  { icon: "BarChart2", title: "Поддержка и отчёты", desc: "Регулярные отчёты, персональный менеджер и постоянный контроль результатов продвижения.", num: "06" },
 ];
 
 const PLANS = [
   {
-    name: "Тестовый",
-    period: "3 месяца",
+    name: "Тестовый", period: "3 месяца",
     prices: ["120 000 ₽", "150 000 ₽"],
     desc: "Идеально для старта и проверки стратегии",
-    features: [
-      "Настройка профиля",
-      "Базовое SEO",
-      "Дизайн карточки",
-      "Работа с отзывами",
-      "Ежемесячный отчёт",
-    ],
+    features: ["Настройка профиля", "Базовое SEO", "Дизайн карточки", "Работа с отзывами", "Ежемесячный отчёт"],
     highlight: false,
   },
   {
-    name: "Стандартный",
-    period: "6 месяцев",
+    name: "Стандартный", period: "6 месяцев",
     prices: ["200 000 ₽", "250 000 ₽"],
     desc: "Для активного роста и захвата аудитории",
-    features: [
-      "Всё из Тестового",
-      "Продвижение Яндекс.Медицина",
-      "Оптимизация под Алису AI",
-      "Еженедельный отчёт",
-      "Персональный менеджер",
-    ],
+    features: ["Всё из Тестового", "Продвижение Яндекс.Медицина", "Оптимизация под Алису AI", "Еженедельный отчёт", "Персональный менеджер"],
     highlight: true,
   },
   {
-    name: "Логичный",
-    period: "12 месяцев",
+    name: "Логичный", period: "12 месяцев",
     prices: ["350 000 ₽", "400 000 ₽"],
     desc: "Полное долгосрочное партнёрство",
-    features: [
-      "Всё из Стандартного",
-      "Объединение всех стратегий",
-      "Приоритетная поддержка 24/7",
-      "Квартальная стратсессия",
-      "Выделенная команда",
-      "Гарантия результата",
-    ],
+    features: ["Всё из Стандартного", "Объединение всех стратегий", "Приоритетная поддержка 24/7", "Квартальная стратсессия", "Выделенная команда", "Гарантия результата"],
     highlight: false,
   },
 ];
 
-const REVIEWS = [
+const STORY_STEPS = [
   {
-    org: "Стоматология «Здоровая улыбка»",
-    text: "Благодарим команду KeyCard за профессиональную помощь в улучшении нашей репутации! Благодаря их поддержке мы смогли обойти конкурентов и привлечь больше новых клиентов. Особенно радует, что наши акции и предложения стали привлекать больше внимания. Также хочется отметить, что все материалы оформлены очень красиво и стильно. Очень ценим работу с вашей командой и надеемся на дальнейшее сотрудничество!",
-    icon: "🦷",
-    rating: 5,
+    label: "Проблема",
+    heading: "Вас не видят\nновые клиенты",
+    sub: "Конкуренты занимают ТОП в Яндекс Картах, пока ваша карточка теряется на третьей странице. Каждый день — это упущенные звонки и заявки.",
+    accent: "#3B82F6",
+    icon: "EyeOff",
+    stat: { value: "87%", label: "клиентов выбирают бизнес из ТОП-3 карт" },
   },
   {
-    org: "Стоматология «Академия стоматологии»",
-    text: "Выражаем глубокую благодарность за эффективную работу по улучшению нашей онлайн-репутации! Благодаря KeyCard мы заметно повысили узнаваемость и привлекли новых пациентов. Особенно радует, что наши рекламные материалы и оформление стали выглядеть очень профессионально. Всё выполнено красиво и аккуратно, что очень важно для нас. Спасибо за внимательное отношение и качественную работу!",
-    icon: "🏥",
-    rating: 5,
+    label: "Решение",
+    heading: "KeyCard выводит\nвас в ТОП",
+    sub: "Мы берём полный контроль над вашей карточкой: оформление, SEO, отзывы, реклама. Результат заметен уже в первый месяц.",
+    accent: "#8B5CF6",
+    icon: "Rocket",
+    stat: { value: "30 дней", label: "до первых результатов в поиске" },
   },
   {
-    org: "Стоматология «Улыбка Мира»",
-    text: "Спасибо команде KeyCard за отличную работу! Ваша помощь помогла нам обойти конкурентов и привлекла больше клиентов. Все наши акции и предложения теперь выглядят очень привлекательно благодаря красивому оформлению. Работа с вами — настоящее удовольствие, и мы очень ценим ваше профессиональное отношение.",
-    icon: "😊",
-    rating: 5,
-  },
-  {
-    org: "Стоматология «Эстетика улыбки»",
-    text: "Большое спасибо за поддержку! Благодаря KeyCard мы смогли улучшить свою репутацию и привлечь больше пациентов. Всё оформление материалов выполнено очень красиво и аккуратно. Очень довольны сотрудничеством и надеемся на дальнейшие успехи!",
-    icon: "✨",
-    rating: 5,
-  },
-  {
-    org: "Косметология «Красота и гармония»",
-    text: "Огромное спасибо команде KeyCard! Ваша помощь позволила нам обойти конкурентов и значительно увеличить поток клиентов. Все рекламные материалы и оформление выполнены очень красиво и элегантно. Очень ценим ваше профессиональное отношение и работу с нашей репутацией.",
-    icon: "💅",
-    rating: 5,
-  },
-  {
-    org: "Косметология «Элеганс-класс»",
-    text: "Спасибо за отличную работу! Благодаря вам мы смогли повысить узнаваемость и привлечь больше клиентов. Всё оформление материалов выполнено очень красиво и стильно. Работа с вами — настоящее удовольствие, и мы рады продолжать сотрудничество!",
-    icon: "💎",
-    rating: 5,
+    label: "Результат",
+    heading: "Рост клиентов\nкаждый месяц",
+    sub: "300+ партнёров уже получают стабильный поток клиентов из Яндекса. 100% наших клиентов продлевают контракт — потому что видят реальные цифры.",
+    accent: "#10B981",
+    icon: "TrendingUp",
+    stat: { value: "300+", label: "компаний доверяют KeyCard" },
   },
 ];
 
-const SUBMIT_REVIEW_URL = "https://functions.poehali.dev/afbbb854-a4da-457c-8a63-421bef083447";
+const APPROACH = [
+  { icon: "Target", title: "Индивидуальный подход", desc: "Глубокий аудит ниши и конкурентов перед стартом. Стратегия строится под ваш бизнес." },
+  { icon: "Zap", title: "Готовые решения", desc: "5 лет опыта в вашей нише. Проверенные схемы, которые дают результат уже в первый месяц." },
+  { icon: "Users", title: "Новые клиенты", desc: "Цель одна — увеличить ваш поток клиентов через Яндекс. Всё остальное — инструменты." },
+];
 
-const blue = "#3B82F6";
-const blueDim = "rgba(59,130,246,0.12)";
-const purple = "#8B5CF6";
-const purpleDim = "rgba(139,92,246,0.12)";
 const LOGO_URL = "https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/files/90906752-e64f-4802-a583-b5a46b90cd9f.jpg";
-
-function useInView(threshold = 0.12) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return { ref, inView };
-}
-
-function HexagonDecor({ size = 200, color = "rgba(59,130,246,0.15)", strokeWidth = 1, rotate = 0 }: { size?: number; color?: string; strokeWidth?: number; rotate?: number }) {
-  const cx = size / 2;
-  const r = size / 2 - strokeWidth;
-  const pts = Array.from({ length: 8 }, (_, i) => {
-    const a = (Math.PI / 4) * i + Math.PI / 8;
-    return `${cx + r * Math.cos(a)},${cx + r * Math.sin(a)}`;
-  }).join(" ");
-  return (
-    <svg width={size} height={size} style={{ transform: `rotate(${rotate}deg)` }} viewBox={`0 0 ${size} ${size}`} fill="none">
-      <polygon points={pts} stroke={color} strokeWidth={strokeWidth} fill="none" />
-    </svg>
-  );
-}
+const SUBMIT_REVIEW_URL = "https://functions.poehali.dev/afbbb854-a4da-457c-8a63-421bef083447";
 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [form, setForm] = useState({ name: "", phone: "", company: "" });
-  const [submitted, setSubmitted] = useState(false);
-  const [privacyOpen, setPrivacyOpen] = useState(false);
-
-  const heroRef = useInView(0.05);
-  const aboutRef = useInView(0.1);
-  const approachRef = useInView(0.1);
-  const servicesRef = useInView(0.1);
-  const reviewsRef = useInView(0.05);
-  const pricingRef = useInView(0.05);
-  const contactRef = useInView(0.1);
-
+  const [activeStep, setActiveStep] = useState(0);
+  const [activeService, setActiveService] = useState(0);
+  const [activePlan, setActivePlan] = useState(1);
   const [leadForm, setLeadForm] = useState({ name: "", phone: "", card_url: "" });
   const [leadLoading, setLeadLoading] = useState(false);
   const [leadSent, setLeadSent] = useState(false);
   const [leadError, setLeadError] = useState("");
+  const [privacyOpen, setPrivacyOpen] = useState(false);
+
+  const heroRef = useRef<HTMLDivElement>(null);
+  const storyRef = useRef<HTMLDivElement>(null);
+  const storyPinRef = useRef<HTMLDivElement>(null);
+  const servicesPinRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // GSAP PIN: Story section
+  useEffect(() => {
+    if (!storyRef.current || !storyPinRef.current) return;
+
+    const totalSteps = STORY_STEPS.length;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: storyRef.current,
+        start: "top top",
+        end: `+=${totalSteps * 100}vh`,
+        pin: storyPinRef.current,
+        pinSpacing: true,
+        scrub: false,
+        onUpdate: (self) => {
+          const step = Math.min(
+            totalSteps - 1,
+            Math.floor(self.progress * totalSteps)
+          );
+          setActiveStep(step);
+        },
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  // GSAP PIN: Services section
+  useEffect(() => {
+    if (!servicesRef.current || !servicesPinRef.current) return;
+
+    const totalServices = SERVICES.length;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: servicesRef.current,
+        start: "top top",
+        end: `+=${totalServices * 80}vh`,
+        pin: servicesPinRef.current,
+        pinSpacing: true,
+        scrub: false,
+        onUpdate: (self) => {
+          const idx = Math.min(
+            totalServices - 1,
+            Math.floor(self.progress * totalServices)
+          );
+          setActiveService(idx);
+        },
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  // Hero entrance animation
+  useEffect(() => {
+    if (!heroRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.from(".hero-line", {
+        y: 60, opacity: 0, duration: 0.9, stagger: 0.15, ease: "power3.out", delay: 0.2,
+      });
+      gsap.from(".hero-stat", {
+        y: 30, opacity: 0, duration: 0.7, stagger: 0.1, ease: "power2.out", delay: 0.8,
+      });
+    }, heroRef.current);
+    return () => ctx.revert();
+  }, []);
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -202,776 +192,436 @@ export default function Index() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(leadForm),
       });
-      if (!res.ok) throw new Error("Ошибка отправки");
+      if (!res.ok) throw new Error();
       setLeadSent(true);
     } catch {
-      setLeadError("Не удалось отправить заявку. Попробуйте ещё раз.");
+      setLeadError("Не удалось отправить. Попробуйте ещё раз.");
     } finally {
       setLeadLoading(false);
     }
   };
 
-  const [reviewForm, setReviewForm] = useState({ full_name: "", email: "", organization: "", phone: "", text: "" });
-  const [reviewSubmitted, setReviewSubmitted] = useState(false);
-  const [reviewLoading, setReviewLoading] = useState(false);
-  const [activeReview, setActiveReview] = useState(0);
-
-  const handleReviewSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setReviewLoading(true);
-    try {
-      await fetch(SUBMIT_REVIEW_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(reviewForm),
-      });
-      setReviewSubmitted(true);
-    } finally {
-      setReviewLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.open("https://t.me/yandex_promotion", "_blank");
-    setSubmitted(true);
-  };
+  const step = STORY_STEPS[activeStep];
+  const service = SERVICES[activeService];
 
   return (
-    <div className="min-h-screen text-[#E8EDF3]" style={{ fontFamily: "'Golos Text', sans-serif", background: "#060d1f" }}>
+    <div className="w-full" style={{ background: "#060d1f", color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>
 
-      {/* NAV */}
-      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "backdrop-blur-md border-b" : ""}`}
-        style={scrolled ? { background: "rgba(6,13,31,0.92)", borderColor: "rgba(59,130,246,0.15)" } : {}}>
-        <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-[72px]">
+      {/* ── NAV ── */}
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        style={{ background: scrolled ? "rgba(6,13,31,0.95)" : "transparent", backdropFilter: scrolled ? "blur(12px)" : "none", borderBottom: scrolled ? "1px solid rgba(59,130,246,0.12)" : "none" }}
+      >
+        <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16">
           <a href="#" className="flex items-center gap-2.5">
-            <img src={LOGO_URL} alt="KeyCard" className="h-10 w-10 object-cover rounded-lg" style={{ border: "1px solid rgba(59,130,246,0.3)" }} />
-            <span className="hidden sm:block text-sm font-bold tracking-widest uppercase" style={{ color: "#E8EDF3", fontFamily: "Inter, sans-serif", letterSpacing: "0.15em" }}>
-              KeyCard <span style={{ color: blue }}>Promotion</span>
+            <img src={LOGO_URL} alt="KeyCard" className="h-9 w-9 object-cover rounded-lg" style={{ border: "1px solid rgba(59,130,246,0.3)" }} />
+            <span className="font-black text-sm tracking-widest uppercase" style={{ color: "#E8EDF3" }}>
+              Key<span style={{ color: "#3B82F6" }}>Card</span>
             </span>
           </a>
-
-          <nav className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8">
             {NAV.map((n) => (
-              <a key={n.href} href={n.href} className="text-xs tracking-widest uppercase transition-colors duration-300 hover:text-white" style={{ color: "rgba(180,200,230,0.65)" }}>
+              <a key={n.href} href={n.href} className="text-sm font-medium transition-colors hover:opacity-100" style={{ color: "rgba(180,200,230,0.65)" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(180,200,230,0.65)")}>
                 {n.label}
               </a>
             ))}
-          </nav>
-
-          <a
-            href="#contact"
-            className="hidden md:flex items-center gap-2 text-xs tracking-widest uppercase px-5 py-2.5 rounded-lg transition-all duration-300 hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #3B82F6, #8B5CF6)", color: "#fff" }}
-          >
-            Получить разбор
+          </div>
+          <a href="#contact" className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all hover:opacity-90"
+            style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)", color: "#fff" }}>
+            Получить аудит <Icon name="ArrowUpRight" size={14} />
           </a>
-
-          <button className="md:hidden p-2" style={{ color: "rgba(180,200,230,0.65)" }} onClick={() => setMenuOpen(!menuOpen)}>
-            <Icon name={menuOpen ? "X" : "Menu"} size={22} />
+          <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
+            <Icon name={menuOpen ? "X" : "Menu"} size={22} style={{ color: "#E8EDF3" }} />
           </button>
         </div>
-
         {menuOpen && (
-          <div className="md:hidden border-t px-5 py-6 flex flex-col gap-5" style={{ background: "#0a1428", borderColor: "rgba(59,130,246,0.15)" }}>
+          <div className="md:hidden px-5 pb-5 flex flex-col gap-4" style={{ background: "rgba(6,13,31,0.98)", borderTop: "1px solid rgba(59,130,246,0.1)" }}>
             {NAV.map((n) => (
-              <a key={n.href} href={n.href} className="text-sm tracking-widest uppercase text-[#E8EDF3]" onClick={() => setMenuOpen(false)}>
-                {n.label}
-              </a>
+              <a key={n.href} href={n.href} className="text-sm font-medium py-2" style={{ color: "rgba(180,200,230,0.8)" }} onClick={() => setMenuOpen(false)}>{n.label}</a>
             ))}
+            <a href="#contact" className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-bold mt-2"
+              style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)", color: "#fff" }} onClick={() => setMenuOpen(false)}>
+              Получить аудит <Icon name="ArrowUpRight" size={14} />
+            </a>
           </div>
         )}
-      </header>
+      </nav>
 
-      {/* HERO */}
-      <section ref={heroRef.ref} className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-16">
-        {/* BG glow blobs */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute" style={{ width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 70%)", top: "10%", left: "-10%" }} />
-          <div className="absolute" style={{ width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)", top: "30%", right: "-5%" }} />
-          <div className="absolute" style={{ width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)", bottom: "5%", left: "40%" }} />
-          {/* Grid lines */}
-          <svg className="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#3B82F6" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
-          {/* Hexagon decorations */}
-          <div className="absolute opacity-20" style={{ top: "8%", right: "5%", animation: "rotate-slow 30s linear infinite" }}>
-            <HexagonDecor size={300} color="#3B82F6" strokeWidth={1} />
-          </div>
-          <div className="absolute opacity-10" style={{ top: "5%", right: "3%", animation: "rotate-slow 20s linear infinite reverse" }}>
-            <HexagonDecor size={380} color="#8B5CF6" strokeWidth={0.5} />
-          </div>
-          <div className="absolute opacity-15" style={{ bottom: "10%", left: "3%", animation: "rotate-slow 25s linear infinite" }}>
-            <HexagonDecor size={200} color="#3B82F6" strokeWidth={1} />
-          </div>
-          {/* Floating circuit dots */}
-          {[
-            { x: "15%", y: "20%", s: 4 },
-            { x: "80%", y: "15%", s: 3 },
-            { x: "90%", y: "70%", s: 5 },
-            { x: "5%", y: "65%", s: 3 },
-            { x: "50%", y: "90%", s: 4 },
-          ].map((d, i) => (
-            <div key={i} className="absolute rounded-full" style={{ width: d.s, height: d.s, left: d.x, top: d.y, background: "#3B82F6", boxShadow: `0 0 ${d.s * 3}px rgba(59,130,246,0.8)`, animation: `float ${3 + i}s ease-in-out infinite`, animationDelay: `${i * 0.7}s` }} />
-          ))}
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-5 md:px-10 py-24 w-full">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            <div className={`flex-1 transition-all duration-1000 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-              <div className="flex items-center gap-3 mb-8">
-                <div className="h-px w-10" style={{ background: `linear-gradient(90deg, ${blue}, ${purple})` }} />
-                <span className="text-xs tracking-[0.25em] uppercase" style={{ color: blue }}>Рекламное SEO-агентство</span>
-              </div>
-              <h1 style={{ fontSize: "clamp(2.8rem,6vw,5rem)", lineHeight: 1.05, fontWeight: 700, color: "#E8EDF3", fontFamily: "Inter, sans-serif", letterSpacing: "-0.01em" }}>
-                Будь первым{" "}
-                <span style={{ background: "linear-gradient(90deg, #3B82F6, #8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  на картах
-                </span>
-                <br />
-                с первыми в{" "}
-                <span style={{ background: "linear-gradient(90deg, #8B5CF6, #3B82F6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  Яндекс Рекламе
-                </span>
-              </h1>
-              <p className="mt-6 text-base md:text-lg leading-relaxed max-w-xl font-light" style={{ color: "rgba(180,200,230,0.75)" }}>
-                Помогаем салонам красоты, стоматологиям и медицинским центрам стабильно привлекать новых клиентов через локальный поиск.
-              </p>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <a
-                  href="https://t.me/yandex_promotion"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 px-7 py-4 text-sm font-medium tracking-wide rounded-lg transition-all duration-300 hover:opacity-90 glow-blue"
-                  style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}
-                >
-                  Разбор вашей организации
-                  <Icon name="ArrowRight" size={16} />
-                </a>
-                <a
-                  href="#services"
-                  className="flex items-center gap-2.5 px-7 py-4 text-sm font-medium tracking-wide rounded-lg border transition-all duration-300 hover:border-blue-400/40"
-                  style={{ borderColor: "rgba(59,130,246,0.25)", color: "#E8EDF3", background: "rgba(59,130,246,0.05)" }}
-                >
-                  Наши услуги
-                </a>
-              </div>
+      {/* ── HERO ── */}
+      <section ref={heroRef} id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden"
+        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%)" }}>
+        {/* Grid overlay */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: "linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px)",
+          backgroundSize: "60px 60px"
+        }} />
+        <div className="max-w-7xl mx-auto px-5 md:px-10 pt-28 pb-20 w-full">
+          <div className="max-w-4xl">
+            <div className="hero-line inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-semibold tracking-widest uppercase"
+              style={{ background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.2)", color: "#60A5FA" }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+              Продвижение в Яндекс Картах
             </div>
-
-
+            <h1 className="hero-line font-black leading-[0.95] mb-6" style={{ fontSize: "clamp(3rem,8vw,7rem)", letterSpacing: "-0.02em" }}>
+              Будь первым<br />
+              <span style={{ background: "linear-gradient(90deg,#3B82F6,#8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                на картах
+              </span>
+            </h1>
+            <p className="hero-line text-lg md:text-xl mb-10 max-w-xl leading-relaxed" style={{ color: "rgba(180,200,230,0.7)" }}>
+              Выводим компании в ТОП-3 Яндекс Карт. Больше звонков, больше клиентов — уже в первый месяц.
+            </p>
+            <div className="hero-line flex flex-col sm:flex-row gap-4 mb-20">
+              <a href="#contact" className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-base transition-all hover:opacity-90 hover:scale-105"
+                style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)", color: "#fff" }}>
+                Бесплатный аудит <Icon name="ArrowUpRight" size={18} />
+              </a>
+              <a href="#vacancy" className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-base transition-all hover:opacity-80"
+                style={{ border: "1px solid rgba(59,130,246,0.3)", color: "#E8EDF3" }}>
+                Записаться на разбор
+              </a>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+              {STATS.map((s, i) => (
+                <div key={i} className="hero-stat rounded-2xl px-5 py-4"
+                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(59,130,246,0.12)" }}>
+                  <p className="font-black text-3xl mb-1" style={{ background: "linear-gradient(90deg,#3B82F6,#8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{s.value}</p>
+                  <p className="text-xs" style={{ color: "rgba(180,200,230,0.55)" }}>{s.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
+        </div>
+        {/* Scroll hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+          <p className="text-xs tracking-widest uppercase" style={{ color: "rgba(180,200,230,0.3)" }}>Прокрути вниз</p>
+          <Icon name="ChevronDown" size={16} style={{ color: "rgba(59,130,246,0.5)" }} />
+        </div>
+      </section>
 
-          <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-5 transition-all duration-1000 delay-300 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            {STATS.map((s) => (
-              <div key={s.value} className="rounded-xl p-5 border tech-border" style={{ background: "rgba(59,130,246,0.05)", borderColor: "rgba(59,130,246,0.15)" }}>
-                <div style={{ fontSize: 38, fontWeight: 700, color: blue, lineHeight: 1, fontFamily: "Inter, sans-serif" }}>{s.value}</div>
-                <div className="mt-1 text-xs tracking-wide" style={{ color: "rgba(180,200,230,0.6)" }}>{s.label}</div>
+      {/* ── STORY PIN ── */}
+      <div ref={storyRef} id="about" style={{ height: `${STORY_STEPS.length * 100 + 100}vh` }}>
+        <div ref={storyPinRef} className="h-screen w-full flex items-center justify-center overflow-hidden relative"
+          style={{ background: "#060d1f" }}>
+          {/* Progress dots */}
+          <div className="absolute left-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-10">
+            {STORY_STEPS.map((s, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="rounded-full transition-all duration-500"
+                  style={{
+                    width: i === activeStep ? 10 : 6,
+                    height: i === activeStep ? 10 : 6,
+                    background: i === activeStep ? s.accent : "rgba(180,200,230,0.2)",
+                    boxShadow: i === activeStep ? `0 0 12px ${s.accent}` : "none"
+                  }} />
+                <span className="text-xs hidden lg:block transition-all duration-300"
+                  style={{ color: i === activeStep ? "rgba(180,200,230,0.8)" : "rgba(180,200,230,0.25)", fontWeight: i === activeStep ? 600 : 400 }}>
+                  {s.label}
+                </span>
               </div>
             ))}
           </div>
-        </div>
 
-        <div className="relative border-t py-3 overflow-hidden" style={{ borderColor: "rgba(59,130,246,0.1)" }}>
-          <div className="ticker-wrap flex gap-14 whitespace-nowrap">
-            {Array(6).fill(["Яндекс.Бизнес", "Яндекс.Карты", "SEO", "Репутация", "Алиса AI", "Яндекс.Медицина"]).flat().map((t, i) => (
-              <span key={i} className="text-[11px] tracking-[0.2em] uppercase" style={{ color: "rgba(59,130,246,0.5)" }}>
-                {t}&nbsp;·
+          {/* Step counter */}
+          <div className="absolute top-8 right-8 text-right z-10">
+            <p className="font-black text-6xl leading-none" style={{ color: "rgba(59,130,246,0.08)", fontVariantNumeric: "tabular-nums" }}>
+              0{activeStep + 1}
+            </p>
+            <p className="text-xs tracking-widest uppercase mt-1" style={{ color: "rgba(180,200,230,0.3)" }}>/ 0{STORY_STEPS.length}</p>
+          </div>
+
+          {/* Main content */}
+          <div className="max-w-5xl mx-auto px-10 md:px-20 w-full grid md:grid-cols-2 gap-16 items-center">
+            <div key={activeStep} style={{ animation: "storyIn 0.5s ease forwards" }}>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs font-bold tracking-widest uppercase"
+                style={{ background: `${step.accent}18`, border: `1px solid ${step.accent}40`, color: step.accent }}>
+                <Icon name={step.icon} size={12} />
+                {step.label}
+              </div>
+              <h2 className="font-black leading-[1.05] mb-6 whitespace-pre-line"
+                style={{ fontSize: "clamp(2.2rem,5vw,4rem)", letterSpacing: "-0.02em" }}>
+                {step.heading}
+              </h2>
+              <p className="text-base leading-relaxed mb-8" style={{ color: "rgba(180,200,230,0.65)" }}>
+                {step.sub}
+              </p>
+              <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90"
+                style={{ background: `linear-gradient(135deg,${step.accent},#8B5CF6)`, color: "#fff" }}>
+                Узнать подробнее <Icon name="ArrowRight" size={14} />
+              </a>
+            </div>
+            <div key={`stat-${activeStep}`} className="flex flex-col items-center" style={{ animation: "storyIn 0.5s 0.1s ease forwards", opacity: 0 }}>
+              <div className="relative">
+                <div className="absolute inset-0 rounded-3xl" style={{ background: `radial-gradient(circle at center, ${step.accent}22 0%, transparent 70%)`, transform: "scale(1.5)" }} />
+                <div className="relative rounded-3xl p-12 text-center" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${step.accent}30` }}>
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                    style={{ background: `${step.accent}18`, border: `1px solid ${step.accent}30` }}>
+                    <Icon name={step.icon} size={28} style={{ color: step.accent }} />
+                  </div>
+                  <p className="font-black mb-2" style={{ fontSize: "clamp(2.5rem,6vw,5rem)", background: `linear-gradient(135deg,${step.accent},#fff)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", letterSpacing: "-0.03em" }}>
+                    {step.stat.value}
+                  </p>
+                  <p className="text-sm" style={{ color: "rgba(180,200,230,0.5)" }}>{step.stat.label}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── APPROACH ── */}
+      <section id="approach" className="py-28 relative overflow-hidden" style={{ background: "#060d1f" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: "linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)",
+          backgroundSize: "80px 80px"
+        }} />
+        <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
+          <div className="mb-16">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#8B5CF6" }}>Наш подход</p>
+            <h2 className="font-black leading-tight" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", letterSpacing: "-0.02em" }}>
+              Индивидуальная стратегия —<br />
+              <span style={{ background: "linear-gradient(90deg,#8B5CF6,#3B82F6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                проверенный результат
               </span>
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {APPROACH.map((a, i) => (
+              <div key={i} className="group relative rounded-3xl p-8 transition-all duration-500 hover:-translate-y-2"
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(139,92,246,0.12)" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(139,92,246,0.4)"; e.currentTarget.style.background = "rgba(139,92,246,0.06)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(139,92,246,0.12)"; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6"
+                  style={{ background: "rgba(139,92,246,0.12)", border: "1px solid rgba(139,92,246,0.2)" }}>
+                  <Icon name={a.icon} size={22} style={{ color: "#8B5CF6" }} />
+                </div>
+                <p className="text-4xl font-black mb-3" style={{ color: "rgba(139,92,246,0.12)", fontVariantNumeric: "tabular-nums" }}>0{i + 1}</p>
+                <h3 className="font-bold text-lg mb-3" style={{ color: "#E8EDF3" }}>{a.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "rgba(180,200,230,0.6)" }}>{a.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section id="about" ref={aboutRef.ref} className="py-28 md:py-36 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute" style={{ width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)", top: "20%", right: "-5%" }} />
-        </div>
-        <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className={`transition-all duration-700 ${aboutRef.inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${blue}, ${purple})` }} />
-                <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>О компании</span>
-              </div>
-              <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", lineHeight: 1.1, fontWeight: 700, color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>
-                5 лет выводим бизнес в топ Яндекса
+      {/* ── SERVICES PIN ── */}
+      <div ref={servicesRef} id="services" style={{ height: `${SERVICES.length * 80 + 100}vh` }}>
+        <div ref={servicesPinRef} className="h-screen w-full flex items-center overflow-hidden"
+          style={{ background: "linear-gradient(180deg,#06101f 0%,#060d1f 100%)" }}>
+          <div className="max-w-7xl mx-auto px-5 md:px-10 w-full grid md:grid-cols-2 gap-16 items-center">
+
+            {/* Left: list */}
+            <div>
+              <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#3B82F6" }}>Инструменты</p>
+              <h2 className="font-black mb-10 leading-tight" style={{ fontSize: "clamp(1.8rem,4vw,3rem)", letterSpacing: "-0.02em" }}>
+                Полный арсенал<br />для роста в Яндексе
               </h2>
-              <p className="mt-5 leading-relaxed text-sm" style={{ color: "rgba(180,200,230,0.7)" }}>
-                Компания KeyCard специализируется на продвижении локального бизнеса в поисковых системах Яндекс, Яндекс.Карты и смежных платформах.
-              </p>
-              <p className="mt-3 leading-relaxed text-sm" style={{ color: "rgba(180,200,230,0.7)" }}>
-                Работаем с салонами красоты, косметологическими сетями, стоматологиями и медицинскими центрами — нишами с высокой конкуренцией в локальном поиске.
-              </p>
-              <div className="mt-8 flex flex-col gap-3">
-                {[
-                  "Более 300 доверенных партнёров по всей России",
-                  "Команда дизайнеров, маркетологов, SEO- и IT-специалистов",
-                  "Постоянно отслеживаем тренды и алгоритмы Яндекса",
-                ].map((t) => (
-                  <div key={t} className="flex items-start gap-3">
-                    <div className="mt-1 w-4 h-4 rounded flex-shrink-0 flex items-center justify-center" style={{ background: blueDim, border: `1px solid rgba(59,130,246,0.3)` }}>
-                      <Icon name="Check" size={10} style={{ color: blue }} />
+              <div className="flex flex-col gap-3">
+                {SERVICES.map((s, i) => (
+                  <button key={i} className="flex items-center gap-4 px-5 py-4 rounded-2xl text-left transition-all duration-300 w-full"
+                    style={{
+                      background: i === activeService ? "rgba(59,130,246,0.1)" : "rgba(255,255,255,0.02)",
+                      border: `1px solid ${i === activeService ? "rgba(59,130,246,0.4)" : "rgba(59,130,246,0.08)"}`,
+                    }}
+                    onClick={() => setActiveService(i)}>
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: i === activeService ? "rgba(59,130,246,0.2)" : "rgba(255,255,255,0.04)" }}>
+                      <Icon name={s.icon} size={16} style={{ color: i === activeService ? "#60A5FA" : "rgba(180,200,230,0.4)" }} />
                     </div>
-                    <span className="text-sm" style={{ color: "rgba(180,200,230,0.85)" }}>{t}</span>
-                  </div>
+                    <span className="font-semibold text-sm transition-colors"
+                      style={{ color: i === activeService ? "#E8EDF3" : "rgba(180,200,230,0.5)" }}>
+                      {s.title}
+                    </span>
+                    <span className="ml-auto text-xs font-mono" style={{ color: i === activeService ? "#3B82F6" : "rgba(180,200,230,0.2)" }}>{s.num}</span>
+                  </button>
                 ))}
               </div>
             </div>
 
-            <div className={`transition-all duration-700 delay-200 ${aboutRef.inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
-              <div className="relative flex items-center justify-center" style={{ minHeight: 420 }}>
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 420 420" fill="none">
-                  {[{ x: 210, y: 60 }, { x: 360, y: 120 }, { x: 390, y: 270 }, { x: 310, y: 380 }, { x: 110, y: 380 }, { x: 30, y: 270 }, { x: 60, y: 120 }].map((pt, i) => (
-                    <line key={i} x1="210" y1="210" x2={pt.x} y2={pt.y} stroke="rgba(59,130,246,0.2)" strokeWidth="1" strokeDasharray="4 4" />
-                  ))}
-                  <circle cx="210" cy="210" r="80" stroke="rgba(59,130,246,0.1)" strokeWidth="1" />
-                  <circle cx="210" cy="210" r="160" stroke="rgba(139,92,246,0.07)" strokeWidth="1" />
-                </svg>
-
-                <div className="relative z-10 rounded-2xl overflow-hidden flex-shrink-0 animate-float" style={{ width: 140, height: 140, border: "1px solid rgba(59,130,246,0.3)", background: "#0a1428", boxShadow: "0 0 40px rgba(59,130,246,0.2)" }}>
-                  <img src={LOGO_URL} alt="KeyCard" className="w-full h-full object-cover" />
+            {/* Right: detail */}
+            <div key={activeService} style={{ animation: "storyIn 0.4s ease forwards" }}>
+              <div className="rounded-3xl p-10 relative overflow-hidden"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(59,130,246,0.2)", minHeight: 340 }}>
+                <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full opacity-20"
+                  style={{ background: "radial-gradient(circle,#3B82F6,transparent)" }} />
+                <div className="relative">
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+                    style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.25)" }}>
+                    <Icon name={service.icon} size={28} style={{ color: "#60A5FA" }} />
+                  </div>
+                  <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "rgba(59,130,246,0.6)" }}>{service.num}</p>
+                  <h3 className="font-black text-3xl mb-4" style={{ letterSpacing: "-0.02em" }}>{service.title}</h3>
+                  <p className="text-base leading-relaxed mb-8" style={{ color: "rgba(180,200,230,0.65)" }}>{service.desc}</p>
+                  <a href="#contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all hover:opacity-90"
+                    style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)", color: "#fff" }}>
+                    Узнать стоимость <Icon name="ArrowRight" size={14} />
+                  </a>
                 </div>
-
-                {[
-                  { label: "Стоматологии", angle: -90, icon: "🦷" },
-                  { label: "Косметология", angle: -38, icon: "✨" },
-                  { label: "Салоны красоты", angle: 14, icon: "💇" },
-                  { label: "Медцентры", angle: 66, icon: "🏥" },
-                  { label: "Автосервисы", angle: 118, icon: "🔧" },
-                  { label: "Фитнес-клубы", angle: 170, icon: "💪" },
-                  { label: "Рестораны", angle: 222, icon: "🍽️" },
-                ].map(({ label, angle, icon }) => {
-                  const r = 160;
-                  const rad = (angle * Math.PI) / 180;
-                  const x = 50 + ((Math.cos(rad) * r) / 420) * 100;
-                  const y = 50 + ((Math.sin(rad) * r) / 420) * 100;
-                  return (
-                    <div key={label} className="absolute flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-[#E8EDF3] whitespace-nowrap" style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%, -50%)", background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.2)", backdropFilter: "blur(8px)", boxShadow: "0 2px 12px rgba(0,0,0,0.3)" }}>
-                      <span>{icon}</span>
-                      <span>{label}</span>
-                    </div>
-                  );
-                })}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* APPROACH */}
-      <section id="approach" ref={approachRef.ref} className="py-28 md:py-36 relative" style={{ background: "linear-gradient(180deg, #060d1f 0%, #0a1428 50%, #060d1f 100%)" }}>
+      {/* ── PRICING ── */}
+      <section id="pricing" className="py-28 relative" style={{ background: "#060d1f" }}>
         <div className="max-w-7xl mx-auto px-5 md:px-10">
-          <div className={`text-center mb-14 transition-all duration-700 ${approachRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, transparent, ${blue})` }} />
-              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Наш подход</span>
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
-            </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
-              Индивидуальная стратегия — проверенный результат
+          <div className="text-center mb-16">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#3B82F6" }}>Тарифы</p>
+            <h2 className="font-black leading-tight" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", letterSpacing: "-0.02em" }}>
+              Прозрачные условия<br />
+              <span style={{ background: "linear-gradient(90deg,#3B82F6,#8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                сотрудничества
+              </span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { num: "01", icon: "Target", title: "Индивидуальный подход", desc: "Анализируем ваш бизнес, конкурентов и нишу. Разрабатываем стратегию под конкретные цели — без шаблонов." },
-              { num: "02", icon: "Zap", title: "Готовые решения", desc: "Используем методики, отработанные на 300+ клиентах. Знаем, что работает в вашей нише и даёт результат быстро." },
-              { num: "03", icon: "Users", title: "Новые клиенты", desc: "Цель — не просто позиции, а реальный поток клиентов. Оцениваем эффективность по бизнес-метрикам." },
-            ].map((c, i) => (
-              <div key={c.num} className={`card-hover rounded-xl p-8 border transition-all duration-700 tech-border ${approachRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ background: "rgba(59,130,246,0.04)", borderColor: "rgba(59,130,246,0.12)", transitionDelay: `${i * 120}ms` }}>
-                <div className="flex items-start justify-between mb-6">
-                  <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ background: blueDim, border: "1px solid rgba(59,130,246,0.2)" }}>
-                    <Icon name={c.icon} size={22} style={{ color: blue }} />
-                  </div>
-                  <span style={{ fontSize: 44, fontWeight: 700, color: "rgba(59,130,246,0.12)", lineHeight: 1, fontFamily: "Inter, sans-serif" }}>{c.num}</span>
-                </div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: "#E8EDF3", marginBottom: 10, fontFamily: "Inter, sans-serif" }}>{c.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(180,200,230,0.65)" }}>{c.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className={`mt-12 text-center transition-all duration-700 delay-400 ${approachRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-            <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-8 py-4 text-sm font-medium rounded-lg transition-all duration-300 hover:opacity-90"
-              style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}>
-              Разбор вашей организации
-              <Icon name="ArrowUpRight" size={16} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES */}
-      <section id="services" ref={servicesRef.ref} className="py-28 md:py-36 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute" style={{ width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)", bottom: 0, right: "10%" }} />
-        </div>
-        <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
-          <div className={`mb-14 transition-all duration-700 ${servicesRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="flex items-center gap-3 mb-5">
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${blue}, ${purple})` }} />
-              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Что мы предлагаем</span>
-            </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
-              Полный арсенал инструментов<br className="hidden md:block" /> для роста в Яндексе
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {SERVICES.map((s, i) => (
-              <div key={s.title}
-                className={`card-hover rounded-xl p-7 border transition-all duration-700 tech-border ${servicesRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ background: "rgba(59,130,246,0.04)", borderColor: "rgba(59,130,246,0.12)", transitionDelay: `${i * 80}ms` }}>
-                <div className="w-11 h-11 rounded-lg flex items-center justify-center mb-5" style={{ background: i % 2 === 0 ? blueDim : purpleDim, border: `1px solid ${i % 2 === 0 ? "rgba(59,130,246,0.2)" : "rgba(139,92,246,0.2)"}` }}>
-                  <Icon name={s.icon} size={20} style={{ color: i % 2 === 0 ? blue : purple }} />
-                </div>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: "#E8EDF3", marginBottom: 10, fontFamily: "Inter, sans-serif" }}>{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(180,200,230,0.65)" }}>{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* REVIEWS_START */}
-      <section id="reviews" style={{display:"none"}}>
-        <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
-
-          <div className={`text-center mb-14 transition-all duration-700 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, transparent, ${blue})` }} />
-              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Отзывы клиентов</span>
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
-            </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
-              Нам доверяют лидеры рынка
-            </h2>
-            <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Реальные результаты наших партнёров</p>
-          </div>
-
-          {/* Reviews carousel */}
-          <div className={`transition-all duration-700 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="relative rounded-2xl p-8 md:p-10 border" style={{ background: "linear-gradient(145deg, rgba(59,130,246,0.08), rgba(139,92,246,0.06))", borderColor: "rgba(59,130,246,0.2)" }}>
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.2)" }}>
-                  {REVIEWS[activeReview].icon}
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg" style={{ color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>{REVIEWS[activeReview].org}</h3>
-                  <div className="flex gap-0.5 mt-1">
-                    {[1,2,3,4,5].map(s => <span key={s} style={{ color: "#F5A623", fontSize: 14 }}>★</span>)}
-                  </div>
-                </div>
-                <div className="ml-auto text-5xl leading-none opacity-20 font-serif" style={{ color: blue }}>"</div>
-              </div>
-              <p className="text-base leading-relaxed" style={{ color: "rgba(180,200,230,0.85)" }}>
-                {REVIEWS[activeReview].text}
-              </p>
-              <div className="flex items-center justify-between mt-8">
-                <div className="flex gap-2">
-                  {REVIEWS.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveReview(i)}
-                      className="rounded-full transition-all duration-300"
-                      style={{ width: i === activeReview ? 24 : 8, height: 8, background: i === activeReview ? blue : "rgba(59,130,246,0.25)" }}
-                    />
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setActiveReview((activeReview - 1 + REVIEWS.length) % REVIEWS.length)}
-                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:opacity-80"
-                    style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.2)" }}
-                  >
-                    <Icon name="ChevronLeft" size={18} style={{ color: blue }} />
-                  </button>
-                  <button
-                    onClick={() => setActiveReview((activeReview + 1) % REVIEWS.length)}
-                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:opacity-80"
-                    style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.2)" }}
-                  >
-                    <Icon name="ChevronRight" size={18} style={{ color: blue }} />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Mini grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
-              {REVIEWS.map((r, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveReview(i)}
-                  className="text-left rounded-xl p-4 border transition-all duration-200"
+          {/* Tab selector */}
+          <div className="flex justify-center mb-10">
+            <div className="flex rounded-2xl p-1" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(59,130,246,0.12)" }}>
+              {PLANS.map((p, i) => (
+                <button key={i} onClick={() => setActivePlan(i)}
+                  className="px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300"
                   style={{
-                    background: i === activeReview ? "rgba(59,130,246,0.12)" : "rgba(59,130,246,0.04)",
-                    borderColor: i === activeReview ? "rgba(59,130,246,0.4)" : "rgba(59,130,246,0.1)",
-                  }}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span style={{ fontSize: 16 }}>{r.icon}</span>
-                    <span className="text-[11px] font-semibold truncate" style={{ color: i === activeReview ? blue : "rgba(180,200,230,0.7)" }}>{r.org}</span>
-                  </div>
-                  <div className="flex gap-px">
-                    {[1,2,3,4,5].map(s => <span key={s} style={{ color: "#F5A623", fontSize: 10 }}>★</span>)}
-                  </div>
+                    background: i === activePlan ? "linear-gradient(135deg,#3B82F6,#8B5CF6)" : "transparent",
+                    color: i === activePlan ? "#fff" : "rgba(180,200,230,0.5)",
+                  }}>
+                  {p.name}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Review form */}
-          <div className={`mt-16 transition-all duration-700 delay-200 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="rounded-2xl p-8 md:p-10 border" style={{ background: "rgba(59,130,246,0.04)", borderColor: "rgba(59,130,246,0.15)" }}>
-              <div className="mb-6">
-                <h3 className="text-xl font-bold mb-1" style={{ color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>Оставить отзыв</h3>
-                <p className="text-sm" style={{ color: "rgba(180,200,230,0.55)" }}>Мы опубликуем его после проверки</p>
-              </div>
-
-              {reviewSubmitted ? (
-                <div className="flex flex-col items-center justify-center py-10 gap-4">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.3)" }}>
-                    <Icon name="CheckCircle" size={32} style={{ color: blue }} />
+          {/* Active plan detail */}
+          <div key={activePlan} className="max-w-2xl mx-auto" style={{ animation: "storyIn 0.4s ease forwards" }}>
+            <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(59,130,246,0.25)", background: "rgba(255,255,255,0.02)" }}>
+              <div className="px-8 py-6" style={{ background: "linear-gradient(135deg,rgba(59,130,246,0.12),rgba(139,92,246,0.08))", borderBottom: "1px solid rgba(59,130,246,0.15)" }}>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "#60A5FA" }}>{PLANS[activePlan].period}</p>
+                    <h3 className="font-black text-3xl">{PLANS[activePlan].name}</h3>
+                    <p className="text-sm mt-1" style={{ color: "rgba(180,200,230,0.6)" }}>{PLANS[activePlan].desc}</p>
                   </div>
-                  <p className="text-lg font-semibold" style={{ color: "#E8EDF3" }}>Спасибо за отзыв!</p>
-                  <p className="text-sm text-center" style={{ color: "rgba(180,200,230,0.6)" }}>Мы рассмотрим его в течение 1–2 рабочих дней и опубликуем.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleReviewSubmit}>
-                  <div className="grid md:grid-cols-2 gap-4 mb-4">
-                    {[
-                      { key: "full_name", label: "ФИО", placeholder: "Иванова Мария Сергеевна", type: "text" },
-                      { key: "organization", label: "Название организации", placeholder: "Клиника «Здоровая улыбка»", type: "text" },
-                      { key: "phone", label: "Телефон", placeholder: "+7 (999) 000-00-00", type: "tel" },
-                      { key: "email", label: "Почта", placeholder: "mail@clinic.ru", type: "email" },
-                    ].map(({ key, label, placeholder, type }) => (
-                      <div key={key}>
-                        <label className="block text-xs mb-1.5 tracking-wide" style={{ color: "rgba(180,200,230,0.55)" }}>{label}</label>
-                        <input
-                          type={type}
-                          required
-                          placeholder={placeholder}
-                          value={reviewForm[key as keyof typeof reviewForm]}
-                          onChange={e => setReviewForm(f => ({ ...f, [key]: e.target.value }))}
-                          className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-all duration-200"
-                          style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.2)", color: "#E8EDF3" }}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mb-5">
-                    <label className="block text-xs mb-1.5 tracking-wide" style={{ color: "rgba(180,200,230,0.55)" }}>Ваш отзыв</label>
-                    <textarea
-                      required
-                      rows={4}
-                      placeholder="Расскажите о вашем опыте работы с KeyCard..."
-                      value={reviewForm.text}
-                      onChange={e => setReviewForm(f => ({ ...f, text: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-all duration-200 resize-none"
-                      style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.2)", color: "#E8EDF3" }}
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={reviewLoading}
-                    className="flex items-center gap-2.5 px-7 py-3.5 text-sm font-medium rounded-lg transition-all duration-300 hover:opacity-90 disabled:opacity-50"
-                    style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}
-                  >
-                    {reviewLoading ? "Отправляем..." : "Отправить отзыв"}
-                    {!reviewLoading && <Icon name="Send" size={15} />}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PRICING */}
-      <section id="pricing" ref={pricingRef.ref} className="py-28 md:py-36 relative" style={{ background: "linear-gradient(180deg, #060d1f 0%, #080f22 100%)" }}>
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute opacity-30" style={{ top: "15%", left: "50%", transform: "translateX(-50%)", animation: "rotate-slow 40s linear infinite" }}>
-            <HexagonDecor size={700} color="#3B82F6" strokeWidth={0.5} />
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
-          <div className={`text-center mb-14 transition-all duration-700 ${pricingRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, transparent, ${blue})` }} />
-              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Тарифы</span>
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
-            </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
-              Прозрачные условия сотрудничества
-            </h2>
-            <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Цена зависит от количества продвигаемых точек и объёма работ</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {PLANS.map((p, i) => (
-              <div key={p.name}
-                className={`relative rounded-xl p-8 border transition-all duration-700 ${p.highlight ? "glow-blue" : ""} ${pricingRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{
-                  transitionDelay: `${i * 120}ms`,
-                  background: p.highlight
-                    ? "linear-gradient(145deg, rgba(59,130,246,0.15), rgba(99,102,241,0.1))"
-                    : "rgba(59,130,246,0.04)",
-                  borderColor: p.highlight ? "rgba(59,130,246,0.5)" : "rgba(59,130,246,0.12)",
-                }}>
-                {p.highlight && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <span className="text-[10px] tracking-widest uppercase px-4 py-1.5 rounded-full font-medium" style={{ background: "linear-gradient(135deg, #3B82F6, #8B5CF6)", color: "#fff" }}>
+                  {PLANS[activePlan].highlight && (
+                    <div className="px-3 py-1.5 rounded-full text-xs font-bold"
+                      style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)", color: "#fff" }}>
                       Популярный
-                    </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="px-8 py-6">
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="rounded-2xl p-4 text-center" style={{ background: "rgba(59,130,246,0.06)", border: "1px solid rgba(59,130,246,0.15)" }}>
+                    <p className="text-xs mb-1" style={{ color: "rgba(180,200,230,0.5)" }}>Без репутации</p>
+                    <p className="font-black text-xl" style={{ color: "#60A5FA" }}>{PLANS[activePlan].prices[0]}</p>
                   </div>
-                )}
-                <div className="mb-5">
-                  <p className="text-xs tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(180,200,230,0.5)" }}>{p.name}</p>
-                  <p className="text-sm" style={{ color: blue }}>{p.period}</p>
+                  <div className="rounded-2xl p-4 text-center" style={{ background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.15)" }}>
+                    <p className="text-xs mb-1" style={{ color: "rgba(180,200,230,0.5)" }}>С репутацией</p>
+                    <p className="font-black text-xl" style={{ color: "#A78BFA" }}>{PLANS[activePlan].prices[1]}</p>
+                  </div>
                 </div>
-                <div style={{ fontSize: 28, fontWeight: 700, color: "#E8EDF3", marginBottom: 2, fontFamily: "Inter, sans-serif" }}>{p.prices[0]}</div>
-                <p className="text-xs mb-3" style={{ color: "rgba(180,200,230,0.5)" }}>Без репутации</p>
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="h-px flex-1 border-t border-dashed" style={{ borderColor: "rgba(59,130,246,0.15)" }} />
-                  <span className="text-xs" style={{ color: "rgba(180,200,230,0.4)" }}>или</span>
-                  <div className="h-px flex-1 border-t border-dashed" style={{ borderColor: "rgba(59,130,246,0.15)" }} />
-                </div>
-                <div style={{ fontSize: 28, fontWeight: 700, color: "#E8EDF3", marginBottom: 12, fontFamily: "Inter, sans-serif" }}>{p.prices[1]}</div>
-                <p className="text-xs mb-7" style={{ color: "rgba(180,200,230,0.5)" }}>{p.desc}</p>
                 <ul className="space-y-3 mb-8">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5">
-                      <div className="mt-0.5 w-4 h-4 rounded flex-shrink-0 flex items-center justify-center" style={{ background: blueDim }}>
-                        <Icon name="Check" size={9} style={{ color: blue }} />
+                  {PLANS[activePlan].features.map((f, i) => (
+                    <li key={i} className="flex items-center gap-3 text-sm" style={{ color: "rgba(180,200,230,0.8)" }}>
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
+                        style={{ background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.3)" }}>
+                        <Icon name="Check" size={11} style={{ color: "#60A5FA" }} />
                       </div>
-                      <span className="text-sm" style={{ color: "rgba(180,200,230,0.8)" }}>{f}</span>
+                      {f}
                     </li>
                   ))}
                 </ul>
-                <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
-                  className="block text-center text-sm font-medium py-3.5 rounded-lg border transition-all duration-300 hover:opacity-90"
-                  style={p.highlight
-                    ? { background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff", borderColor: "transparent" }
-                    : { background: "transparent", color: "#E8EDF3", borderColor: "rgba(59,130,246,0.25)" }}>
-                  Выбрать тариф
+                <a href="#contact" className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold text-sm transition-all hover:opacity-90"
+                  style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)", color: "#fff" }}>
+                  Выбрать тариф <Icon name="ArrowRight" size={14} />
                 </a>
               </div>
-            ))}
-          </div>
-
-          <p className="mt-8 text-center text-xs" style={{ color: "rgba(180,200,230,0.35)" }}>
-            В каждый тариф включено: настройка профиля · SEO · дизайн · работа с отзывами · Яндекс.Медицина · Алиса AI
-          </p>
-        </div>
-      </section>
-
-      {/* CONTACT */}
-      <section id="contact" ref={contactRef.ref} className="py-28 md:py-36 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute" style={{ width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)", top: "10%", left: "-10%" }} />
-          <div className="absolute" style={{ width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)", bottom: "5%", right: "-5%" }} />
-        </div>
-        <div className="max-w-4xl mx-auto px-5 md:px-10 relative">
-          <div className={`text-center mb-12 transition-all duration-700 ${contactRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, transparent, ${blue})` }} />
-              <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Контакты</span>
-              <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
             </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
-              Готовы обсудить ваш проект?
-            </h2>
-            <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Оставьте заявку — свяжемся в течение 30 минут в рабочее время</p>
-          </div>
-
-          <div className={`rounded-2xl p-8 md:p-12 border transition-all duration-700 delay-150 tech-border ${contactRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-            style={{ background: "rgba(59,130,246,0.04)", borderColor: "rgba(59,130,246,0.15)" }}>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Phone + email */}
-              <div className="flex flex-col gap-5">
-                <div>
-                  <p className="text-[11px] tracking-[0.15em] uppercase mb-2" style={{ color: "rgba(180,200,230,0.45)" }}>Телефон</p>
-                  <a href="tel:+79935904964" className="flex items-center gap-3 text-lg font-semibold hover:opacity-80 transition-opacity" style={{ color: "#E8EDF3" }}>
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: blueDim, border: "1px solid rgba(59,130,246,0.2)" }}>
-                      <Icon name="Phone" size={16} style={{ color: blue }} />
-                    </div>
-                    +7 993-590-49-64
-                  </a>
-                </div>
-                <div>
-                  <p className="text-[11px] tracking-[0.15em] uppercase mb-2" style={{ color: "rgba(180,200,230,0.45)" }}>Почта</p>
-                  <a href="mailto:yandex_promotion@mail.ru" className="flex items-center gap-3 text-sm hover:opacity-80 transition-opacity" style={{ color: "#E8EDF3" }}>
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: blueDim, border: "1px solid rgba(59,130,246,0.2)" }}>
-                      <Icon name="Mail" size={16} style={{ color: blue }} />
-                    </div>
-                    yandex_promotion@mail.ru
-                  </a>
-                </div>
-              </div>
-
-              {/* Messengers */}
-              <div>
-                <p className="text-[11px] tracking-[0.15em] uppercase mb-4" style={{ color: "rgba(180,200,230,0.45)" }}>Мессенджеры</p>
-                <div className="flex flex-col gap-3">
-                  <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:opacity-80"
-                    style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#229ED9" }}>
-                      <Icon name="Send" size={15} style={{ color: "#fff" }} />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>Telegram</p>
-                      <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>@yandex_promotion</p>
-                    </div>
-                  </a>
-                  <a href="https://wa.me/79935904964" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:opacity-80"
-                    style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#25D366" }}>
-                      <Icon name="MessageCircle" size={15} style={{ color: "#fff" }} />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>WhatsApp</p>
-                      <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>+7 993-590-49-64</p>
-                    </div>
-                  </a>
-                  <a href="https://max.ru/yandex_promotion" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:opacity-80"
-                    style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
-                    <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0">
-                      <img src="https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/bucket/cece604d-e954-48aa-81df-e9bbf691da88.png" alt="Макс" className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium" style={{ color: "#E8EDF3" }}>Макс</p>
-                      <p className="text-xs" style={{ color: "rgba(180,200,230,0.5)" }}>Написать в Макс</p>
-                    </div>
-                  </a>
-                </div>
-              </div>
+            {/* Plan switcher cards below */}
+            <div className="grid grid-cols-3 gap-3 mt-4">
+              {PLANS.map((p, i) => (
+                <button key={i} onClick={() => setActivePlan(i)}
+                  className="rounded-2xl p-4 text-left transition-all duration-300"
+                  style={{
+                    background: i === activePlan ? "rgba(59,130,246,0.1)" : "rgba(255,255,255,0.02)",
+                    border: `1px solid ${i === activePlan ? "rgba(59,130,246,0.4)" : "rgba(59,130,246,0.08)"}`,
+                  }}>
+                  <p className="font-bold text-xs mb-1" style={{ color: i === activePlan ? "#E8EDF3" : "rgba(180,200,230,0.4)" }}>{p.name}</p>
+                  <p className="text-[10px]" style={{ color: i === activePlan ? "rgba(96,165,250,0.8)" : "rgba(180,200,230,0.25)" }}>{p.period}</p>
+                </button>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* LEAD FORM */}
-      <section id="vacancy" className="py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0a1628 0%, #0d1f3c 50%, #0a1628 100%)" }}>
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute opacity-10" style={{ top: "5%", right: "3%", animation: "rotate-slow 30s linear infinite" }}>
-            <HexagonDecor size={280} color="#3B82F6" strokeWidth={1} />
-          </div>
-          <div className="absolute opacity-5" style={{ bottom: "5%", left: "2%", animation: "rotate-slow 25s linear infinite reverse" }}>
-            <HexagonDecor size={200} color="#60A5FA" strokeWidth={1} />
-          </div>
-          {[{x:"8%",y:"15%"},{x:"92%",y:"25%"},{x:"5%",y:"70%"},{x:"95%",y:"65%"},{x:"50%",y:"5%"}].map((d,i) => (
-            <div key={i} className="absolute rounded-full" style={{ width: 3, height: 3, left: d.x, top: d.y, background: "#60A5FA", boxShadow: "0 0 8px rgba(96,165,250,0.8)", animation: `float ${3+i}s ease-in-out infinite`, animationDelay: `${i*0.6}s` }} />
-          ))}
-        </div>
-
+      {/* ── LEAD FORM (разбор) ── */}
+      <section id="vacancy" className="py-28 relative overflow-hidden" style={{ background: "linear-gradient(180deg,#060d1f 0%,#08101e 100%)" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(59,130,246,0.07) 0%, transparent 70%)"
+        }} />
         <div className="max-w-2xl mx-auto px-5 md:px-10 relative">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase mb-3" style={{ color: "#60A5FA" }}>Бесплатно</p>
-            <h2 className="font-black leading-tight uppercase" style={{ fontSize: "clamp(1.8rem,5vw,2.8rem)", color: "#fff", fontFamily: "Inter, sans-serif", letterSpacing: "0.02em" }}>
+          <div className="text-center mb-12">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#3B82F6" }}>Бесплатно</p>
+            <h2 className="font-black leading-tight mb-3" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", letterSpacing: "-0.02em" }}>
               Записаться на разбор
             </h2>
-            <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Оставьте заявку — свяжемся и проведём разбор вашей карточки</p>
+            <p className="text-sm" style={{ color: "rgba(180,200,230,0.55)" }}>Оставьте заявку — свяжемся и разберём вашу карточку</p>
           </div>
 
           {/* What's included */}
-          <div className="grid grid-cols-3 gap-3 mb-8">
+          <div className="grid grid-cols-3 gap-3 mb-10">
             {[
               { icon: "📊", title: "Анализ текущего положения", desc: "Разберём где вы сейчас и что мешает росту" },
               { icon: "🔍", title: "Разбор ошибок", desc: "Найдём слабые места в карточке и стратегии" },
               { icon: "✅", title: "Решение", desc: "Дадим конкретный план действий" },
             ].map((item, i) => (
-              <div key={i} className="rounded-2xl p-4 text-center flex flex-col items-center gap-2" style={{ background: "rgba(59,130,246,0.07)", border: "1px solid rgba(59,130,246,0.2)" }}>
-                <div style={{ fontSize: 28 }}>{item.icon}</div>
+              <div key={i} className="rounded-2xl p-4 text-center flex flex-col items-center gap-2"
+                style={{ background: "rgba(59,130,246,0.05)", border: "1px solid rgba(59,130,246,0.15)" }}>
+                <div style={{ fontSize: 26 }}>{item.icon}</div>
                 <p className="text-xs font-bold leading-snug" style={{ color: "#E8EDF3" }}>{item.title}</p>
-                <p className="text-[11px] leading-snug" style={{ color: "rgba(180,200,230,0.55)" }}>{item.desc}</p>
+                <p className="text-[11px] leading-snug" style={{ color: "rgba(180,200,230,0.45)" }}>{item.desc}</p>
               </div>
             ))}
           </div>
 
-          {/* Form card */}
-          <div className="rounded-3xl overflow-hidden" style={{ background: "linear-gradient(160deg, #0f2147 0%, #0a1833 100%)", border: "1px solid rgba(59,130,246,0.25)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+          <div className="rounded-3xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(59,130,246,0.2)" }}>
             {leadSent ? (
               <div className="px-8 py-16 text-center">
                 <div className="text-5xl mb-4">🎉</div>
-                <h3 className="font-black text-2xl mb-2" style={{ color: "#fff", fontFamily: "Inter, sans-serif" }}>Заявка отправлена!</h3>
-                <p className="text-sm" style={{ color: "rgba(180,200,230,0.65)" }}>Мы свяжемся с вами в ближайшее время для записи на разбор.</p>
+                <h3 className="font-black text-2xl mb-2">Заявка отправлена!</h3>
+                <p className="text-sm" style={{ color: "rgba(180,200,230,0.55)" }}>Свяжемся с вами в ближайшее время.</p>
               </div>
             ) : (
               <form onSubmit={handleLeadSubmit} className="px-8 py-10 space-y-5">
-                <div>
-                  <label className="block text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "rgba(180,200,230,0.6)" }}>Ваше имя *</label>
-                  <input
-                    type="text"
-                    value={leadForm.name}
-                    onChange={e => setLeadForm(f => ({ ...f, name: e.target.value }))}
-                    placeholder="Иван Иванов"
-                    required
-                    className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
-                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.25)", color: "#E8EDF3" }}
-                    onFocus={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.7)"}
-                    onBlur={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)"}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "rgba(180,200,230,0.6)" }}>Телефон *</label>
-                  <input
-                    type="tel"
-                    value={leadForm.phone}
-                    onChange={e => setLeadForm(f => ({ ...f, phone: e.target.value }))}
-                    placeholder="+7 (999) 000-00-00"
-                    required
-                    className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
-                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.25)", color: "#E8EDF3" }}
-                    onFocus={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.7)"}
-                    onBlur={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)"}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "rgba(180,200,230,0.6)" }}>Ссылка на карточку</label>
-                  <input
-                    type="url"
-                    value={leadForm.card_url}
-                    onChange={e => setLeadForm(f => ({ ...f, card_url: e.target.value }))}
-                    placeholder="https://www.wildberries.ru/catalog/..."
-                    className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
-                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.25)", color: "#E8EDF3" }}
-                    onFocus={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.7)"}
-                    onBlur={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)"}
-                  />
-                </div>
-                {leadError && (
-                  <p className="text-xs text-red-400">{leadError}</p>
-                )}
-                <button
-                  type="submit"
-                  disabled={leadLoading}
-                  className="w-full py-4 rounded-xl font-bold text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90 disabled:opacity-50"
-                  style={{ background: "linear-gradient(135deg, #3B82F6, #6366F1)", color: "#fff" }}
-                >
+                {[
+                  { key: "name", label: "Ваше имя *", type: "text", placeholder: "Иван Иванов", required: true },
+                  { key: "phone", label: "Телефон *", type: "tel", placeholder: "+7 (999) 000-00-00", required: true },
+                  { key: "card_url", label: "Ссылка на карточку", type: "url", placeholder: "https://yandex.ru/maps/...", required: false },
+                ].map(({ key, label, type, placeholder, required }) => (
+                  <div key={key}>
+                    <label className="block text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "rgba(180,200,230,0.5)" }}>{label}</label>
+                    <input type={type} value={leadForm[key as keyof typeof leadForm]}
+                      onChange={e => setLeadForm(f => ({ ...f, [key]: e.target.value }))}
+                      placeholder={placeholder} required={required}
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(59,130,246,0.2)", color: "#E8EDF3" }}
+                      onFocus={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.6)"}
+                      onBlur={e => e.currentTarget.style.borderColor = "rgba(59,130,246,0.2)"} />
+                  </div>
+                ))}
+                {leadError && <p className="text-xs text-red-400">{leadError}</p>}
+                <button type="submit" disabled={leadLoading}
+                  className="w-full py-4 rounded-xl font-bold text-sm tracking-wide transition-all hover:opacity-90 disabled:opacity-50"
+                  style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)", color: "#fff" }}>
                   {leadLoading ? "Отправляем..." : "Отправить заявку"}
                 </button>
-                <p className="text-center text-[11px]" style={{ color: "rgba(180,200,230,0.35)" }}>
-                  Нажимая кнопку, вы соглашаетесь с <button type="button" onClick={() => setPrivacyOpen(true)} className="underline hover:opacity-80">политикой конфиденциальности</button>
+                <p className="text-center text-[11px]" style={{ color: "rgba(180,200,230,0.3)" }}>
+                  Нажимая, вы соглашаетесь с{" "}
+                  <button type="button" onClick={() => setPrivacyOpen(true)} className="underline hover:opacity-80">политикой конфиденциальности</button>
                 </p>
               </form>
             )}
@@ -979,113 +629,115 @@ export default function Index() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t py-10" style={{ borderColor: "rgba(59,130,246,0.1)", background: "#040a18" }}>
+      {/* ── CONTACT ── */}
+      <section id="contact" className="py-28 relative" style={{ background: "#060d1f" }}>
+        <div className="max-w-7xl mx-auto px-5 md:px-10">
+          <div className="text-center mb-16">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#8B5CF6" }}>Контакты</p>
+            <h2 className="font-black leading-tight" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", letterSpacing: "-0.02em" }}>
+              Готовы обсудить<br />
+              <span style={{ background: "linear-gradient(90deg,#8B5CF6,#3B82F6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                ваш проект?
+              </span>
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="rounded-3xl p-8" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(139,92,246,0.15)" }}>
+              <h3 className="font-bold text-lg mb-6" style={{ color: "#E8EDF3" }}>Свяжитесь с нами</h3>
+              <div className="space-y-4">
+                <a href="tel:+79119944122" className="flex items-center gap-4 group">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+                    style={{ background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.2)" }}>
+                    <Icon name="Phone" size={18} style={{ color: "#60A5FA" }} />
+                  </div>
+                  <div>
+                    <p className="text-xs mb-0.5" style={{ color: "rgba(180,200,230,0.4)" }}>Телефон</p>
+                    <p className="font-semibold text-sm" style={{ color: "#E8EDF3" }}>+7 (911) 994-41-22</p>
+                  </div>
+                </a>
+                <a href="mailto:info@keycard-promotion.ru" className="flex items-center gap-4 group">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+                    style={{ background: "rgba(139,92,246,0.1)", border: "1px solid rgba(139,92,246,0.2)" }}>
+                    <Icon name="Mail" size={18} style={{ color: "#A78BFA" }} />
+                  </div>
+                  <div>
+                    <p className="text-xs mb-0.5" style={{ color: "rgba(180,200,230,0.4)" }}>Почта</p>
+                    <p className="font-semibold text-sm" style={{ color: "#E8EDF3" }}>info@keycard-promotion.ru</p>
+                  </div>
+                </a>
+                <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+                    style={{ background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.2)" }}>
+                    <Icon name="Send" size={18} style={{ color: "#60A5FA" }} />
+                  </div>
+                  <div>
+                    <p className="text-xs mb-0.5" style={{ color: "rgba(180,200,230,0.4)" }}>Telegram</p>
+                    <p className="font-semibold text-sm" style={{ color: "#E8EDF3" }}>@yandex_promotion</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div className="rounded-3xl p-8 flex flex-col justify-center items-center text-center"
+              style={{ background: "linear-gradient(135deg,rgba(59,130,246,0.08),rgba(139,92,246,0.08))", border: "1px solid rgba(59,130,246,0.2)" }}>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+                style={{ background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.3)" }}>
+                <Icon name="Rocket" size={28} style={{ color: "#60A5FA" }} />
+              </div>
+              <h3 className="font-black text-2xl mb-3" style={{ letterSpacing: "-0.02em" }}>Начнём прямо сейчас</h3>
+              <p className="text-sm mb-6" style={{ color: "rgba(180,200,230,0.55)" }}>
+                Бесплатный аудит карточки — без обязательств. Узнайте, почему вас не находят клиенты.
+              </p>
+              <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-sm transition-all hover:opacity-90 hover:scale-105"
+                style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)", color: "#fff" }}>
+                Написать в Telegram <Icon name="ArrowUpRight" size={16} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className="py-10" style={{ borderTop: "1px solid rgba(59,130,246,0.1)", background: "#040a18" }}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <img src={LOGO_URL} alt="KeyCard" className="h-8 w-8 object-cover rounded-lg" style={{ border: "1px solid rgba(59,130,246,0.2)" }} />
-            <span className="text-sm font-bold tracking-widest uppercase" style={{ color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>
-              KeyCard <span style={{ color: blue }}>Promotion</span>
+            <span className="text-sm font-black tracking-widest uppercase" style={{ color: "#E8EDF3" }}>
+              Key<span style={{ color: "#3B82F6" }}>Card</span> Promotion
             </span>
           </div>
-          <div className="flex flex-col items-center md:items-start gap-0.5">
-            <p className="text-xs" style={{ color: "rgba(180,200,230,0.35)" }}>© 2025 KeyCard. Все права защищены.</p>
-            <p className="text-xs" style={{ color: "rgba(180,200,230,0.35)" }}>ИНН 772145676128</p>
-          </div>
-          <div className="flex flex-col items-end gap-2">
-            <a href="https://t.me/yandex_promotion" target="_blank" rel="noopener noreferrer"
-              className="text-xs tracking-widest uppercase hover:opacity-80 transition-opacity" style={{ color: blue }}>
-              Telegram
-            </a>
-            <a href="https://drive.google.com/file/d/1HLi4Iq_alrceyaNOXONKQddflYvHbtM1/view?usp=sharing" target="_blank" rel="noopener noreferrer"
-              className="text-xs hover:opacity-80 transition-opacity underline underline-offset-2" style={{ color: "rgba(180,200,230,0.35)" }}>
-              Договор на оказание услуг
-            </a>
-            <button onClick={() => setPrivacyOpen(true)}
-              className="text-xs hover:opacity-80 transition-opacity underline underline-offset-2 cursor-pointer" style={{ color: "rgba(180,200,230,0.35)", background: "none", border: "none" }}>
-              Политика конфиденциальности
-            </button>
-          </div>
+          <p className="text-xs" style={{ color: "rgba(180,200,230,0.3)" }}>© 2025 KeyCard Promotion. Все права защищены.</p>
+          <button onClick={() => setPrivacyOpen(true)} className="text-xs hover:opacity-80 transition-opacity" style={{ color: "rgba(180,200,230,0.4)" }}>
+            Политика конфиденциальности
+          </button>
         </div>
       </footer>
 
       {/* Privacy modal */}
       {privacyOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(4,10,24,0.85)", backdropFilter: "blur(8px)" }} onClick={() => setPrivacyOpen(false)}>
-          <div className="rounded-2xl p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto border" style={{ background: "#0a1428", borderColor: "rgba(59,130,246,0.2)" }} onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-5">
-              <h3 style={{ fontSize: 20, fontWeight: 700, color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>Политика конфиденциальности</h3>
-              <button onClick={() => setPrivacyOpen(false)} style={{ color: "rgba(180,200,230,0.5)" }}><Icon name="X" size={20} /></button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.75)" }} onClick={() => setPrivacyOpen(false)}>
+          <div className="rounded-3xl p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto" style={{ background: "#0d1f3c", border: "1px solid rgba(59,130,246,0.2)" }} onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-black text-xl">Политика конфиденциальности</h3>
+              <button onClick={() => setPrivacyOpen(false)} className="p-2 rounded-lg hover:opacity-70" style={{ background: "rgba(255,255,255,0.05)" }}>
+                <Icon name="X" size={18} />
+              </button>
             </div>
-            <div className="text-sm leading-relaxed space-y-4" style={{ color: "rgba(180,200,230,0.65)" }}>
-              <p>Настоящая Политика конфиденциальности (далее — Политика) регулирует порядок обработки и использования персональных данных пользователей сайта https://keycard-promotion.ru (далее — Сайт). Используя Сайт, Вы соглашаетесь с условиями данной Политики.</p>
-
-              <div>
-                <p className="font-semibold mb-1" style={{ color: "#E8EDF3" }}>1. Общие положения</p>
-                <p>1.1. Администрация сайта обязуется защищать конфиденциальность информации, предоставляемой Пользователями, в соответствии с требованиями законодательства Российской Федерации, включая Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных» и иные нормативные акты.</p>
-                <p className="mt-1">1.2. Настоящая Политика применима только к сайту https://keycard-promotion.ru. Администрация не несёт ответственности за действия сторон, на которые Пользователь может перейти по ссылкам, размещённым на сайте.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1" style={{ color: "#E8EDF3" }}>2. Персональные данные, собираемые сайтом</p>
-                <p className="mb-1">2.1. При использовании сайта могут быть собраны следующие виды персональных данных: имя; контактный телефон; адрес электронной почты; иные данные, необходимые для выполнения услуг.</p>
-                <p>2.2. Персональные данные собираются только с согласия Пользователя и используются исключительно для целей, указанных в настоящей Политике.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1" style={{ color: "#E8EDF3" }}>3. Цели обработки персональных данных</p>
-                <p>3.1. Предоставление услуг и информационных материалов; связь с Пользователем; улучшение качества обслуживания; выполнение обязательств перед Пользователями.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1" style={{ color: "#E8EDF3" }}>4. Передача персональных данных третьим лицам</p>
-                <p>4.1. Персональные данные Пользователя не передаются третьим лицам, за исключением случаев, предусмотренных законодательством РФ или по договору.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1" style={{ color: "#E8EDF3" }}>5. Меры по защите персональных данных</p>
-                <p>5.1. Администрация сайта принимает необходимые технические и организационные меры для защиты персональных данных от несанкционированного доступа, изменения, раскрытия или уничтожения.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1" style={{ color: "#E8EDF3" }}>6. Права Пользователей</p>
-                <p>6.1. Пользователь имеет право: знать о месте хранения и целях обработки своих данных; требовать уточнения, блокировки или уничтожения данных; отказаться от обработки персональных данных, за исключением случаев, предусмотренных законом.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1" style={{ color: "#E8EDF3" }}>7. Сроки хранения данных</p>
-                <p>7.1. Персональные данные хранятся в течение периода, необходимого для достижения целей их обработки, либо в соответствии с требованиями законодательства РФ.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1" style={{ color: "#E8EDF3" }}>8. Обеспечение безопасности</p>
-                <p>8.1. Администрация сайта обеспечивает защиту персональных данных Пользователей и принимает меры для предотвращения несанкционированного доступа.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-2" style={{ color: "#E8EDF3" }}>9. Контакты по вопросам конфиденциальности</p>
-                <p className="mb-2">Если у Вас есть вопросы по обработке персональных данных, свяжитесь с нами:</p>
-                <div className="space-y-1 text-xs rounded-lg p-3" style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.15)" }}>
-                  <p><span style={{ color: "#E8EDF3" }}>Наименование ИП:</span> Плотицин Егор Михайлович</p>
-                  <p><span style={{ color: "#E8EDF3" }}>Юридический адрес:</span> Москва, 111674, 1-я Вольская улица, 13 к2, кв. 71</p>
-                  <p><span style={{ color: "#E8EDF3" }}>Расчётный счёт:</span> 40802810300009669624</p>
-                  <p><span style={{ color: "#E8EDF3" }}>Банк:</span> АО «Тинькофф Банк»</p>
-                  <p><span style={{ color: "#E8EDF3" }}>Корр. счёт:</span> 30101810145250000974</p>
-                  <p><span style={{ color: "#E8EDF3" }}>ИНН:</span> 7710140679</p>
-                  <p><span style={{ color: "#E8EDF3" }}>БИК:</span> 044525974</p>
-                </div>
-              </div>
+            <div className="space-y-4 text-sm leading-relaxed" style={{ color: "rgba(180,200,230,0.7)" }}>
+              <p>ИП Кузьмин Максим Александрович обрабатывает персональные данные пользователей в соответствии с ФЗ-152 «О персональных данных».</p>
+              <p>Собираемые данные: имя, телефон, email — используются исключительно для обратной связи и не передаются третьим лицам.</p>
+              <p>Отправляя форму, вы даёте согласие на обработку персональных данных.</p>
+              <p>По вопросам: <a href="mailto:info@keycard-promotion.ru" style={{ color: "#60A5FA" }}>info@keycard-promotion.ru</a></p>
             </div>
           </div>
         </div>
       )}
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        @keyframes storyIn {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
       `}</style>
     </div>
   );
