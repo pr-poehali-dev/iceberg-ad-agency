@@ -86,7 +86,7 @@ const APPROACH = [
   { icon: "Users", title: "Новые клиенты", desc: "Цель одна — увеличить ваш поток клиентов через Яндекс. Всё остальное — инструменты." },
 ];
 
-const LOGO_URL = "https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/files/90906752-e64f-4802-a583-b5a46b90cd9f.jpg";
+const LOGO_URL = "https://cdn.poehali.dev/projects/678f7adc-98d6-4171-8f2c-e01ae23f112c/files/5f4405fd-1c67-4c1e-9a5e-f9c9ff1ec10d.jpg";
 const SUBMIT_REVIEW_URL = "https://functions.poehali.dev/afbbb854-a4da-457c-8a63-421bef083447";
 
 export default function Index() {
@@ -302,7 +302,7 @@ export default function Index() {
       </section>
 
       {/* ── STORY PIN ── */}
-      <div ref={storyRef} id="about" style={{ height: `${STORY_STEPS.length * 100 + 100}vh` }}>
+      <div ref={storyRef} id="about" style={{ height: `${STORY_STEPS.length * 100}vh` }}>
         <div ref={storyPinRef} className="h-screen w-full flex items-center justify-center overflow-hidden relative"
           style={{ background: "#111a1f" }}>
           {/* Progress dots */}
@@ -372,7 +372,7 @@ export default function Index() {
       </div>
 
       {/* ── APPROACH ── */}
-      <section id="approach" className="py-28 relative overflow-hidden" style={{ background: "#111a1f" }}>
+      <section id="approach" className="py-16 relative overflow-hidden" style={{ background: "#111a1f" }}>
         <div className="absolute inset-0 pointer-events-none" style={{
           backgroundImage: "linear-gradient(rgba(141,158,71,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(141,158,71,0.04) 1px, transparent 1px)",
           backgroundSize: "80px 80px"
