@@ -124,9 +124,9 @@ export default function Index() {
       ScrollTrigger.create({
         trigger: storyRef.current,
         start: "top top",
-        end: `+=${totalSteps * 100}vh`,
+        end: "bottom bottom",
         pin: storyPinRef.current,
-        pinSpacing: true,
+        pinSpacing: false,
         scrub: false,
         onUpdate: (self) => {
           const step = Math.min(
@@ -151,9 +151,9 @@ export default function Index() {
       ScrollTrigger.create({
         trigger: servicesRef.current,
         start: "top top",
-        end: `+=${totalServices * 80}vh`,
+        end: "bottom bottom",
         pin: servicesPinRef.current,
-        pinSpacing: true,
+        pinSpacing: false,
         scrub: false,
         onUpdate: (self) => {
           const idx = Math.min(
@@ -407,7 +407,7 @@ export default function Index() {
       </section>
 
       {/* ── SERVICES PIN ── */}
-      <div ref={servicesRef} id="services" style={{ height: `${SERVICES.length * 80 + 100}vh` }}>
+      <div ref={servicesRef} id="services" style={{ height: `${SERVICES.length * 80}vh` }}>
         <div ref={servicesPinRef} className="h-screen w-full flex items-center overflow-hidden"
           style={{ background: "linear-gradient(180deg,#111a1f 0%,#111a1f 100%)" }}>
           <div className="max-w-7xl mx-auto px-5 md:px-10 w-full grid md:grid-cols-2 gap-16 items-center">
