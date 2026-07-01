@@ -13,24 +13,24 @@
     --popover: 224 45% 11%;
     --popover-foreground: 210 40% 96%;
 
-    --primary: 220 90% 60%;
-    --primary-foreground: 224 50% 8%;
+    --primary: 205 30% 55%;
+    --primary-foreground: 210 20% 12%;
 
-    --secondary: 224 40% 15%;
-    --secondary-foreground: 210 30% 85%;
+    --secondary: 75 28% 52%;
+    --secondary-foreground: 210 20% 12%;
 
-    --muted: 224 40% 15%;
-    --muted-foreground: 215 20% 55%;
+    --muted: 210 20% 16%;
+    --muted-foreground: 205 15% 55%;
 
-    --accent: 260 80% 65%;
-    --accent-foreground: 224 50% 8%;
+    --accent: 78 38% 45%;
+    --accent-foreground: 210 20% 12%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 224 35% 18%;
-    --input: 224 35% 18%;
-    --ring: 220 90% 60%;
+    --border: 210 20% 20%;
+    --input: 210 20% 20%;
+    --ring: 205 30% 55%;
 
     --radius: 8px;
 
@@ -56,7 +56,7 @@
     @apply bg-background text-foreground;
     font-family: "Inter", sans-serif;
     font-weight: 400;
-    background: #060d1f;
+    background: #111a1f;
   }
   h1,
   h2,
@@ -96,19 +96,19 @@
 @keyframes glow-pulse {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 20px rgba(90, 127, 181, 0.3);
   }
   50% {
-    box-shadow: 0 0 60px rgba(59, 130, 246, 0.7);
+    box-shadow: 0 0 60px rgba(90, 127, 181, 0.7);
   }
 }
 @keyframes glow-purple {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 20px rgba(141, 158, 71, 0.3);
   }
   50% {
-    box-shadow: 0 0 60px rgba(139, 92, 246, 0.7);
+    box-shadow: 0 0 60px rgba(141, 158, 71, 0.7);
   }
 }
 @keyframes rotate-slow {
@@ -180,8 +180,8 @@
 }
 .card-hover:hover {
   transform: translateY(-5px);
-  border-color: rgba(59, 130, 246, 0.5);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.12);
+  border-color: rgba(90, 127, 181, 0.5);
+  box-shadow: 0 12px 40px rgba(90, 127, 181, 0.12);
 }
 
 .tech-border {
@@ -195,8 +195,8 @@
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.6),
-    rgba(139, 92, 246, 0.4),
+    rgba(90, 127, 181, 0.6),
+    rgba(141, 158, 71, 0.4),
     transparent
   );
   -webkit-mask:
