@@ -252,7 +252,7 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-[72px]">
           <a href="#" className="flex items-center gap-2.5">
             <img src={LOGO_URL} alt="KeyCard" className="h-10 w-10 object-cover rounded-lg" style={{ border: "1px solid rgba(59,130,246,0.3)" }} />
-            <span className="hidden sm:block text-sm font-bold tracking-widest uppercase" style={{ color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif", letterSpacing: "0.15em" }}>
+            <span className="hidden sm:block text-sm font-bold tracking-widest uppercase" style={{ color: "#E8EDF3", fontFamily: "Inter, sans-serif", letterSpacing: "0.15em" }}>
               KeyCard <span style={{ color: blue }}>Promotion</span>
             </span>
           </a>
@@ -334,7 +334,7 @@ export default function Index() {
                 <div className="h-px w-10" style={{ background: `linear-gradient(90deg, ${blue}, ${purple})` }} />
                 <span className="text-xs tracking-[0.25em] uppercase" style={{ color: blue }}>Рекламное SEO-агентство</span>
               </div>
-              <h1 style={{ fontSize: "clamp(2.8rem,6vw,5rem)", lineHeight: 1.05, fontWeight: 700, color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif", letterSpacing: "-0.01em" }}>
+              <h1 style={{ fontSize: "clamp(2.8rem,6vw,5rem)", lineHeight: 1.05, fontWeight: 700, color: "#E8EDF3", fontFamily: "Inter, sans-serif", letterSpacing: "-0.01em" }}>
                 Будь первым{" "}
                 <span style={{ background: "linear-gradient(90deg, #3B82F6, #8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                   на картах
@@ -375,7 +375,7 @@ export default function Index() {
           <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-5 transition-all duration-1000 delay-300 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             {STATS.map((s) => (
               <div key={s.value} className="rounded-xl p-5 border tech-border" style={{ background: "rgba(59,130,246,0.05)", borderColor: "rgba(59,130,246,0.15)" }}>
-                <div style={{ fontSize: 38, fontWeight: 700, color: blue, lineHeight: 1, fontFamily: "Rajdhani, sans-serif" }}>{s.value}</div>
+                <div style={{ fontSize: 38, fontWeight: 700, color: blue, lineHeight: 1, fontFamily: "Inter, sans-serif" }}>{s.value}</div>
                 <div className="mt-1 text-xs tracking-wide" style={{ color: "rgba(180,200,230,0.6)" }}>{s.label}</div>
               </div>
             ))}
@@ -405,7 +405,7 @@ export default function Index() {
                 <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${blue}, ${purple})` }} />
                 <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>О компании</span>
               </div>
-              <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", lineHeight: 1.1, fontWeight: 700, color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif" }}>
+              <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", lineHeight: 1.1, fontWeight: 700, color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>
                 5 лет выводим бизнес в топ Яндекса
               </h2>
               <p className="mt-5 leading-relaxed text-sm" style={{ color: "rgba(180,200,230,0.7)" }}>
@@ -479,7 +479,7 @@ export default function Index() {
               <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Наш подход</span>
               <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
             </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Rajdhani, sans-serif" }}>
+            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
               Индивидуальная стратегия — проверенный результат
             </h2>
           </div>
@@ -496,9 +496,9 @@ export default function Index() {
                   <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ background: blueDim, border: "1px solid rgba(59,130,246,0.2)" }}>
                     <Icon name={c.icon} size={22} style={{ color: blue }} />
                   </div>
-                  <span style={{ fontSize: 44, fontWeight: 700, color: "rgba(59,130,246,0.12)", lineHeight: 1, fontFamily: "Rajdhani, sans-serif" }}>{c.num}</span>
+                  <span style={{ fontSize: 44, fontWeight: 700, color: "rgba(59,130,246,0.12)", lineHeight: 1, fontFamily: "Inter, sans-serif" }}>{c.num}</span>
                 </div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: "#E8EDF3", marginBottom: 10, fontFamily: "Rajdhani, sans-serif" }}>{c.title}</h3>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: "#E8EDF3", marginBottom: 10, fontFamily: "Inter, sans-serif" }}>{c.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "rgba(180,200,230,0.65)" }}>{c.desc}</p>
               </div>
             ))}
@@ -526,7 +526,7 @@ export default function Index() {
               <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${blue}, ${purple})` }} />
               <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Что мы предлагаем</span>
             </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Rajdhani, sans-serif" }}>
+            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
               Полный арсенал инструментов<br className="hidden md:block" /> для роста в Яндексе
             </h2>
           </div>
@@ -539,7 +539,7 @@ export default function Index() {
                 <div className="w-11 h-11 rounded-lg flex items-center justify-center mb-5" style={{ background: i % 2 === 0 ? blueDim : purpleDim, border: `1px solid ${i % 2 === 0 ? "rgba(59,130,246,0.2)" : "rgba(139,92,246,0.2)"}` }}>
                   <Icon name={s.icon} size={20} style={{ color: i % 2 === 0 ? blue : purple }} />
                 </div>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: "#E8EDF3", marginBottom: 10, fontFamily: "Rajdhani, sans-serif" }}>{s.title}</h3>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: "#E8EDF3", marginBottom: 10, fontFamily: "Inter, sans-serif" }}>{s.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "rgba(180,200,230,0.65)" }}>{s.desc}</p>
               </div>
             ))}
@@ -557,7 +557,7 @@ export default function Index() {
               <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Отзывы клиентов</span>
               <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
             </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Rajdhani, sans-serif" }}>
+            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
               Нам доверяют лидеры рынка
             </h2>
             <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Реальные результаты наших партнёров</p>
@@ -571,7 +571,7 @@ export default function Index() {
                   {REVIEWS[activeReview].icon}
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg" style={{ color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif" }}>{REVIEWS[activeReview].org}</h3>
+                  <h3 className="font-bold text-lg" style={{ color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>{REVIEWS[activeReview].org}</h3>
                   <div className="flex gap-0.5 mt-1">
                     {[1,2,3,4,5].map(s => <span key={s} style={{ color: "#F5A623", fontSize: 14 }}>★</span>)}
                   </div>
@@ -639,7 +639,7 @@ export default function Index() {
           <div className={`mt-16 transition-all duration-700 delay-200 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <div className="rounded-2xl p-8 md:p-10 border" style={{ background: "rgba(59,130,246,0.04)", borderColor: "rgba(59,130,246,0.15)" }}>
               <div className="mb-6">
-                <h3 className="text-xl font-bold mb-1" style={{ color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif" }}>Оставить отзыв</h3>
+                <h3 className="text-xl font-bold mb-1" style={{ color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>Оставить отзыв</h3>
                 <p className="text-sm" style={{ color: "rgba(180,200,230,0.55)" }}>Мы опубликуем его после проверки</p>
               </div>
 
@@ -716,7 +716,7 @@ export default function Index() {
               <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Тарифы</span>
               <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
             </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Rajdhani, sans-serif" }}>
+            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
               Прозрачные условия сотрудничества
             </h2>
             <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Цена зависит от количества продвигаемых точек и объёма работ</p>
@@ -744,14 +744,14 @@ export default function Index() {
                   <p className="text-xs tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(180,200,230,0.5)" }}>{p.name}</p>
                   <p className="text-sm" style={{ color: blue }}>{p.period}</p>
                 </div>
-                <div style={{ fontSize: 28, fontWeight: 700, color: "#E8EDF3", marginBottom: 2, fontFamily: "Rajdhani, sans-serif" }}>{p.prices[0]}</div>
+                <div style={{ fontSize: 28, fontWeight: 700, color: "#E8EDF3", marginBottom: 2, fontFamily: "Inter, sans-serif" }}>{p.prices[0]}</div>
                 <p className="text-xs mb-3" style={{ color: "rgba(180,200,230,0.5)" }}>Без репутации</p>
                 <div className="flex items-center gap-2 mb-3">
                   <div className="h-px flex-1 border-t border-dashed" style={{ borderColor: "rgba(59,130,246,0.15)" }} />
                   <span className="text-xs" style={{ color: "rgba(180,200,230,0.4)" }}>или</span>
                   <div className="h-px flex-1 border-t border-dashed" style={{ borderColor: "rgba(59,130,246,0.15)" }} />
                 </div>
-                <div style={{ fontSize: 28, fontWeight: 700, color: "#E8EDF3", marginBottom: 12, fontFamily: "Rajdhani, sans-serif" }}>{p.prices[1]}</div>
+                <div style={{ fontSize: 28, fontWeight: 700, color: "#E8EDF3", marginBottom: 12, fontFamily: "Inter, sans-serif" }}>{p.prices[1]}</div>
                 <p className="text-xs mb-7" style={{ color: "rgba(180,200,230,0.5)" }}>{p.desc}</p>
                 <ul className="space-y-3 mb-8">
                   {p.features.map((f) => (
@@ -793,7 +793,7 @@ export default function Index() {
               <span className="text-xs tracking-[0.2em] uppercase" style={{ color: blue }}>Контакты</span>
               <div className="h-px w-8" style={{ background: `linear-gradient(90deg, ${purple}, transparent)` }} />
             </div>
-            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Rajdhani, sans-serif" }}>
+            <h2 style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, color: "#E8EDF3", lineHeight: 1.1, fontFamily: "Inter, sans-serif" }}>
               Готовы обсудить ваш проект?
             </h2>
             <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Оставьте заявку — свяжемся в течение 30 минут в рабочее время</p>
@@ -887,7 +887,7 @@ export default function Index() {
           {/* Header */}
           <div className="text-center mb-10">
             <p className="text-xs font-semibold tracking-[0.3em] uppercase mb-3" style={{ color: "#60A5FA" }}>Бесплатно</p>
-            <h2 className="font-black leading-tight uppercase" style={{ fontSize: "clamp(1.8rem,5vw,2.8rem)", color: "#fff", fontFamily: "Rajdhani, sans-serif", letterSpacing: "0.02em" }}>
+            <h2 className="font-black leading-tight uppercase" style={{ fontSize: "clamp(1.8rem,5vw,2.8rem)", color: "#fff", fontFamily: "Inter, sans-serif", letterSpacing: "0.02em" }}>
               Записаться на разбор
             </h2>
             <p className="mt-3 text-sm" style={{ color: "rgba(180,200,230,0.6)" }}>Оставьте заявку — свяжемся и проведём разбор вашей карточки</p>
@@ -913,7 +913,7 @@ export default function Index() {
             {leadSent ? (
               <div className="px-8 py-16 text-center">
                 <div className="text-5xl mb-4">🎉</div>
-                <h3 className="font-black text-2xl mb-2" style={{ color: "#fff", fontFamily: "Rajdhani, sans-serif" }}>Заявка отправлена!</h3>
+                <h3 className="font-black text-2xl mb-2" style={{ color: "#fff", fontFamily: "Inter, sans-serif" }}>Заявка отправлена!</h3>
                 <p className="text-sm" style={{ color: "rgba(180,200,230,0.65)" }}>Мы свяжемся с вами в ближайшее время для записи на разбор.</p>
               </div>
             ) : (
@@ -984,7 +984,7 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <img src={LOGO_URL} alt="KeyCard" className="h-8 w-8 object-cover rounded-lg" style={{ border: "1px solid rgba(59,130,246,0.2)" }} />
-            <span className="text-sm font-bold tracking-widest uppercase" style={{ color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif" }}>
+            <span className="text-sm font-bold tracking-widest uppercase" style={{ color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>
               KeyCard <span style={{ color: blue }}>Promotion</span>
             </span>
           </div>
@@ -1014,7 +1014,7 @@ export default function Index() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(4,10,24,0.85)", backdropFilter: "blur(8px)" }} onClick={() => setPrivacyOpen(false)}>
           <div className="rounded-2xl p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto border" style={{ background: "#0a1428", borderColor: "rgba(59,130,246,0.2)" }} onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-5">
-              <h3 style={{ fontSize: 20, fontWeight: 700, color: "#E8EDF3", fontFamily: "Rajdhani, sans-serif" }}>Политика конфиденциальности</h3>
+              <h3 style={{ fontSize: 20, fontWeight: 700, color: "#E8EDF3", fontFamily: "Inter, sans-serif" }}>Политика конфиденциальности</h3>
               <button onClick={() => setPrivacyOpen(false)} style={{ color: "rgba(180,200,230,0.5)" }}><Icon name="X" size={20} /></button>
             </div>
             <div className="text-sm leading-relaxed space-y-4" style={{ color: "rgba(180,200,230,0.65)" }}>
@@ -1081,7 +1081,7 @@ export default function Index() {
       )}
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
